@@ -21,6 +21,23 @@ export class AppController {
     return { studentprojects: this.studentprojectService.getAll() }
   }
 
+  @Get('/beratungsangebote')
+  @Render('programm.hbs')
+  getBeratungsangebote () {
+    return {
+      studentprojects: this.studentprojectService.getByContextSpaceIds([
+        '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
+        '!YehuBeeJpRWuYmeVWz:content.udk-berlin.de', // Universitätsbibliothek
+        '!PIZnKjMWljdFHfugiJ:content.udk-berlin.de', // Berlin Career College
+        '!leNHytnZdIfmkxQKIe:content.udk-berlin.de', // Artist Training (eingeordnet unter "Berlin Career College")
+        '!eBKDDBPyVbxnUYLQHQ:content.udk-berlin.de', // International Office
+        '!ikWOqOsHeWtDpXiaZk:content.udk-berlin.de', // Allgemeine Studienberatung
+        '!WfLvMMfXpFaSuqyqPE:content.udk-berlin.de', // Frauenbeauftragte
+        '!lsoUcOlTSDYmqTukyb:content.udk-berlin.de' //  Studium Generale
+      ])
+    }
+  }
+
   @Get('/c/:id')
   @Bind(Param())
   @Render('studentproject.hbs')

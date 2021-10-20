@@ -33,7 +33,7 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, coordinates, parent) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, coordinates, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
@@ -47,6 +47,7 @@ export class StudentprojectService {
         credit: credit,
         published: published,
         parent: parent,
+        parentSpaceId: parentSpaceId,
         children: {}
       }
     }
@@ -62,7 +63,7 @@ export class StudentprojectService {
       'institute',
       'semester']
 
-    async function scanForAndAddSpaceChildren (spaceId, path, parent) {
+    async function scanForAndAddSpaceChildren (spaceId, path, parent, parentSpaceId) {
       const stateEvents = await matrixClient.roomState(spaceId).catch(() => {})
 
       const metaEvent = _.find(stateEvents, { type: 'dev.medienhaus.meta' })
@@ -80,10 +81,6 @@ export class StudentprojectService {
 
       // robert
       const avatar = await matrixClient.getStateEvent(spaceId, 'm.room.avatar').catch(() => {})
-      // let avatarUrl = ''
-      // if (avatar) {
-      //   avatarUrl = await matrixClient.mxcUrlToHttp(avatar.url)
-      // }
 
       const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId)
       const authorNames = []
@@ -145,7 +142,7 @@ export class StudentprojectService {
           }))
         }
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.url, authorNames, credit, published, topicEn, topicDe, coordinates, parent))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.url, authorNames, credit, published, topicEn, topicDe, coordinates, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
@@ -159,11 +156,11 @@ export class StudentprojectService {
         if (event.room_id !== spaceId) continue
         // if (event.sender !== matrixClient.getUserId()) continue
 
-        await scanForAndAddSpaceChildren(event.state_key, [...path, spaceId, 'children'], spaceName)
+        await scanForAndAddSpaceChildren(event.state_key, [...path, spaceId, 'children'], spaceName, spaceId)
       }
     }
 
-    await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '')
+    await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
     this.studentprojects = result
 
@@ -172,6 +169,10 @@ export class StudentprojectService {
 
   getAll () {
     return this.studentprojects
+  }
+
+  getByContextSpaceIds (contextSpaceIds) {
+    return _.filter(this.studentprojects, project => contextSpaceIds.includes(project.parentSpaceId))
   }
 
   async get (id) {
