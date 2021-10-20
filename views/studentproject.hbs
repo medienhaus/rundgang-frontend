@@ -19,8 +19,8 @@
             <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
         {{/if}}
 
-        {{#if studentproject.topicEn}}
-            <p>{{ studentproject.topicEn }}</p>
+        {{#if studentproject.topicDe}}
+            <p>{{ studentproject.topicDe }}</p>
         {{/if}}
 
         {{#each studentproject.content}}
@@ -29,7 +29,7 @@
     </div>
     <div class="info">
         {{#if studentproject.parent}}
-            <div class="label">Context</div>
+            <div class="label">Kontext</div>
             <div class="tagbubble">
                 <span>{{ studentproject.parent }}</span>
             </div>
