@@ -1,0 +1,29 @@
+{{> header activePageProgramm=true }}
+
+<main class="events">
+    <hr>
+    <div class="eventsswrap">
+
+        {{#each eventsByDay  as |day|}}
+   
+            <div class="day">
+            <h2>{{@key}}</h2>
+            {{#each day as |event|}}
+                <div class="event">
+                    <div class="time">{{event.time}}</div>
+                    <h3>{{event.name}} </h3>
+                    <div class="tags">
+                        <ul>
+                            <li>
+                                {{event.published}} 
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {{/each}}
+            </div>
+        {{/each}}
+    </div>
+</main>
+
+{{> footer }}

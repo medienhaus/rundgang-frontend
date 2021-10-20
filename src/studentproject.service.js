@@ -190,12 +190,25 @@ export class StudentprojectService {
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
 
-  getAllEvents () {
+  getAll () {
     return this.studentprojects
   }
 
-  getAll () {
-    return this.studentprojects
+  getAllEvents () {
+    const events = {}
+    Object.entries(this.studentprojects).forEach(([k, c]) => {
+      if (c.location) {
+        events[k] = c
+      }
+    })
+    return events
+  }
+
+  getAllEventsByDay () {
+    const days = {
+      '30.10.11': this.getAllEvents()
+    }
+    return days
   }
 
   async get (id) {
