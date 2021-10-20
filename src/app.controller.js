@@ -40,6 +40,11 @@ export class AppController {
     return process.env.NODE_ENV === 'local' ? strukturDev : struktur
   }
 
+  @Get('/api/events')
+  apiGetEvents () {
+    return this.studentprojectService.getAllEvents()
+  }
+
   @Get('/api/:id')
   @Bind(Param())
   async apiGetSingle ({ id }) {

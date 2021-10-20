@@ -169,7 +169,7 @@ export class StudentprojectService {
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
 
-  getAll () {
+  getAllEvents () {
     return this.studentprojects
   }
 
