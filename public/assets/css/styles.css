@@ -1,0 +1,1036 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "BauPro";
+  src: url("../webfont/BauPro.woff2") format("woff2"), url("../webfont/BauPro.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BauPro";
+  src: url("../webfont/BauPro-Medium.woff2") format("woff2"), url("../webfont/BauPro-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+::-moz-selection {
+  background: #dcf3ff;
+  color: black;
+}
+
+::selection {
+  background: #dcf3ff;
+  color: black;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  color: black;
+  width: 100%;
+  /*min-height: 100%;*/
+  position: relative;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "BauPro";
+  font-size: 20px;
+  line-height: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/** HEADER **/
+header .topline {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: 1px solid #C4C4C4;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0px;
+  z-index: 900;
+}
+header .topline h1 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+header .topline h1 a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/** PREVIEW STYLES**/
+/*
+.singleproject > main {
+	border-color: var(--color-lo);
+	border-radius: unset;
+	border-style: solid;
+	border-width: calc(var(--margin) * 0.2);
+	padding: calc(var(--margin) * 1);
+}
+*/
+/* GENERAL STYLES
+   ============================= */
+h1 {
+  font-family: "BauPro";
+  font-weight: 500;
+  font-size: 48px;
+}
+
+h2 {
+  font-family: "BauPro";
+  font-weight: 500;
+  font-size: 34px;
+}
+
+h3 {
+  font-family: "BauPro";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+p {
+  font-family: "BauPro";
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+}
+p a {
+  color: inherit;
+}
+
+strong, b {
+  font-weight: 500;
+}
+
+.tagbubble span {
+  display: inline-block;
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.tagbubble span a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.flexwrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+main {
+  margin-top: 55px;
+  transition: opacity 0.2s;
+}
+
+main.menuopen {
+  opacity: 0.2;
+}
+
+div.overlay {
+  background-color: black;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 500;
+  pointer-events: none;
+}
+div.overlay.menuopen {
+  opacity: 0.2;
+  transition: opacity 0.4s;
+}
+
+/* BURGER MENU
+   ============================= */
+.hamburger {
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.hamburger:hover {
+  opacity: 0.7;
+}
+
+.hamburger.is-active:hover {
+  opacity: 0.7;
+}
+
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: #000;
+}
+
+.hamburger-box {
+  width: 30px;
+  height: 24px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px;
+}
+
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  width: 30px;
+  height: 3px;
+  background-color: #000;
+  border-radius: 0px;
+  position: absolute;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+.hamburger-inner::before, .hamburger-inner::after {
+  content: "";
+  display: block;
+}
+
+.hamburger-inner::before {
+  top: -10px;
+}
+
+.hamburger-inner::after {
+  bottom: -10px;
+}
+
+.hamburger--squeeze .hamburger-inner {
+  transition-duration: 0.075s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--squeeze .hamburger-inner::before {
+  transition: top 0.075s 0.12s ease, opacity 0.075s ease;
+}
+
+.hamburger--squeeze .hamburger-inner::after {
+  transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.hamburger--squeeze.is-active .hamburger-inner {
+  transform: rotate(45deg);
+  transition-delay: 0.12s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.hamburger--squeeze.is-active .hamburger-inner::before {
+  top: 0;
+  opacity: 0;
+  transition: top 0.075s ease, opacity 0.075s 0.12s ease;
+}
+
+.hamburger--squeeze.is-active .hamburger-inner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+  transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.menu {
+  position: fixed;
+  right: -50vw;
+  height: 100vh;
+  width: 25vw;
+  min-width: 350px;
+  z-index: 800;
+  background-color: white;
+  background-image: url(../img/pilzeduo.svg);
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: bottom center;
+  top: 0;
+  padding: 20px;
+  padding-top: 55px;
+  box-sizing: border-box;
+  transition: all 0.5s;
+}
+.menu ul {
+  padding: 0 !important;
+  margin: 0;
+  list-style: none;
+}
+.menu ul li {
+  line-height: 40px;
+  list-style: none;
+}
+.menu ul li a {
+  color: #858585;
+  text-decoration: none;
+  font-weight: 500;
+}
+.menu ul li.current a {
+  color: black;
+}
+.menu nav.main {
+  margin-top: 10px;
+}
+.menu nav.sub {
+  margin-top: 40px;
+}
+.menu nav.sub ul li a {
+  font-weight: 400;
+}
+.menu .lang {
+  margin-top: 40px;
+}
+.menu .lang > div {
+  font-weight: 500;
+  color: #858585;
+}
+.menu .lang .switch {
+  height: 31px;
+  width: 85px;
+  border: 1px solid black;
+  border-radius: 60px;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 15px;
+}
+.menu .lang .switch span {
+  font-weight: 400;
+  line-height: 31px;
+  font-size: 14px;
+  text-align: center;
+  width: 45px;
+  display: inline-block;
+  position: absolute;
+}
+.menu .lang .switch span.active {
+  background: black;
+  position: absolute;
+  right: 0;
+  height: 29px;
+  border-radius: 60px;
+  color: white;
+}
+.menu.slidein {
+  right: 0;
+}
+
+/* STARTPAGE STYLES
+   ============================= */
+main.start .choose {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 20px;
+  padding-top: 20px;
+}
+main.start .choose .rundganginfo {
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+main.start .choose ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-left: -6px;
+  display: flex;
+  flex-wrap: wrap;
+}
+main.start .choose ul li {
+  font-weight: 500;
+  font-size: 41px;
+  background-color: black;
+  border-radius: 90px;
+  padding: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 4px;
+  margin-bottom: 10px;
+}
+main.start .choose ul li a {
+  color: white;
+  text-decoration: inherit;
+}
+main.start .choose div.footer {
+  position: absolute;
+  bottom: 10px;
+  width: 50%;
+}
+main.start .choose div.footer ul li {
+  background-color: transparent;
+  font-size: 14px;
+  padding: 0px;
+  padding-right: 12px;
+  margin-bottom: 2px;
+}
+main.start .choose div.footer ul li a {
+  color: #C4C4C4;
+  transition: color 0.3s;
+}
+main.start .choose div.footer ul li a:hover {
+  color: black;
+}
+main.start .plakat {
+  width: 50%;
+  background-color: #ffd246;
+  height: calc(100vh - 55px);
+}
+main.start div.greypill {
+  background-color: #C4C4C4;
+  font-size: 14px;
+  padding: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 90px;
+  display: inline-block;
+  font-weight: 500;
+  margin-top: 30px;
+  height: 26px;
+}
+main.start div.greypill a {
+  color: black;
+  text-decoration: inherit;
+}
+main.start div.greypill.covid {
+  margin-left: -6px;
+}
+main.start div.rundang.greypill {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* KARTENANSICHT, ORTE, LEAFLET
+   ============================= */
+.address-lists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.container {
+  margin: 10px auto;
+  margin-top: 70px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.address-lists .address, .tags li {
+  /* display: inline-flex; */
+  transition: 100ms linear;
+  display: inline-block;
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  margin-bottom: 0;
+  margin-right: 0;
+}
+
+.address:hover, .address.active {
+  background: #CF122E;
+}
+
+.location-info {
+  display: none;
+}
+
+.tags {
+  padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 10px;
+}
+
+.leaflet-popup-content-wrapper {
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+  border: 1px solid #C4C4C4;
+}
+
+.leaflet-popup-content {
+  margin: 10px !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  top: 10px !important;
+  right: 10px !important;
+  font-size: 20px !important;
+  color: black !important;
+}
+
+.leaflet-popup-content h3 {
+  margin-bottom: 0 !important;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.leaflet-popup-content p {
+  margin-top: 5px !important;
+  font-size: 16px;
+  line-height: 20px;
+  color: #C4C4C4;
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
+
+/* .leaflet-popup.leaflet-zoom-animated {
+	left: 25px !important;
+} */
+#map {
+  width: 100%;
+  height: calc(100vh - 152px);
+}
+
+/* STYLES FÜR PROJEKTÜBERSICHT / PROGRAMM
+   ============================= */
+main.programm #filterline {
+  position: relative;
+  margin-top: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+main.programm #filterline ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+main.programm #filterline ul li:not(.back) {
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background: black;
+  color: white;
+}
+main.programm #filterline ul li.back {
+  font-weight: 500;
+  font-size: 14px;
+  color: #858585;
+  margin-right: 10px;
+}
+main.programm #filterline ul li.back span {
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background-color: #858585;
+  display: inline-block;
+  width: 26px;
+  padding-left: 8px;
+  transition: background-color 0.3s;
+}
+main.programm #filterline ul li.back span:hover {
+  background-color: black;
+}
+main.programm #filterline .level {
+  display: none;
+}
+main.programm #filterline .level.active {
+  display: block;
+}
+main.programm #filterline .selected > div {
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+}
+main.programm #filterline .selected > div > span {
+  font-size: 24px;
+  vertical-align: -3px;
+  margin-left: 5px;
+}
+main.programm #filterline .second ul {
+  display: none;
+}
+main.programm #filterline .second ul li.hide {
+  display: none;
+}
+main.programm #filterline .second ul.active {
+  display: flex;
+}
+main.programm hr {
+  border: none;
+  border-bottom: 1px solid #C4C4C4;
+  outline: 0;
+}
+main.programm .projectswrap {
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+main.programm .projectswrap .projecttile {
+  width: calc(25% - 15px);
+  position: relative;
+}
+main.programm .projectswrap .projecttile h2 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+main.programm .projectswrap .projecttile .info {
+  font-size: 16px;
+  margin-bottom: 80px;
+  line-height: 1.2;
+  margin-top: 7px;
+}
+main.programm .projectswrap .projecttile .hoverinfo {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  line-height: 19px;
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  height: calc(100% - 60px);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+main.programm .projectswrap .projecttile .hoverinfo p {
+  font-size: 16px;
+  line-height: 19px;
+}
+main.programm .projectswrap .projecttile a:hover + .hoverinfo {
+  opacity: 1;
+}
+main.programm .projectswrap .projecttile .image {
+  background-color: white;
+  position: relative;
+  /*height: 200px;*/
+}
+main.programm .projectswrap .projecttile .image .online {
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  right: 3px;
+  top: 8px;
+  background-color: #00C770;
+}
+main.programm .projectswrap .projecttile .image img {
+  width: 100%;
+  height: auto;
+}
+main.programm .projectswrap .projecttile.flexfix {
+  height: 1px;
+}
+main.programm .projectswrap .projecttile a {
+  color: inherit;
+  text-decoration: inherit;
+}
+main.programm .projectswrap .projecttile a.blocklink {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  position: absolute;
+}
+
+/* STYLES FÜR SINGLE PROJECT
+   ============================= */
+.singleproject h2.projecttitle {
+  font-size: 34px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  line-height: 35px;
+  letter-spacing: -0.025em;
+}
+.singleproject .projectclose {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 21px;
+  top: 85px;
+  cursor: pointer;
+}
+.singleproject .projectclose img {
+  width: 100%;
+  margin: 0;
+}
+.singleproject .students.tagbubble {
+  margin-bottom: 40px;
+}
+.singleproject .projectmain {
+  width: 50%;
+  position: relative;
+  padding-top: 45px;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.singleproject .projectmain .thumb img {
+  margin-top: 0;
+}
+.singleproject .projectmain .image {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.singleproject .projectmain .image .sub {
+  text-align: right;
+  color: #858585;
+  font-size: 16px;
+}
+.singleproject .projectmain img {
+  width: 100%;
+  height: auto;
+}
+.singleproject .projectmain h3 {
+  font-size: 34px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  line-height: 35px;
+  letter-spacing: -0.025em;
+}
+.singleproject .projectmain .thumb + h2 {
+  margin-top: 10px;
+}
+.singleproject .projectmain blockquote {
+  margin: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-left: 4px solid rgba(0, 0, 0, 0.05);
+  padding: 25px;
+}
+.singleproject .projectmain blockquote:before {
+  content: open-quote;
+}
+.singleproject .projectmain blockquote:after {
+  content: close-quote;
+}
+.singleproject .projectmain div.code {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-left: 4px solid rgba(0, 0, 0, 0.05);
+  color: black;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 25px;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.singleproject .projectmain .bbb {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.singleproject .projectmain .bbb > div {
+  font-weight: 500;
+  font-size: 14px;
+}
+.singleproject .projectmain .bbb span.bbblink {
+  display: inline-block;
+  margin-top: 10px;
+  background: #8C78FF;
+  height: 26px;
+  border-radius: 60px;
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 10px;
+  margin-bottom: 6px;
+  margin-left: 7px;
+  cursor: pointer;
+}
+.singleproject .projectmain .bbb span.date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #C4C4C4;
+}
+.singleproject .projectmain .bbb a {
+  text-decoration: none;
+  color: inherit;
+}
+.singleproject .projectmain div.video {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  height: 0;
+}
+.singleproject .projectmain div.video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.singleproject .projectmain div.audio {
+  box-shadow: none;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.singleproject .projectmain div.audio .slider .gap-progress .pin {
+  background-color: black;
+}
+.singleproject .projectmain div.audio .volume__button svg path,
+.singleproject .projectmain div.audio .play-pause-btn svg path {
+  fill: black !important;
+}
+.singleproject .projectmain div.audio .slider .gap-progress {
+  background-color: #63bdff;
+}
+.singleproject .info {
+  width: 50%;
+  position: relative;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.singleproject .info div.label {
+  margin-bottom: 8px;
+  margin-top: 20px;
+}
+.singleproject ul {
+  list-style-position: outside;
+  list-style-type: "–  ";
+  padding: 0;
+  padding-left: 22px;
+}
+.singleproject ol {
+  list-style-position: outside;
+  padding: 0;
+  padding-left: 25px;
+}
+.singleproject .eventinfo {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  font-weight: 500;
+}
+.singleproject .eventinfo .day {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.singleproject .eventinfo .flexbox {
+  display: flex;
+  flex-wrap: wrap;
+}
+.singleproject .eventinfo .time {
+  font-size: 15px;
+  width: 180px;
+}
+.singleproject .eventinfo .infos {
+  width: calc(100% - 180px);
+  font-size: 16px;
+  line-height: 19px;
+  padding-bottom: 0;
+}
+.singleproject .eventinfo .tags ul {
+  padding-left: 0;
+}
+.singleproject .eventinfo .tags ul li a {
+  color: inherit;
+  text-decoration: none;
+}
+.singleproject .eventinfo .tags ul li {
+  margin-bottom: 8px;
+}
+.singleproject .eventinfo .tags .stream, .singleproject .eventinfo .tags .conference {
+  background-color: #8C78FF;
+}
+
+/* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
+   ============================= */
+main.events .day {
+  margin-top: 50px;
+}
+main.events .day h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 25px;
+  padding-left: 20px;
+}
+main.events .day .event {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-right: 20px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+main.events .day .event .time {
+  width: 150px;
+  font-feature-settings: "tnum" 1;
+  font-size: 15px;
+  font-weight: 500;
+}
+main.events .day .event h3 {
+  width: 550px;
+  box-sizing: border-box;
+  padding-left: 25px;
+  font-size: 16px;
+}
+main.events .day .event .tags {
+  padding-left: 80px;
+  box-sizing: border-box;
+  width: calc(100% - 700px);
+}
+main.events .day .event .tags ul {
+  padding: 0;
+  margin: 0;
+}
+main.events .day .event .tags ul li {
+  margin-right: 2px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+main.events .day .event .tags ul li.online {
+  background-color: #00C770;
+}
+main.events .day .event .tags ul li.bbb {
+  background-color: #8C78FF;
+}
+main.events .day .event:hover {
+  background-color: #F1F1F1;
+}
+
+/* STYLES FÜR IMPRESSUM, DATENSCHUTZ, VIEL TEXT
+   ============================= */
+.smalltext {
+  max-width: 780px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.basictext {
+  max-width: 740px;
+  margin: 0 auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.basictext h2 {
+  margin-bottom: 50px;
+}
+.basictext p {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+/* STYLES FOR STARTPAGE PLAKAT
+   ============================= */
+main.start .plakat {
+  background-image: url("../img/plakat/strasse.svg"), url("../img/plakat/udkpilz.svg"), url("../img/plakat/hausline.svg"), url("../img/plakat/kleinepilze.svg"), url("../img/plakat/dotsbg.png");
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: bottom left, bottom center, bottom left, bottom center, center center;
+  background-size: contain, contain, contain, contain, cover;
+}
+
+@-moz-document url-prefix() {
+  main.programm #filterline ul li:not(.back),
+  main.programm .projectswrap .projecttile .image .online,
+  .tagbubble span,
+  .address-lists .address, .tags li,
+  main.start div.greypill,
+  main.start .choose div.footer ul li,
+  .singleproject .projectmain .bbb span.bbblink {
+    line-height: 28px;
+  }
+
+  main.start .choose ul li {
+    padding-top: 17px;
+  }
+}

@@ -1,0 +1,35 @@
+{{> header activePageProgramm=true }}
+
+<main class="programm">
+    <hr>
+    <div class="projectswrap">
+        {{#each studentprojects}}
+            <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
+                <a href="/c/{{ id }}">
+                    <div class="image" style="height:342px;">
+                        {{#if thumbnail}}
+                            <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
+                        {{/if}}
+                        {{#unless location}}
+                            <div class="online">+ online</div>
+                        {{/unless}}
+                    </div>
+                    <div class="info">
+                        <h2>{{ name }}</h2>
+                        <div>
+                            {{#each authors}}
+                                {{.}},
+                            {{/each}}
+                        </div>
+                    </div>
+                </a>
+                <div class="hoverinfo">
+                    <h2>{{ name }}</h2>
+                    <p>{{ topicDe }}</p>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</main>
+
+{{> footer }}
