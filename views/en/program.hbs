@@ -1,20 +1,19 @@
-{{> header activePageProgramm=true }}
+{{> en/partials/header activePageProgram=true }}
 
 <main class="programm">
     <hr>
     <div class="projectswrap">
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
-                <a href="/c/{{ id }}">
+                <a href="/en/c/{{ id }}">
                     <div class="image">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
-                        {{/if}}
-                        {{#unless thumbnail}}
+                        {{else}}
                             <div style="background: #ffd246; display: block; height: 160px; width: 100%"></div>
-                        {{/unless}}
+                        {{/if}}
                         {{#unless location}}
-                            <div class="online">+ online</div>
+                            <div class="online">online exclusive</div>
                         {{/unless}}
                     </div>
                     <div class="info">
@@ -28,11 +27,11 @@
                 </a>
                 <div class="hoverinfo">
                     <h2>{{ name }}</h2>
-                    <p>{{ topicDe }}</p>
+                    <p>{{ topicEn }}</p>
                 </div>
             </div>
         {{/each}}
     </div>
 </main>
 
-{{> footer }}
+{{> en/partials/footer }}

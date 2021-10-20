@@ -8,8 +8,13 @@ async function bootstrap () {
 
   app.useStaticAssets(join(__dirname, '..', 'public'))
   app.setBaseViewsDir(join(__dirname, '..', 'views'))
-  hbs.registerPartials(join(__dirname, '..', 'views', 'partials'))
-  hbs.registerPartials(join(__dirname, '..', 'views', 'contentBlocks'))
+  hbs.registerPartials(join(__dirname, '..', 'views'))
+  // hbs.registerPartials(join(__dirname, '..', 'views', 'contentBlocks'))
+  // hbs.registerHelper('navigationMenu', function ({ ...data }) {
+  //   if (data.data.root.language === 'en') return 'en/header'
+  //
+  //   return 'header'
+  // })
   app.setViewEngine('hbs')
 
   await app.listen(3004)

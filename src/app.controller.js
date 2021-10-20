@@ -12,19 +12,48 @@ export class AppController {
   }
 
   @Get('/')
-  @Render('index.hbs')
-  root () {}
+  @Render('de/index.hbs')
+  root () { return { languageSwitchLink: '/en' } }
+
+  @Get('/en')
+  @Render('en/index.hbs')
+  rootEnglish () { return { languageSwitchLink: '/' } }
 
   @Get('/programm')
-  @Render('programm.hbs')
+  @Render('de/programm.hbs')
+  getAllEnglish () {
+    return { languageSwitchLink: '/en/program', studentprojects: this.studentprojectService.getAll() }
+  }
+
+  @Get('/en/program')
+  @Render('en/program.hbs')
   getAll () {
-    return { studentprojects: this.studentprojectService.getAll() }
+    return { languageSwitchLink: '/programm', studentprojects: this.studentprojectService.getAll() }
   }
 
   @Get('/beratungsangebote')
-  @Render('programm.hbs')
+  @Render('de/programm.hbs')
   getBeratungsangebote () {
     return {
+      languageSwitchLink: '/en/advisory-services',
+      studentprojects: this.studentprojectService.getByContextSpaceIds([
+        '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
+        '!YehuBeeJpRWuYmeVWz:content.udk-berlin.de', // Universitätsbibliothek
+        '!PIZnKjMWljdFHfugiJ:content.udk-berlin.de', // Berlin Career College
+        '!leNHytnZdIfmkxQKIe:content.udk-berlin.de', // Artist Training (eingeordnet unter "Berlin Career College")
+        '!eBKDDBPyVbxnUYLQHQ:content.udk-berlin.de', // International Office
+        '!ikWOqOsHeWtDpXiaZk:content.udk-berlin.de', // Allgemeine Studienberatung
+        '!WfLvMMfXpFaSuqyqPE:content.udk-berlin.de', // Frauenbeauftragte
+        '!lsoUcOlTSDYmqTukyb:content.udk-berlin.de' //  Studium Generale
+      ])
+    }
+  }
+
+  @Get('/en/advisory-services')
+  @Render('en/program.hbs')
+  getBeratungsangeboteEnglish () {
+    return {
+      languageSwitchLink: '/beratungsangebote',
       studentprojects: this.studentprojectService.getByContextSpaceIds([
         '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
         '!YehuBeeJpRWuYmeVWz:content.udk-berlin.de', // Universitätsbibliothek
@@ -40,11 +69,20 @@ export class AppController {
 
   @Get('/c/:id')
   @Bind(Param())
-  @Render('studentproject.hbs')
+  @Render('de/studentproject.hbs')
   async getStudentproject ({ id }) {
-    const project = await this.studentprojectService.get(id)
+    const project = await this.studentprojectService.get(id, 'de')
     if (!project) throw new NotFoundException()
-    return { studentproject: project }
+    return { languageSwitchLink: `/en/c/${id}`, studentproject: project }
+  }
+
+  @Get('/en/c/:id')
+  @Bind(Param())
+  @Render('en/studentproject.hbs')
+  async getStudentprojectEnglish ({ id }) {
+    const project = await this.studentprojectService.get(id, 'en')
+    if (!project) throw new NotFoundException()
+    return { languageSwitchLink: `/c/${id}`, studentproject: project }
   }
 
   @Get('/api/all')

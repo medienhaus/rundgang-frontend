@@ -1,0 +1,40 @@
+{{> en/partials/header }}
+
+<main class="singleproject">
+    <div class="projectmain">
+        <h2 class="projecttitle">{{ studentproject.name }}</h2>
+
+        <div class="students tagbubble">
+            {{#each studentproject.authors}}
+                <span>{{.}}</span>
+            {{/each}}
+            {{#if studentproject.credits}}
+                {{#each studentproject.credits}}
+                    <span>{{.}}</span>
+                {{/each}}
+            {{/if}}
+        </div>
+
+        {{#if studentproject.thumbnail_full_size}}
+            <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
+        {{/if}}
+
+        {{#if studentproject.topicEn}}
+            <p>{{ studentproject.topicEn }}</p>
+        {{/if}}
+
+        {{#each studentproject.content}}
+            {{{ formatted_content }}}
+        {{/each}}
+    </div>
+    <div class="info">
+        {{#if studentproject.parent}}
+            <div class="label">Context</div>
+            <div class="tagbubble">
+                <span>{{ studentproject.parent }}</span>
+            </div>
+        {{/if}}
+    </div>
+</main>
+
+{{> en/partials/footer }}

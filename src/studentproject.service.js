@@ -175,8 +175,8 @@ export class StudentprojectService {
     return _.filter(this.studentprojects, project => contextSpaceIds.includes(project.parentSpaceId))
   }
 
-  async get (id) {
-    const { content, formattedContent } = await this.getContent(id, 'en')
+  async get (id, language = 'en') {
+    const { content, formattedContent } = await this.getContent(id, language)
     return { ...this.studentprojects[id], content, formatted_content: formattedContent }
   }
 
