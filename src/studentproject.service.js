@@ -157,10 +157,10 @@ export class StudentprojectService {
             eventResult.push(childrenResult)
           } else { // otherwise we direcetly get the content of the room
             const content = await fetchContent(event.room_id)
-            eventResult.push({ name: event.name.substring(event.name.indexOf('_') + 1), content: content })
+            eventResult.push([{ name: event.name.substring(event.name.indexOf('_') + 1), content: content }])
           }
         }))
-
+        console.log(eventResult)
         // console.log(eventArray.filter(event => event))
 
         // fetch events
