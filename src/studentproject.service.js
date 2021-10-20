@@ -33,14 +33,14 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, coordinates, parent) { // changed
+    function createSpaceObject (id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent) { // changed
       return {
         id: id,
         name: name,
         type: metaEvent.content.type,
         topicEn: topicEn,
         topicDe: topicDe,
-        location: coordinates,
+        events: events,
         thumbnail: thumbnail,
         authors: authors,
         credit: credit,
@@ -125,26 +125,47 @@ export class StudentprojectService {
           method: 'GET',
           headers: { Authorization: 'Bearer ' + configService.get('matrix.access_token') }
         }
-        const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
+        const events = hierarchy.rooms.filter(room => room.name === 'events' && !room.name.startsWith('x_'))
+        // const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
+        if (events.length < 1) return
+        const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
 
-        let coordinates
-
-        if (location.length > 0) {
-          coordinates = await Promise.all(location.map(async loc => {
-            const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${loc.room_id}/messages?limit=99&dir=b`, req)
-            const data = result.data
-            const htmlString = data.chunk.map(type => {
-              if (type.type === 'm.room.message' && type.content['m.new_content'] === undefined && type.redacted_because === undefined) {
-                return type.content.body
-              } else { return null }
-            }
-            ).filter(x => x !== null)
-
-            return htmlString
-          }))
+        async function fetchContent (roomId) {
+          const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${roomId}/messages?limit=99&dir=b`, req)
+          const data = result.data
+          const htmlString = data.chunk.map(type => {
+            if (type.type === 'm.room.message' && type.content['m.new_content'] === undefined && type.redacted_because === undefined) {
+              return type.content.body
+            } else { return null }
+          }
+          ).filter(x => x !== null)
+          return htmlString
         }
+        const eventResult = [] // array for events
+        // @TODO one map too many
+        await Promise.all(eventHierarchy.rooms.map(async (event, index) => {
+          if (index === 0) return // we ignore the first result since its the event space itself
+          if (event.children_state.length > 0) { // if the space has children
+            const childrenResult = await Promise.all(event.children_state.map(async child => {
+              const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
+              return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
+                // we want to return an array of object with all information for the specific event
+                const content = await fetchContent(data.room_id)
+                return { name: data.name.substring(data.name.indexOf('_') + 1), content: content }
+              })))[0]
+            }))
+            eventResult.push(childrenResult)
+          } else { // otherwise we direcetly get the content of the room
+            const content = await fetchContent(event.room_id)
+            eventResult.push({ name: event.name.substring(event.name.indexOf('_') + 1), content: content })
+          }
+        }))
 
-        _.set(result, [spaceId], createSpaceObject(spaceId, spaceName, metaEvent, avatarUrl, authorNames, credit, published, topicEn, topicDe, coordinates, parent))
+        // console.log(eventArray.filter(event => event))
+
+        // fetch events
+
+        _.set(result, [spaceId], createSpaceObject(spaceId, spaceName, metaEvent, avatarUrl, authorNames, credit, published, topicEn, topicDe, eventResult, parent))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
@@ -170,6 +191,10 @@ export class StudentprojectService {
   }
 
   getAllEvents () {
+    return this.studentprojects
+  }
+
+  getAll () {
     return this.studentprojects
   }
 
