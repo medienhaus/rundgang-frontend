@@ -21,6 +21,12 @@ export class AppController {
     return { studentprojects: this.studentprojectService.getAll() }
   }
 
+  @Get('/events')
+  @Render('events.hbs')
+  getAllEvents () {
+    return { eventsByDay: this.studentprojectService.getAllEventsByDay() }
+  }
+
   @Get('/c/:id')
   @Bind(Param())
   @Render('studentproject.hbs')
@@ -43,6 +49,11 @@ export class AppController {
   @Get('/api/events')
   apiGetEvents () {
     return this.studentprojectService.getAllEvents()
+  }
+
+  @Get('/api/events/day')
+  apiGetEventsByDay () {
+    return this.studentprojectService.getAllEventsByDay()
   }
 
   @Get('/api/:id')
