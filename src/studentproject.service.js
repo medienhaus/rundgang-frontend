@@ -160,7 +160,6 @@ export class StudentprojectService {
             eventResult.push([{ name: event.name.substring(event.name.indexOf('_') + 1), content: content }])
           }
         }))
-        console.log(eventResult)
         // console.log(eventArray.filter(event => event))
 
         // fetch events
