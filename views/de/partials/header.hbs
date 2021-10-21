@@ -29,29 +29,11 @@
         <div class="topline">
             <h1><a href="/">UdK Berlin Rundgang 2021</a></h1>
             <div class="burger">
-                {{#if activePageIndex}}
-                    <div class="lang">
-                        <div class="switch">
-                            <a href="{{ languageSwitchLink }}">
-                                <span>EN</span><span class="active">DE</span>
-                            </a>
-                        </div>
-                    </div>
-                {{else}}
-                    {{#if activePageStudentproject}}
-                        <a href="/programm" class="hamburger hamburger--squeeze is-active">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </a>
-                    {{else}}
-                        <button class="hamburger hamburger--squeeze" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    {{/if}}
-                {{/if}}
+                <button class="hamburger hamburger--squeeze" type="button">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                </button>
             </div>
         </div>
 
@@ -61,7 +43,7 @@
                     <li {{#if activePageIndex}}class="current"{{/if}}><a href="/">Startseite</a></li>
                     <li {{#if activePageProgramm}}class="current"{{/if}}><a href="/programm">Programm</a></li>
                     <li><a href="#">Orte</a></li>
-                    <li><a href="#">Einzelveranstaltungen</a></li>
+                    <li {{#if activePageZeitplan}}class="current"{{/if}}><a href="/zeitplan">Zeitplan</a></li>
                     <li {{#if activePageBeratungsangebote}}class="current"{{/if}}><a href="/beratungsangebote">Beratungsangebote</a></li>
                 </ul>
             </nav>

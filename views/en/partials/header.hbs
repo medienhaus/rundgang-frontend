@@ -29,29 +29,11 @@
         <div class="topline">
             <h1><a href="/en">UdK Berlin Rundgang 2021</a></h1>
             <div class="burger">
-                {{#if activePageIndex}}
-                    <div class="lang">
-                        <div class="switch">
-                            <a href="{{ languageSwitchLink }}">
-                                <span class="active">EN</span><span>DE</span>
-                            </a>
-                        </div>
-                    </div>
-                {{else}}
-                    {{#if activePageStudentproject}}
-                        <a href="/en/program" class="hamburger hamburger--squeeze is-active">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </a>
-                    {{else}}
-                        <button class="hamburger hamburger--squeeze" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    {{/if}}
-                {{/if}}
+                <button class="hamburger hamburger--squeeze" type="button">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                </button>
             </div>
         </div>
 
@@ -61,7 +43,7 @@
                     <li {{#if activePageIndex}}class="current"{{/if}}><a href="/en">Homepage</a></li>
                     <li {{#if activePageProgram}}class="current"{{/if}}><a href="/en/program">Program</a></li>
                     <li {{#if activePageLocations}}class="current"{{/if}}><a href="/en/locations">Locations</a></li>
-                    <li><a href="#">Event Calendar</a></li>
+                    <li {{#if activePageEvents}}class="current"{{/if}}><a href="/en/events">Event Calendar</a></li>
                     <li {{#if activePageAdvisoryServices}}class="current"{{/if}}><a href="/en/advisory-services">Advisory Services</a></li>
                 </ul>
             </nav>
