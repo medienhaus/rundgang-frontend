@@ -7,12 +7,13 @@
 	  
 	  
 	// only for preview: get different heights of tiles
+	/*
 	const images = document.querySelectorAll(".image");
 	images.forEach(function(image) {
 		var randomHeight = randomNumber(150, 400);
 		image.setAttribute("style","height:"+randomHeight+"px;");
 	});
-	
+	*/
 	
 	const firstLevel = document.querySelector('.level.first');
 	const firstLevelElms = firstLevel.querySelectorAll('ul li');
