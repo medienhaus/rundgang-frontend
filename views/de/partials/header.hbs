@@ -38,11 +38,19 @@
                         </div>
                     </div>
                 {{else}}
-                    <button class="hamburger hamburger--squeeze" type="button">
+                    {{#if activePageStudentproject}}
+                        <a href="/programm" class="hamburger hamburger--squeeze is-active">
                             <span class="hamburger-box">
                                 <span class="hamburger-inner"></span>
                             </span>
-                    </button>
+                        </a>
+                    {{else}}
+                        <button class="hamburger hamburger--squeeze" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>
