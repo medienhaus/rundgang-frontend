@@ -79,6 +79,18 @@ export class AppController {
     return { languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.getAllEventsByDay() }
   }
 
+  @Get('/orte')
+  @Render('de/locations.hbs')
+  getAllLocations () {
+    return { languageSwitchLink: '/en/locations' }
+  }
+
+  @Get('/en/locations')
+  @Render('en/locations.hbs')
+  getAllLocationsEngl () {
+    return { languageSwitchLink: '/orte' }
+  }
+
   @Get('/c/:id')
   @Bind(Param())
   @Render('de/studentproject.hbs')
