@@ -7,6 +7,8 @@ import { HttpService } from '@nestjs/axios'
 import Handlebars from 'handlebars'
 import fs from 'fs'
 import { join } from 'path'
+import locationData from '../data/locationData.json'
+import { constant } from 'lodash'
 
 @Injectable()
 @Dependencies(ConfigService, HttpService)
@@ -196,7 +198,7 @@ export class StudentprojectService {
   getAllEvents () {
     const events = {}
     Object.entries(this.studentprojects).forEach(([k, c]) => {
-      if (c.location) {
+      if (c.events && c.events.length > 0) {
         events[k] = c
       }
     })
@@ -204,10 +206,108 @@ export class StudentprojectService {
   }
 
   getAllEventsByDay () {
-    const days = {
-      '30.10.11': this.getAllEvents()
-    }
+    const days = {}
+    const events = this.getAllEvents()
+
+    Object.entries(events).forEach(([k, c]) => {
+      if (c.events && c.events.length > 0) {
+        // events[k] = c
+        c.events.forEach(event => {
+          event.forEach(entry => {
+            if (entry.name === 'date') {
+              entry.content.forEach(date => {
+                if (date.split(' ')[0] in days) {
+                  console.log('already exists append')
+                } else {
+                  console.log('does not exists add new and append')
+                  days[date.split(' ')[0]] = {}
+                }
+                days[date.split(' ')[0]][k] = {
+                  id: c.id,
+                  name: c.name,
+                  parent: c.parent,
+                  type: c.type
+                }
+              })
+            }
+          })
+        })
+        c.events.forEach(event => {
+          const tempData = {}
+          tempData.id = c.id
+          tempData.event = event
+          const infos = this.getEventInformation(tempData)
+          if (infos.date) {
+            infos.date.forEach(date => {
+              Object.entries(days).forEach(([infoK, infoC]) => {
+                if (infoK === date.day) {
+                  Object.entries(infoC).forEach(([eventK, eventC]) => {
+                    if (eventC.id === infos.id) {
+                      days[infoK][eventK] = { ...eventC, ...infos }
+                    }
+                  })
+                }
+              })
+            })
+          }
+        })
+      }
+    })
     return days
+  }
+
+  getEventInformation (event) {
+    const data = {}
+    data.id = event.id
+    event.event.forEach(entry => {
+      entry.content.forEach(content => {
+        if (entry.name === 'location') {
+          if (data.coordinates) {
+            data.coordinates.push(content)
+          } else {
+            data.coordinates = []
+            data.coordinates.push(content)
+          }
+          this.coordiantesToLocation(content.split('-')[0])
+          if (data.locations) {
+            data.locations.push(this.coordiantesToLocation(content.split('-')[0]))
+          } else {
+            data.locations = []
+            data.locations.push(this.coordiantesToLocation(content.split('-')[0]))
+          }
+        }
+        if (entry.name === 'date') {
+          if (data.date) {
+            data.date.push({ day: content.split(' ')[0], time: content.split(' ')[1] })
+          } else {
+            data.date = []
+            data.date.push({ day: content.split(' ')[0], time: content.split(' ')[1] })
+          }
+        }
+        if (entry.name === 'bbb') {
+          if (data.bigBlueButton) {
+            data.bigBlueButton.push(content)
+          } else {
+            data.bigBlueButton = []
+            data.bigBlueButton.push(content)
+          }
+        }
+        if (entry.name === 'livestream') {
+          if (data.livestream) {
+            data.livestream.push(content)
+          } else {
+            data.livestream = []
+            data.livestream.push(content)
+          }
+        }
+      })
+    })
+
+    return data
+  }
+
+  coordiantesToLocation (coords) {
+    return locationData.find(location => location.coordinates.trim() === coords.trim())
   }
 
   async get (id) {
