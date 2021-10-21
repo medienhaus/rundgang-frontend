@@ -83,6 +83,11 @@
 		position: relative;
 		width: 100%;
 	}
+	.singleproject .projectmain,
+	.singleproject .info{
+		box-sizing: border-box;
+		padding: 20px;
+	}
 	.singleproject .projectclose{
 		top: 0px;
 	}
@@ -142,6 +147,33 @@
 		margin-top: 6px;
 		margin-bottom: 7px;
 	}
+	.singleproject .eventinfo .time{
+		width: 100%;
+	}
+	.singleproject .eventinfo .infos{
+		width: 100%;
+		margin-top: 15px;
+	}
+	.container{
+		width:100%;
+		border:0px solid red;
+		overflow-x: scroll; 
+		float:left;
+		height: 50px;
+		margin-top: 18px;
+	}
+	.address-lists{
+		display: flex;
+		flex-direction: row; 
+		flex-wrap: nowrap;
+		padding-right: 20px;
+		.location-name{
+			white-space: nowrap;
+		}
+	}
+	#map{
+		height: calc(100vh - 133px);
+	}
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
@@ -155,6 +187,23 @@
 		width: 100%;
 		background-size: 30%;
 		background-position: 80% bottom;
+	}
+	.hamburger{
+		padding: 0;
+	}
+	.hamburger-box{
+		width: 25px;
+		height: 26px;
+	}
+	.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after{
+		height: 2px;
+		width: 25px;
+	}
+	.hamburger-inner::before{
+		top: -8px;
+	}
+	.hamburger-inner::after{
+		bottom: -8px;
 	}
 }
 

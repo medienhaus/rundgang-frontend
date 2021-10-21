@@ -69,6 +69,7 @@ header{
 		h1{
 			font-size: 20px;
 			font-weight: 500;
+			letter-spacing: -0.01em;
 			a{
 				color: inherit;
 				text-decoration: inherit;
@@ -197,9 +198,9 @@ div.overlay{
 	margin: 0;
 	overflow: visible; }
 	.hamburger:hover {
-	opacity: 0.7; }
+	opacity: 1; }
 	.hamburger.is-active:hover {
-	opacity: 0.7; 
+	opacity: 1; 
 }
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::before,
@@ -368,6 +369,7 @@ body.start{
 			list-style: none;
 			padding: 0;
 			margin: 0;
+			margin-left: -6px;
 			display: flex;
 			flex-wrap: wrap;
 			li{
@@ -392,14 +394,17 @@ body.start{
 			width: 50%;
 			ul{
 				li{
-					background-color: $grey;
+					background-color: transparent;
 					font-size: 14px;
 					padding: 0px;
-					padding-left: 15px;
-					padding-right: 15px;
-					height: 26px;
+					padding-right: 12px;
+					margin-bottom: 2px;
 					a{
-						color: black;
+						color: $grey;
+						transition: color .3s;
+						&:hover{
+							color: black;
+						}
 					}
 				}
 			}
@@ -424,6 +429,9 @@ body.start{
 		a{
 			color: black;
 			text-decoration: inherit;
+		}
+		&.covid{
+			margin-left: -6px;
 		}
 	}
 	div.rundang.greypill{
@@ -450,6 +458,7 @@ body.start{
 	padding-bottom: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
+	overflow: hidden;
 }
 
 .address-lists .address, .tags li {
@@ -458,6 +467,7 @@ body.start{
 	display: inline-block;
 	@include pill();
 	margin-bottom: 0;
+	margin-right: 0;
 }
 
 .address:hover, .address.active {
@@ -476,7 +486,8 @@ body.start{
 }
 
 .leaflet-popup-content-wrapper {
-	border: 2px solid #383838;
+	box-shadow: 0 3px 14px rgb(0 0 0 / 20%);
+	border: 1px solid #C4C4C4;
 }
 
 .leaflet-popup-content {
@@ -505,6 +516,10 @@ body.start{
 
 .leaflet-popup-tip-container {
 	display: none;
+}
+
+.leaflet-control{
+	z-index: 300!important;
 }
 
 /* .leaflet-popup.leaflet-zoom-animated {
@@ -595,7 +610,7 @@ body.programm{
 	}
 	
 	.projectswrap{
-		margin-top: 60px;
+		margin-top: 20px;
 		padding-left: 20px;
 		padding-right: 20px;
 		display: flex;
@@ -612,13 +627,16 @@ body.programm{
 			.info{
 				font-size: 16px;
 				margin-bottom: 80px;
+				line-height: 1.2;
+				margin-top: 7px;
 			}
 			.hoverinfo{
 				opacity: 0;
 				position: absolute;
 				top: 0;
 				left: 0;
-				background-color: rgba(0, 0, 0, 0.85);
+				right: 0;
+				background-color: rgba(0, 0, 0, 0.80);
 				font-size: 16px;
 				line-height: 19px;
 				color: white;
@@ -627,25 +645,36 @@ body.programm{
 				height: calc(100% - 60px);
 				pointer-events: none;
 				transition: opacity .3s;
+				height: 100%;
 				p{
 					font-size: 16px;
 					line-height: 19px;
+					margin: 0;
 				}
 			}
 			a:hover + .hoverinfo{
 				opacity: 1;
 			}
 			.image{
-				background-color: #ffd246;
-				height: 100px;
+				background-color: white;
+				position: relative;
+				line-height: 0;
+				/*height: 200px;*/
 				.online{
 					@include pill();
 					display: inline-block;
 					position: absolute;
-					right: 0;
+					right: 3px;
 					top: 8px;
 					background-color: $green;
 				}
+				img{
+					width: 100%;
+					height: auto;
+				}
+			}
+			.image:hover .hoverinfo{
+				opacity: 1;
 			}
 			&.flexfix{
 				height: 1px;
@@ -678,7 +707,7 @@ body.programm{
 		font-weight: 500;
 		margin-bottom: 20px;
 		line-height: 35px;
-		letter-spacing: -0.5px;
+		letter-spacing: -0.025em;
 	}
 	.projectclose{
 		width: 15px;
@@ -724,7 +753,7 @@ body.programm{
 			margin-bottom: 20px;
 			margin-top: 60px;
 			line-height: 35px;
-			letter-spacing: -0.5px;
+			letter-spacing: -0.025em;
 		}
 		.thumb + h2{
 			margin-top: 10px;
@@ -734,6 +763,9 @@ body.programm{
 			margin-top: 1em;
 			margin-bottom: 1em;
 			position: relative;
+			background-color: rgba(0,0,0,0.05);
+			border-left: 4px solid rgba(0,0,0,0.05);
+			padding: 25px;
 			&:before {
 				content: open-quote;
 			}
@@ -742,7 +774,8 @@ body.programm{
 			}
 		}
 		div.code{
-			background-color: $grey;
+			background-color: rgba(0,0,0,0.05);
+			border-left: 4px solid rgba(0,0,0,0.05);
 			color:  black;
 			margin-top: 40px;
 			margin-bottom: 40px;
@@ -762,7 +795,7 @@ body.programm{
 			span.bbblink{
 				display: inline-block;
 				margin-top: 10px;
-				background: #63BDFF;
+				background: #8C78FF;
 				height: 26px;
 				border-radius: 60px;
 				color: black;
@@ -773,6 +806,7 @@ body.programm{
 				line-height: 26px;
 				margin-right: 10px;
 				margin-bottom: 6px;
+				margin-left: 7px;
 				cursor: pointer;
 			}
 			span.date{
@@ -839,6 +873,45 @@ body.programm{
 		padding: 0;
 		padding-left: 25px;
 	}
+	.eventinfo{
+		background-color: rgba(0, 0, 0, 0.05);
+		padding: 15px;
+		font-weight: 500;
+		.day{
+			font-size: 20px;
+			font-weight: 500;
+			margin-bottom: 20px;
+		}
+		.flexbox{
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.time{
+			font-size: 15px;
+			width: 180px;
+		}
+		.infos{
+			width: calc(100% - 180px);
+			font-size: 16px;
+			line-height: 19px;
+			padding-bottom: 0;
+		}
+		.tags{
+			ul{
+				padding-left: 0;
+				li a{
+					color: inherit;
+					text-decoration: none;
+				}
+				li{
+					margin-bottom: 8px;
+				}
+			}
+			.stream, .conference{
+				background-color: $purple;
+			}
+		}
+	}
 }
 
 
@@ -888,6 +961,7 @@ body.events{
 				ul li{
 					margin-right: 2px;
 					margin-bottom: 6px;
+					font-weight: 500;
 				}
 				ul li.online{
 					background-color: $green;
@@ -955,3 +1029,10 @@ body.start .plakat{
 		padding-top: 17px;
 	}
 }
+
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+	header .topline{
+		border-top: 1px solid #C4C4C4;
+	}
+}}

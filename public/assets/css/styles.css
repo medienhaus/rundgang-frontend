@@ -186,11 +186,11 @@ div.overlay.menuopen {
 }
 
 .hamburger:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .hamburger.is-active:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .hamburger.is-active .hamburger-inner,
@@ -447,6 +447,7 @@ main.start div.rundang.greypill {
   padding-bottom: 10px;
   padding-left: 20px;
   padding-right: 20px;
+  overflow: hidden;
 }
 
 .address-lists .address, .tags li {
@@ -515,6 +516,10 @@ main.start div.rundang.greypill {
 
 .leaflet-popup-tip-container {
   display: none;
+}
+
+.leaflet-control {
+  z-index: 300 !important;
 }
 
 /* .leaflet-popup.leaflet-zoom-animated {
@@ -656,7 +661,7 @@ main.programm .projectswrap .projecttile .hoverinfo {
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
   line-height: 19px;
   color: white;
@@ -665,10 +670,12 @@ main.programm .projectswrap .projecttile .hoverinfo {
   height: calc(100% - 60px);
   pointer-events: none;
   transition: opacity 0.3s;
+  height: 100%;
 }
 main.programm .projectswrap .projecttile .hoverinfo p {
   font-size: 16px;
   line-height: 19px;
+  margin: 0;
 }
 main.programm .projectswrap .projecttile a:hover + .hoverinfo {
   opacity: 1;
@@ -676,6 +683,7 @@ main.programm .projectswrap .projecttile a:hover + .hoverinfo {
 main.programm .projectswrap .projecttile .image {
   background-color: white;
   position: relative;
+  line-height: 0;
   /*height: 200px;*/
 }
 main.programm .projectswrap .projecttile .image .online {
@@ -700,6 +708,9 @@ main.programm .projectswrap .projecttile .image .online {
 main.programm .projectswrap .projecttile .image img {
   width: 100%;
   height: auto;
+}
+main.programm .projectswrap .projecttile .image:hover .hoverinfo {
+  opacity: 1;
 }
 main.programm .projectswrap .projecttile.flexfix {
   height: 1px;
@@ -881,7 +892,7 @@ main.programm .projectswrap .projecttile a.blocklink {
 }
 .singleproject ul {
   list-style-position: outside;
-  list-style-type: "–  ";
+  list-style-type: "–  ";
   padding: 0;
   padding-left: 22px;
 }
@@ -1021,16 +1032,23 @@ main.start .plakat {
 
 @-moz-document url-prefix() {
   main.programm #filterline ul li:not(.back),
-  main.programm .projectswrap .projecttile .image .online,
-  .tagbubble span,
-  .address-lists .address, .tags li,
-  main.start div.greypill,
-  main.start .choose div.footer ul li,
-  .singleproject .projectmain .bbb span.bbblink {
+main.programm .projectswrap .projecttile .image .online,
+.tagbubble span,
+.address-lists .address, .tags li,
+main.start div.greypill,
+main.start .choose div.footer ul li,
+.singleproject .projectmain .bbb span.bbblink {
     line-height: 28px;
   }
 
   main.start .choose ul li {
     padding-top: 17px;
+  }
+}
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    header .topline {
+      border-top: 1px solid #C4C4C4;
+    }
   }
 }
