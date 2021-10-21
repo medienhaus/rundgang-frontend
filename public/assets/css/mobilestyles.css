@@ -130,6 +130,14 @@ main.events .day .event .tags {
     margin-top: 5px;
     margin-bottom: 20px;
   }
+
+  div.footer {
+    display: none;
+  }
+
+  main.start div.footer.onlymobile {
+    display: block;
+  }
 }
 @media only screen and (max-width: 750px) {
   .menu {
@@ -164,8 +172,9 @@ main.events .day .event .tags {
     border: 0px solid red;
     overflow-x: scroll;
     float: left;
-    height: 50px;
+    height: 45px;
     margin-top: 18px;
+    margin-bottom: 0;
   }
 
   .address-lists {
@@ -180,6 +189,10 @@ main.events .day .event .tags {
 
   #map {
     height: calc(100vh - 133px);
+  }
+
+  main.programm #filterline {
+    margin-top: 65px;
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {

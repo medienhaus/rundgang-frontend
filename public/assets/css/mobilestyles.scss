@@ -127,6 +127,12 @@
 		margin-top: 5px;
 		margin-bottom: 20px;
 	}
+	div.footer{
+		display: none;
+	}
+	body.start div.footer.onlymobile{
+		display: block;
+	}
 }
 
 
@@ -159,8 +165,9 @@
 		border:0px solid red;
 		overflow-x: scroll; 
 		float:left;
-		height: 50px;
+		height: 45px;
 		margin-top: 18px;
+		margin-bottom: 0;
 	}
 	.address-lists{
 		display: flex;
@@ -173,6 +180,9 @@
 	}
 	#map{
 		height: calc(100vh - 133px);
+	}
+	body.programm #filterline{
+		margin-top: 65px;
 	}
 }
 
