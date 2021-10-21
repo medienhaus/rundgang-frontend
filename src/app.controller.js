@@ -67,10 +67,16 @@ export class AppController {
     }
   }
 
-  @Get('/events')
-  @Render('events.hbs')
+  @Get('/zeitplan')
+  @Render('de/events.hbs')
   getAllEvents () {
-    return { eventsByDay: this.studentprojectService.getAllEventsByDay() }
+    return { languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.getAllEventsByDay() }
+  }
+
+  @Get('/en/events')
+  @Render('en/events.hbs')
+  getAllEventsEnglish () {
+    return { languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.getAllEventsByDay() }
   }
 
   @Get('/c/:id')

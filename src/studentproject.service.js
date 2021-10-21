@@ -215,9 +215,7 @@ export class StudentprojectService {
             if (entry.name === 'date') {
               entry.content.forEach(date => {
                 if (date.split(' ')[0] in days) {
-                  console.log('already exists append')
                 } else {
-                  console.log('does not exists add new and append')
                   days[date.split(' ')[0]] = {}
                 }
                 days[date.split(' ')[0]][k] = {
