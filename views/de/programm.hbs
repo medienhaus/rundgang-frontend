@@ -20,7 +20,7 @@
                         <h2>{{ name }}</h2>
                         <div>
                             {{#each authors}}
-                                {{.}},
+                                {{.}}{{#greaterThan ../authors.length @index}}, {{/greaterThan}}
                             {{/each}}
                         </div>
                     </div>

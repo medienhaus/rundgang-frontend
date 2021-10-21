@@ -15,6 +15,12 @@ async function bootstrap () {
   //
   //   return 'header'
   // })
+  hbs.registerHelper('greaterThan', function (length, index, options) {
+    if (length > 1 && index < length - 1) {
+      return options.fn(this)
+    }
+    return options.inverse(this)
+  })
   app.setViewEngine('hbs')
 
   await app.listen(3004)
