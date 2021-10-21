@@ -316,17 +316,14 @@ div.overlay.menuopen {
 .menu nav.sub ul li a {
   font-weight: 400;
 }
-.lang {
+.menu .lang {
   margin-top: 40px;
 }
-.burger .lang {
-  margin-top: -18px;
-}
-.lang > div {
+.menu .lang > div {
   font-weight: 500;
   color: #858585;
 }
-.lang .switch {
+.menu .lang .switch {
   height: 31px;
   width: 85px;
   border: 1px solid black;
@@ -335,10 +332,10 @@ div.overlay.menuopen {
   position: relative;
   margin-top: 15px;
 }
-.lang .switch a {
+.menu .lang .switch a {
   color: inherit;
 }
-.lang .switch span {
+.menu .lang .switch span {
   font-weight: 400;
   line-height: 31px;
   font-size: 14px;
@@ -347,7 +344,7 @@ div.overlay.menuopen {
   display: inline-block;
   position: absolute;
 }
-.lang .switch span.active {
+.menu .lang .switch span.active {
   background: black;
   position: absolute;
   right: 0;
