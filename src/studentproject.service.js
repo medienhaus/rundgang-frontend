@@ -270,10 +270,10 @@ export class StudentprojectService {
           }
           this.coordiantesToLocation(content.split('-')[0])
           if (data.locations) {
-            data.locations.push(this.coordiantesToLocation(content.split('-')[0]))
+            data.locations.push(this.coordiantesToLocation(content))
           } else {
             data.locations = []
-            data.locations.push(this.coordiantesToLocation(content.split('-')[0]))
+            data.locations.push(this.coordiantesToLocation(content))
           }
         }
         if (entry.name === 'date') {
@@ -307,7 +307,11 @@ export class StudentprojectService {
   }
 
   coordiantesToLocation (coords) {
-    return locationData.find(location => location.coordinates.trim() === coords.trim())
+    const found = locationData.find(location => location.coordinates.trim() === coords.split('-')[0].trim())
+    if (found && coords.split('-')[1]) {
+      found.room = coords.split('-')[1]
+    }
+    return found
   }
 
   async get (id) {
