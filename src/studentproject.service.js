@@ -126,40 +126,40 @@ export class StudentprojectService {
         }
         const events = hierarchy.rooms.filter(room => room.name === 'events' && !room.name.startsWith('x_'))
         // const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
-        if (events.length < 1) return
-        const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
-
-        async function fetchContent (roomId) {
-          const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${roomId}/messages?limit=99&dir=b`, req)
-          const data = result.data
-          const htmlString = data.chunk.map(type => {
-            if (type.type === 'm.room.message' && type.content['m.new_content'] === undefined && type.redacted_because === undefined) {
-              return type.content.body
-            } else { return null }
-          }
-          ).filter(x => x !== null)
-          return htmlString
-        }
-
         const eventResult = [] // array for events
-        // @TODO one map too many
-        await Promise.all(eventHierarchy.rooms.map(async (event, index) => {
-          if (index === 0) return // we ignore the first result since its the event space itself
-          if (event.children_state.length > 0) { // if the space has children
-            const childrenResult = await Promise.all(event.children_state.map(async child => {
-              const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
-              return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
-                // we want to return an array of object with all information for the specific event
-                const content = await fetchContent(data.room_id)
-                return { name: data.name.substring(data.name.indexOf('_') + 1), content: content }
-              })))[0]
-            }))
-            eventResult.push(childrenResult)
-          } else { // otherwise we direcetly get the content of the room
-            const content = await fetchContent(event.room_id)
-            eventResult.push([{ name: event.name.substring(event.name.indexOf('_') + 1), content: content }])
+        if (events.length > 0) {
+          const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
+
+          async function fetchContent (roomId) {
+            const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${roomId}/messages?limit=99&dir=b`, req)
+            const data = result.data
+            const htmlString = data.chunk.map(type => {
+              if (type.type === 'm.room.message' && type.content['m.new_content'] === undefined && type.redacted_because === undefined) {
+                return type.content.body
+              } else { return null }
+            }
+            ).filter(x => x !== null)
+            return htmlString
           }
-        }))
+          // @TODO one map too many
+          await Promise.all(eventHierarchy.rooms.map(async (event, index) => {
+            if (index === 0) return // we ignore the first result since its the event space itself
+            if (event.children_state.length > 0) { // if the space has children
+              const childrenResult = await Promise.all(event.children_state.map(async child => {
+                const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
+                return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
+                  // we want to return an array of object with all information for the specific event
+                  const content = await fetchContent(data.room_id)
+                  return { name: data.name.substring(data.name.indexOf('_') + 1), content: content }
+                })))[0]
+              }))
+              eventResult.push(childrenResult)
+            } else { // otherwise we direcetly get the content of the room
+              const content = await fetchContent(event.room_id)
+              eventResult.push([{ name: event.name.substring(event.name.indexOf('_') + 1), content: content }])
+            }
+          }))
+        }
         // console.log(eventArray.filter(event => event))
 
         // fetch events
