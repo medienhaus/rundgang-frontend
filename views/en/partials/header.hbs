@@ -61,7 +61,7 @@
                     <li {{#if activePageIndex}}class="current"{{/if}}><a href="/en">Homepage</a></li>
                     <li {{#if activePageProgram}}class="current"{{/if}}><a href="/en/program">Program</a></li>
                     <li><a href="#">Locations</a></li>
-                    <li><a href="#">Event Calendar</a></li>
+                    <li {{#if activePageEvents}}class="current"{{/if}}><a href="/en/events">Event Calendar</a></li>
                     <li {{#if activePageAdvisoryServices}}class="current"{{/if}}><a href="/en/advisory-services">Advisory Services</a></li>
                 </ul>
             </nav>

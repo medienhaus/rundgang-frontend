@@ -61,7 +61,7 @@
                     <li {{#if activePageIndex}}class="current"{{/if}}><a href="/">Startseite</a></li>
                     <li {{#if activePageProgramm}}class="current"{{/if}}><a href="/programm">Programm</a></li>
                     <li><a href="#">Orte</a></li>
-                    <li><a href="#">Einzelveranstaltungen</a></li>
+                    <li {{#if activePageZeitplan}}class="current"{{/if}}><a href="/zeitplan">Zeitplan</a></li>
                     <li {{#if activePageBeratungsangebote}}class="current"{{/if}}><a href="/beratungsangebote">Beratungsangebote</a></li>
                 </ul>
             </nav>
