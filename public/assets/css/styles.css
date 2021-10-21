@@ -611,30 +611,23 @@ main.programm #filterline ul li.back {
   font-weight: 500;
   font-size: 14px;
   color: #858585;
-  margin-right: 10px;
+  margin-right: 6px;
 }
 main.programm #filterline ul li.back span {
-  background: black;
-  height: 26px;
-  border-radius: 60px;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  padding-left: 10px;
-  padding-right: 10px;
-  line-height: 26px;
-  margin-right: 4px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  box-sizing: border-box;
-  background-color: #858585;
-  display: inline-block;
   width: 26px;
-  padding-left: 8px;
-  transition: background-color 0.3s;
+  height: 26px;
+  display: inline-block;
+  background-image: url("../img/back.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: -7px;
+  margin-right: 5px;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+  cursor: pointer;
 }
 main.programm #filterline ul li.back span:hover {
-  background-color: black;
+  opacity: 1;
 }
 main.programm #filterline .level {
   display: none;
@@ -709,22 +702,27 @@ main.programm .projectswrap .projecttile .hoverinfo {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
   background-color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
   line-height: 19px;
   color: white;
   padding: 10px;
   box-sizing: border-box;
-  height: calc(100% - 60px);
   pointer-events: none;
   transition: opacity 0.3s;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 main.programm .projectswrap .projecttile .hoverinfo p {
   font-size: 16px;
   line-height: 19px;
   margin: 0;
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 main.programm .projectswrap .projecttile a:hover + .hoverinfo {
   opacity: 1;
@@ -733,7 +731,11 @@ main.programm .projectswrap .projecttile .image {
   background-color: #c7c7c7;
   position: relative;
   line-height: 0;
-  /*height: 200px;*/
+}
+main.programm .projectswrap .projecttile .image .flags {
+  position: absolute;
+  right: 3px;
+  top: 8px;
 }
 main.programm .projectswrap .projecttile .image .online {
   background: black;
@@ -750,10 +752,62 @@ main.programm .projectswrap .projecttile .image .online {
   cursor: pointer;
   box-sizing: border-box;
   display: inline-block;
-  position: absolute;
-  right: 3px;
-  top: 8px;
   background-color: #00C770;
+}
+main.programm .projectswrap .projecttile .image .live, main.programm .projectswrap .projecttile .image .livein {
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: inline-block;
+  background-color: #E4003A;
+}
+main.programm .projectswrap .projecttile .image .live {
+  padding-left: 22px;
+  position: relative;
+}
+main.programm .projectswrap .projecttile .image .live span {
+  background-color: white;
+  width: 6px;
+  height: 6px;
+  border-radius: 20px;
+  position: absolute;
+  display: inline-block;
+  top: 10px;
+  left: 10px;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+  animation-name: blink;
+  animation-direction: alternate-reverse;
+  animation-timing-function: linear;
+}
+main.programm .projectswrap .projecttile .image .livein span {
+  animation: 1s seconds infinite step-end;
+}
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.2;
+  }
+}
+@keyframes seconds {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 main.programm .projectswrap .projecttile .image img {
   width: 100%;
@@ -788,23 +842,35 @@ main.programm .projectswrap .projecttile a.blocklink {
   line-height: 35px;
   letter-spacing: -0.025em;
 }
-.singleproject .projectclose {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  right: 21px;
-  top: 85px;
-  cursor: pointer;
+.singleproject .back {
+  width: 26px;
+  height: 26px;
+  position: fixed;
+  left: 28px;
+  top: 70px;
+  background-image: url("../img/back.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-.singleproject .projectclose img {
-  width: 100%;
-  margin: 0;
+.singleproject .projectclose {
+  width: 26px;
+  height: 26px;
+  position: fixed;
+  right: 28px;
+  top: 70px;
+  background-image: url("../img/close.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: none;
 }
 .singleproject .tagbubble {
   margin-left: -2px;
 }
 .singleproject .students.tagbubble {
   margin-bottom: 40px;
+}
+.singleproject .students.tagbubble + p {
+  margin-bottom: 7px;
 }
 .singleproject .projectmain {
   width: 50%;
@@ -879,7 +945,7 @@ main.programm .projectswrap .projecttile a.blocklink {
 .singleproject .projectmain .bbb span.bbblink {
   display: inline-block;
   margin-top: 10px;
-  background: #8C78FF;
+  background: #E4003A;
   height: 26px;
   border-radius: 60px;
   color: white;
@@ -897,6 +963,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   font-size: 14px;
   font-weight: 500;
   color: #C4C4C4;
+  white-space: nowrap;
 }
 .singleproject .projectmain .bbb a {
   text-decoration: none;
@@ -980,6 +1047,9 @@ main.programm .projectswrap .projecttile a.blocklink {
   line-height: 19px;
   padding-bottom: 0;
 }
+.singleproject .eventinfo .tags {
+  margin-left: -2px;
+}
 .singleproject .eventinfo .tags ul {
   padding-left: 0;
 }
@@ -991,7 +1061,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   margin-bottom: 8px;
 }
 .singleproject .eventinfo .tags .stream, .singleproject .eventinfo .tags .conference {
-  background-color: #8C78FF;
+  background-color: #E4003A;
 }
 
 /* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
@@ -1048,7 +1118,7 @@ main.events .day .event .tags ul li.online {
   background-color: #00C770;
 }
 main.events .day .event .tags ul li.bbb {
-  background-color: #8C78FF;
+  background-color: #E4003A;
 }
 main.events .day .event:hover {
   background-color: #F1F1F1;

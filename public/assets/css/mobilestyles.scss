@@ -64,6 +64,18 @@
 	body.programm .projectswrap .projecttile{
 		width: calc(33% - 15px);
 	}
+	.singleproject .back{
+		display: none;
+	}
+	.singleproject .projectclose{
+		display: block;
+		top: 72px;
+		right: 26px;
+		z-index: 400;
+	}
+	.singleproject h2.projecttitle{
+		max-width: calc(100% - 40px);
+	}
 }
 
 @media only screen and (max-width: 940px) {
@@ -87,9 +99,6 @@
 	.singleproject .info{
 		box-sizing: border-box;
 		padding: 20px;
-	}
-	.singleproject .projectclose{
-		top: 0px;
 	}
 	body.start .choose ul li{
 		font-weight: 400;
@@ -149,10 +158,15 @@
 	body.programm #filterline ul li.back{
 		width: 100%;
 	}
-	body.programm #filterline ul li:not(.back){
-		margin-top: 6px;
-		margin-bottom: 7px;
+	body.programm #filterline ul li:not(.back),
+	body.programm #filterline ul li.back,
+	body.programm #filterline .selected > div{
+		margin-top: 5px;
+		margin-bottom: 6px;
 	}
+	body.programm #filterline ul li.back{
+			
+		}
 	.singleproject .eventinfo .time{
 		width: 100%;
 	}
@@ -160,6 +174,7 @@
 		width: 100%;
 		margin-top: 15px;
 	}
+	
 	.container{
 		width:100%;
 		border:0px solid red;
@@ -183,6 +198,39 @@
 	}
 	body.programm #filterline{
 		margin-top: 65px;
+	}
+	.singleproject h2.projecttitle,
+	.singleproject .projectmain h3{
+		font-size: 28px;
+	}
+	.singleproject h2.projecttitle{
+		margin-bottom: 10px;
+	}
+	.singleproject .projectclose{
+		right: 20px;
+	}
+	.singleproject .projectmain blockquote,
+	.singleproject .projectmain div.code{
+		padding: 10px;
+	}
+	
+	//** RÄNDER**/
+	header .topline,
+	body.programm #filterline,
+	body.programm .projectswrap,
+	body.start .choose,
+	body.start div.footer.onlymobile,
+	.menu,
+	.singleproject .projectmain, 
+	.singleproject .info{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.singleproject .projectclose{
+		right: 10px;
+	}
+	.singleproject .projectmain{
+		padding-top: 13px;
 	}
 }
 

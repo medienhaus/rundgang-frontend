@@ -58,6 +58,21 @@
   main.programm .projectswrap .projecttile {
     width: calc(33% - 15px);
   }
+
+  .singleproject .back {
+    display: none;
+  }
+
+  .singleproject .projectclose {
+    display: block;
+    top: 72px;
+    right: 26px;
+    z-index: 400;
+  }
+
+  .singleproject h2.projecttitle {
+    max-width: calc(100% - 40px);
+  }
 }
 @media only screen and (max-width: 940px) {
   main.start .choose div.footer ul li {
@@ -81,10 +96,6 @@
 .singleproject .info {
     box-sizing: border-box;
     padding: 20px;
-  }
-
-  .singleproject .projectclose {
-    top: 0px;
   }
 
   main.start .choose ul li {
@@ -153,9 +164,11 @@ main.events .day .event .tags {
     width: 100%;
   }
 
-  main.programm #filterline ul li:not(.back) {
-    margin-top: 6px;
-    margin-bottom: 7px;
+  main.programm #filterline ul li:not(.back),
+main.programm #filterline ul li.back,
+main.programm #filterline .selected > div {
+    margin-top: 5px;
+    margin-bottom: 6px;
   }
 
   .singleproject .eventinfo .time {
@@ -193,6 +206,44 @@ main.events .day .event .tags {
 
   main.programm #filterline {
     margin-top: 65px;
+  }
+
+  .singleproject h2.projecttitle,
+.singleproject .projectmain h3 {
+    font-size: 28px;
+  }
+
+  .singleproject h2.projecttitle {
+    margin-bottom: 10px;
+  }
+
+  .singleproject .projectclose {
+    right: 20px;
+  }
+
+  .singleproject .projectmain blockquote,
+.singleproject .projectmain div.code {
+    padding: 10px;
+  }
+
+  header .topline,
+main.programm #filterline,
+main.programm .projectswrap,
+main.start .choose,
+main.start div.footer.onlymobile,
+.menu,
+.singleproject .projectmain,
+.singleproject .info {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .singleproject .projectclose {
+    right: 10px;
+  }
+
+  .singleproject .projectmain {
+    padding-top: 13px;
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {

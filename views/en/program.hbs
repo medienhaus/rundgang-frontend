@@ -12,9 +12,11 @@
                         {{else}}
                             <div style="background: #ffd246; display: block; height: 160px; width: 100%"></div>
                         {{/if}}
-                        {{#unless location}}
-                            <div class="online">online exclusive</div>
-                        {{/unless}}
+                        <div class="flags">
+                            {{#unless location}}
+                                <div class="online">online exclusive</div>
+                            {{/unless}}
+                        </div>
                         <div class="hoverinfo">
                             <p>{{ topicEn }}</p>
                         </div>
