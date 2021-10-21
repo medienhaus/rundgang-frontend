@@ -1,4 +1,4 @@
-{{> header activePageProgramm=true }}
+{{> de/partials/header activePageProgramm=true }}
 
 <main class="programm">
     <hr>
@@ -6,30 +6,31 @@
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
                 <a href="/c/{{ id }}">
-                    <div class="image" style="height:342px;">
+                    <div class="image">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
+                        {{else}}
+                            <div style="background: #ffd246; display: block; height: 160px; width: 100%"></div>
                         {{/if}}
                         {{#unless location}}
-                            <div class="online">+ online</div>
+                            <div class="online">nur online</div>
                         {{/unless}}
+                        <div class="hoverinfo">
+                            <p>{{ topicDe }}</p>
+                        </div>
                     </div>
                     <div class="info">
                         <h2>{{ name }}</h2>
                         <div>
                             {{#each authors}}
-                                {{.}},
+                                {{.}}{{#greaterThan ../authors.length @index}}, {{/greaterThan}}
                             {{/each}}
                         </div>
                     </div>
                 </a>
-                <div class="hoverinfo">
-                    <h2>{{ name }}</h2>
-                    <p>{{ topicDe }}</p>
-                </div>
             </div>
         {{/each}}
     </div>
 </main>
 
-{{> footer }}
+{{> de/partials/footer }}

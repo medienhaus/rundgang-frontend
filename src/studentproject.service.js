@@ -8,7 +8,6 @@ import Handlebars from 'handlebars'
 import fs from 'fs'
 import { join } from 'path'
 import locationData from '../data/locationData.json'
-import { constant } from 'lodash'
 
 @Injectable()
 @Dependencies(ConfigService, HttpService)
@@ -35,7 +34,7 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
@@ -43,11 +42,13 @@ export class StudentprojectService {
         topicEn: topicEn,
         topicDe: topicDe,
         events: events,
-        thumbnail: thumbnail,
+        thumbnail: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail, 800, 800, 'scale') : '',
+        thumbnail_full_size: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail) : '',
         authors: authors,
         credit: credit,
         published: published,
         parent: parent,
+        parentSpaceId: parentSpaceId,
         children: {}
       }
     }
@@ -63,7 +64,7 @@ export class StudentprojectService {
       'institute',
       'semester']
 
-    async function scanForAndAddSpaceChildren (spaceId, path, parent) {
+    async function scanForAndAddSpaceChildren (spaceId, path, parent, parentSpaceId) {
       const stateEvents = await matrixClient.roomState(spaceId).catch(() => {})
 
       const metaEvent = _.find(stateEvents, { type: 'dev.medienhaus.meta' })
@@ -81,10 +82,6 @@ export class StudentprojectService {
 
       // robert
       const avatar = await matrixClient.getStateEvent(spaceId, 'm.room.avatar').catch(() => {})
-      let avatarUrl = ''
-      if (avatar) {
-        avatarUrl = await matrixClient.mxcUrlToHttp(avatar.url)
-      }
 
       const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId)
       const authorNames = []
@@ -143,6 +140,7 @@ export class StudentprojectService {
           ).filter(x => x !== null)
           return htmlString
         }
+
         const eventResult = [] // array for events
         // @TODO one map too many
         await Promise.all(eventHierarchy.rooms.map(async (event, index) => {
@@ -166,7 +164,7 @@ export class StudentprojectService {
 
         // fetch events
 
-        _.set(result, [spaceId], createSpaceObject(spaceId, spaceName, metaEvent, avatarUrl, authorNames, credit, published, topicEn, topicDe, eventResult, parent))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
@@ -180,11 +178,11 @@ export class StudentprojectService {
         if (event.room_id !== spaceId) continue
         // if (event.sender !== matrixClient.getUserId()) continue
 
-        await scanForAndAddSpaceChildren(event.state_key, [...path, spaceId, 'children'], spaceName)
+        await scanForAndAddSpaceChildren(event.state_key, [...path, spaceId, 'children'], spaceName, spaceId)
       }
     }
 
-    await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '')
+    await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
     this.studentprojects = result
 
@@ -314,8 +312,12 @@ export class StudentprojectService {
     return found
   }
 
-  async get (id) {
-    const { content, formattedContent } = await this.getContent(id, 'en')
+  getByContextSpaceIds (contextSpaceIds) {
+    return _.filter(this.studentprojects, project => contextSpaceIds.includes(project.parentSpaceId))
+  }
+
+  async get (id, language = 'en') {
+    const { content, formattedContent } = await this.getContent(id, language)
     return { ...this.studentprojects[id], content, formatted_content: formattedContent }
   }
 

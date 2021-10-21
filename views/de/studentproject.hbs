@@ -1,6 +1,6 @@
-{{> header }}
+{{> de/partials/header activePageStudentproject=true }}
 
-<main id="main" class="singleproject">
+<main class="singleproject">
     <div class="projectmain">
         <h2 class="projecttitle">{{ studentproject.name }}</h2>
 
@@ -15,12 +15,12 @@
             {{/if}}
         </div>
 
-        {{#if studentproject.thumbnail}}
-            <img src="{{ studentproject.thumbnail }}" alt="" />
+        {{#if studentproject.thumbnail_full_size}}
+            <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
         {{/if}}
 
-        {{#if studentproject.topicEn}}
-            <p>{{ studentproject.topicEn }}</p>
+        {{#if studentproject.topicDe}}
+            <p>{{ studentproject.topicDe }}</p>
         {{/if}}
 
         {{#each studentproject.content}}
@@ -29,7 +29,7 @@
     </div>
     <div class="info">
         {{#if studentproject.parent}}
-            <div class="label">Context</div>
+            <div class="label">Kontext</div>
             <div class="tagbubble">
                 <span>{{ studentproject.parent }}</span>
             </div>
@@ -37,4 +37,4 @@
     </div>
 </main>
 
-{{> footer }}
+{{> de/partials/footer }}

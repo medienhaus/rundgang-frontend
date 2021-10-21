@@ -45,6 +45,10 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  outline: 0;
+}
+
 /** HEADER **/
 header .topline {
   width: 100%;
@@ -131,6 +135,7 @@ strong, b {
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 .tagbubble span a {
   color: inherit;
@@ -186,11 +191,11 @@ div.overlay.menuopen {
 }
 
 .hamburger:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .hamburger.is-active:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .hamburger.is-active .hamburger-inner,
@@ -311,14 +316,17 @@ div.overlay.menuopen {
 .menu nav.sub ul li a {
   font-weight: 400;
 }
-.menu .lang {
+.lang {
   margin-top: 40px;
 }
-.menu .lang > div {
+.burger .lang {
+  margin-top: -18px;
+}
+.lang > div {
   font-weight: 500;
   color: #858585;
 }
-.menu .lang .switch {
+.lang .switch {
   height: 31px;
   width: 85px;
   border: 1px solid black;
@@ -327,7 +335,10 @@ div.overlay.menuopen {
   position: relative;
   margin-top: 15px;
 }
-.menu .lang .switch span {
+.lang .switch a {
+  color: inherit;
+}
+.lang .switch span {
   font-weight: 400;
   line-height: 31px;
   font-size: 14px;
@@ -336,7 +347,7 @@ div.overlay.menuopen {
   display: inline-block;
   position: absolute;
 }
-.menu .lang .switch span.active {
+.lang .switch span.active {
   background: black;
   position: absolute;
   right: 0;
@@ -384,28 +395,43 @@ main.start .choose ul li a {
   color: white;
   text-decoration: inherit;
 }
-main.start .choose div.footer {
+main.start div.footer {
   position: absolute;
   bottom: 10px;
   width: 50%;
 }
-main.start .choose div.footer ul li {
+main.start div.footer ul li {
   background-color: transparent;
   font-size: 14px;
   padding: 0px;
   padding-right: 12px;
   margin-bottom: 2px;
 }
-main.start .choose div.footer ul li a {
+main.start div.footer ul li a {
   color: #C4C4C4;
   transition: color 0.3s;
+  text-decoration: none;
 }
-main.start .choose div.footer ul li a:hover {
+main.start div.footer ul li a:hover {
   color: black;
+}
+main.start div.footer.onlymobile {
+  position: relative;
+  bottom: unset;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  display: none;
+}
+main.start div.footer.onlymobile ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
 }
 main.start .plakat {
   width: 50%;
-  background-color: #ffd246;
   height: calc(100vh - 55px);
 }
 main.start div.greypill {
@@ -419,6 +445,7 @@ main.start div.greypill {
   font-weight: 500;
   margin-top: 30px;
   height: 26px;
+  line-height: 26px;
 }
 main.start div.greypill a {
   color: black;
@@ -444,9 +471,10 @@ main.start div.rundang.greypill {
 .container {
   margin: 10px auto;
   margin-top: 70px;
-  padding-bottom: 10px;
+  padding-bottom: 7px;
   padding-left: 20px;
   padding-right: 20px;
+  overflow: hidden;
 }
 
 .address-lists .address, .tags li {
@@ -465,12 +493,24 @@ main.start div.rundang.greypill {
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
+  box-sizing: border-box;
   margin-bottom: 0;
   margin-right: 0;
+  font-weight: 500;
+  font-family: "BauPro";
+}
+
+.address-lists .address {
+  border: 1px solid black;
+  line-height: 24px;
 }
 
 .address:hover, .address.active {
-  background: #CF122E;
+  display: inline-block;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  line-height: 24px;
 }
 
 .location-info {
@@ -517,10 +557,23 @@ main.start div.rundang.greypill {
   display: none;
 }
 
+.leaflet-control {
+  z-index: 300 !important;
+}
+
+.leaflet-top, .leaflet-bottom {
+  z-index: 400 !important;
+}
+
+.leaflet-popup {
+  margin-bottom: 10px !important;
+}
+
 /* .leaflet-popup.leaflet-zoom-animated {
 	left: 25px !important;
 } */
 #map {
+  border-top: 1px solid #C4C4C4;
   width: 100%;
   height: calc(100vh - 152px);
 }
@@ -553,6 +606,7 @@ main.programm #filterline ul li:not(.back) {
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
+  box-sizing: border-box;
   background: black;
   color: white;
 }
@@ -575,6 +629,7 @@ main.programm #filterline ul li.back span {
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
+  box-sizing: border-box;
   background-color: #858585;
   display: inline-block;
   width: 26px;
@@ -603,10 +658,12 @@ main.programm #filterline .selected > div {
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
+  box-sizing: border-box;
   display: inline-block;
   border: 1px solid black;
   background-color: white;
   color: black;
+  line-height: 24px;
 }
 main.programm #filterline .selected > div > span {
   font-size: 24px;
@@ -656,7 +713,7 @@ main.programm .projectswrap .projecttile .hoverinfo {
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
   line-height: 19px;
   color: white;
@@ -665,17 +722,20 @@ main.programm .projectswrap .projecttile .hoverinfo {
   height: calc(100% - 60px);
   pointer-events: none;
   transition: opacity 0.3s;
+  height: 100%;
 }
 main.programm .projectswrap .projecttile .hoverinfo p {
   font-size: 16px;
   line-height: 19px;
+  margin: 0;
 }
 main.programm .projectswrap .projecttile a:hover + .hoverinfo {
   opacity: 1;
 }
 main.programm .projectswrap .projecttile .image {
-  background-color: white;
+  background-color: #c7c7c7;
   position: relative;
+  line-height: 0;
   /*height: 200px;*/
 }
 main.programm .projectswrap .projecttile .image .online {
@@ -691,6 +751,7 @@ main.programm .projectswrap .projecttile .image .online {
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
+  box-sizing: border-box;
   display: inline-block;
   position: absolute;
   right: 3px;
@@ -700,6 +761,10 @@ main.programm .projectswrap .projecttile .image .online {
 main.programm .projectswrap .projecttile .image img {
   width: 100%;
   height: auto;
+  opacity: 0.9;
+}
+main.programm .projectswrap .projecttile .image:hover .hoverinfo {
+  opacity: 1;
 }
 main.programm .projectswrap .projecttile.flexfix {
   height: 1px;
@@ -737,6 +802,9 @@ main.programm .projectswrap .projecttile a.blocklink {
 .singleproject .projectclose img {
   width: 100%;
   margin: 0;
+}
+.singleproject .tagbubble {
+  margin-left: -2px;
 }
 .singleproject .students.tagbubble {
   margin-bottom: 40px;
@@ -817,7 +885,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   background: #8C78FF;
   height: 26px;
   border-radius: 60px;
-  color: black;
+  color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
@@ -881,9 +949,10 @@ main.programm .projectswrap .projecttile a.blocklink {
 }
 .singleproject ul {
   list-style-position: outside;
-  list-style-type: "–  ";
+  list-style-type: "–  ";
   padding: 0;
   padding-left: 22px;
+  margin-bottom: 0;
 }
 .singleproject ol {
   list-style-position: outside;
@@ -930,6 +999,9 @@ main.programm .projectswrap .projecttile a.blocklink {
 
 /* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
    ============================= */
+main.events .eventswrap {
+  margin-top: 100px;
+}
 main.events .day {
   margin-top: 50px;
 }
@@ -1021,16 +1093,26 @@ main.start .plakat {
 
 @-moz-document url-prefix() {
   main.programm #filterline ul li:not(.back),
-  main.programm .projectswrap .projecttile .image .online,
-  .tagbubble span,
-  .address-lists .address, .tags li,
-  main.start div.greypill,
-  main.start .choose div.footer ul li,
-  .singleproject .projectmain .bbb span.bbblink {
+main.programm .projectswrap .projecttile .image .online,
+.tagbubble span,
+main.start div.greypill,
+main.start .choose div.footer ul li,
+.singleproject .projectmain .bbb span.bbblink {
     line-height: 28px;
+  }
+
+  .tags li, .address-lists .address {
+    line-height: 26px;
   }
 
   main.start .choose ul li {
     padding-top: 17px;
+  }
+}
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    header .topline {
+      border-top: 1px solid #C4C4C4;
+    }
   }
 }

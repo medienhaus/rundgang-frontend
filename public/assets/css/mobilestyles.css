@@ -1,7 +1,7 @@
 /** RESPONSIVE STYLES **/
 @media only screen and (min-width: 1600px) {
   .singleproject .projectmain,
-  .singleproject .info {
+.singleproject .info {
     max-width: 900px;
   }
 }
@@ -12,7 +12,7 @@
 }
 @media only screen and (max-width: 1400px) {
   .singleproject .projectmain,
-  .singleproject .info {
+.singleproject .info {
     width: 65%;
   }
 
@@ -22,13 +22,13 @@
 }
 @media only screen and (max-width: 1300px) {
   .singleproject .projectmain,
-  .singleproject .info {
+.singleproject .info {
     width: 70%;
   }
 }
 @media only screen and (max-width: 1200px) {
   .singleproject .projectmain,
-  .singleproject .info {
+.singleproject .info {
     width: 75%;
   }
 }
@@ -51,7 +51,7 @@
 }
 @media only screen and (max-width: 1000px) {
   .singleproject .projectmain,
-  .singleproject .info {
+.singleproject .info {
     width: 85%;
   }
 
@@ -72,12 +72,13 @@
 }
 @media only screen and (max-width: 800px) {
   .singleproject .projectmain,
-  .singleproject .info {
+.singleproject .info {
     position: relative;
     width: 100%;
   }
 
-  .singleproject .projectmain {
+  .singleproject .projectmain,
+.singleproject .info {
     box-sizing: border-box;
     padding: 20px;
   }
@@ -99,7 +100,7 @@
   }
 
   main.start .choose,
-  main.start .plakat {
+main.start .plakat {
     width: 100%;
     position: relative;
   }
@@ -119,8 +120,8 @@
   }
 
   main.events .day .event .time,
-  main.events .day .event h3,
-  main.events .day .event .tags {
+main.events .day .event h3,
+main.events .day .event .tags {
     width: 100%;
     padding: 0;
   }
@@ -128,6 +129,14 @@
   main.events .day .event .tags {
     margin-top: 5px;
     margin-bottom: 20px;
+  }
+
+  div.footer {
+    display: none;
+  }
+
+  main.start div.footer.onlymobile {
+    display: block;
   }
 }
 @media only screen and (max-width: 750px) {
@@ -157,6 +166,34 @@
     width: 100%;
     margin-top: 15px;
   }
+
+  .container {
+    width: 100%;
+    border: 0px solid red;
+    overflow-x: scroll;
+    float: left;
+    height: 45px;
+    margin-top: 18px;
+    margin-bottom: 0;
+  }
+
+  .address-lists {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-right: 20px;
+  }
+  .address-lists .location-name {
+    white-space: nowrap;
+  }
+
+  #map {
+    height: calc(100vh - 133px);
+  }
+
+  main.programm #filterline {
+    margin-top: 65px;
+  }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   main.start .choose ul li {
@@ -170,6 +207,28 @@
     width: 100%;
     background-size: 30%;
     background-position: 80% bottom;
+  }
+
+  .hamburger {
+    padding: 0;
+  }
+
+  .hamburger-box {
+    width: 25px;
+    height: 26px;
+  }
+
+  .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    height: 2px;
+    width: 25px;
+  }
+
+  .hamburger-inner::before {
+    top: -8px;
+  }
+
+  .hamburger-inner::after {
+    bottom: -8px;
   }
 }
 @media only screen and (max-width: 360px) {
