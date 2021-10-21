@@ -67,6 +67,12 @@ export class AppController {
     }
   }
 
+  @Get('/events')
+  @Render('events.hbs')
+  getAllEvents () {
+    return { eventsByDay: this.studentprojectService.getAllEventsByDay() }
+  }
+
   @Get('/c/:id')
   @Bind(Param())
   @Render('de/studentproject.hbs')
@@ -93,6 +99,16 @@ export class AppController {
   @Get('/api/structure')
   apiGetStructure () {
     return process.env.NODE_ENV === 'local' ? strukturDev : struktur
+  }
+
+  @Get('/api/events')
+  apiGetEvents () {
+    return this.studentprojectService.getAllEvents()
+  }
+
+  @Get('/api/events/day')
+  apiGetEventsByDay () {
+    return this.studentprojectService.getAllEventsByDay()
   }
 
   @Get('/api/:id')

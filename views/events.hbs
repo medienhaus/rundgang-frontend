@@ -1,0 +1,46 @@
+{{> header activePageProgramm=true }}
+
+<main class="events">
+    <hr>
+    <div class="eventsswrap">
+
+        {{#each eventsByDay  as |day|}}
+   
+            <div class="day">
+            <h2>{{@key}}</h2>
+            {{#each day as |event|}}
+                {{#each date as |time|}}
+                    <div class="event">
+                        <div class="time">{{time.time}}</div>
+                        <h3>{{event.name}} </h3>
+                        <div class="tags">
+                            <ul>
+                                {{#each ../locations as |location|}}
+                                    <li>
+                                        {{location.name}} 
+                                    </li>
+                                    <li>
+                                        {{location.room}} 
+                                    </li>
+                                {{/each}}
+                                {{#each ../bigBlueButton as |bbb|}}
+                                    <li class="bbb">
+                                        {{bbb}} 
+                                    </li>
+                                {{/each}}
+                                {{#each ../livestream as |livestream|}}
+                                    <li class="online">
+                                        {{livestream}} 
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                {{/each}}
+            {{/each}}
+            </div>
+        {{/each}}
+    </div>
+</main>
+
+{{> footer }}

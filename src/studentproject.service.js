@@ -7,6 +7,7 @@ import { HttpService } from '@nestjs/axios'
 import Handlebars from 'handlebars'
 import fs from 'fs'
 import { join } from 'path'
+import locationData from '../data/locationData.json'
 
 @Injectable()
 @Dependencies(ConfigService, HttpService)
@@ -33,14 +34,14 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, coordinates, parent, parentSpaceId) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
         type: metaEvent.content.type,
         topicEn: topicEn,
         topicDe: topicDe,
-        location: coordinates,
+        events: events,
         thumbnail: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail, 800, 800, 'scale') : '',
         thumbnail_full_size: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail) : '',
         authors: authors,
@@ -123,13 +124,14 @@ export class StudentprojectService {
           method: 'GET',
           headers: { Authorization: 'Bearer ' + configService.get('matrix.access_token') }
         }
-        const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
+        const events = hierarchy.rooms.filter(room => room.name === 'events' && !room.name.startsWith('x_'))
+        // const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
+        const eventResult = [] // array for events
+        if (events.length > 0) {
+          const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
 
-        let coordinates
-
-        if (location.length > 0) {
-          coordinates = await Promise.all(location.map(async loc => {
-            const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${loc.room_id}/messages?limit=99&dir=b`, req)
+          async function fetchContent (roomId) {
+            const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${roomId}/messages?limit=99&dir=b`, req)
             const data = result.data
             const htmlString = data.chunk.map(type => {
               if (type.type === 'm.room.message' && type.content['m.new_content'] === undefined && type.redacted_because === undefined) {
@@ -137,12 +139,32 @@ export class StudentprojectService {
               } else { return null }
             }
             ).filter(x => x !== null)
-
             return htmlString
+          }
+          // @TODO one map too many
+          await Promise.all(eventHierarchy.rooms.map(async (event, index) => {
+            if (index === 0) return // we ignore the first result since its the event space itself
+            if (event.children_state.length > 0) { // if the space has children
+              const childrenResult = await Promise.all(event.children_state.map(async child => {
+                const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
+                return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
+                  // we want to return an array of object with all information for the specific event
+                  const content = await fetchContent(data.room_id)
+                  return { name: data.name.substring(data.name.indexOf('_') + 1), content: content }
+                })))[0]
+              }))
+              eventResult.push(childrenResult)
+            } else { // otherwise we direcetly get the content of the room
+              const content = await fetchContent(event.room_id)
+              eventResult.push([{ name: event.name.substring(event.name.indexOf('_') + 1), content: content }])
+            }
           }))
         }
+        // console.log(eventArray.filter(event => event))
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.url, authorNames, credit, published, topicEn, topicDe, coordinates, parent, parentSpaceId))
+        // fetch events
+
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
@@ -169,6 +191,125 @@ export class StudentprojectService {
 
   getAll () {
     return this.studentprojects
+  }
+
+  getAllEvents () {
+    const events = {}
+    Object.entries(this.studentprojects).forEach(([k, c]) => {
+      if (c.events && c.events.length > 0) {
+        events[k] = c
+      }
+    })
+    return events
+  }
+
+  getAllEventsByDay () {
+    const days = {}
+    const events = this.getAllEvents()
+
+    Object.entries(events).forEach(([k, c]) => {
+      if (c.events && c.events.length > 0) {
+        // events[k] = c
+        c.events.forEach(event => {
+          event.forEach(entry => {
+            if (entry.name === 'date') {
+              entry.content.forEach(date => {
+                if (date.split(' ')[0] in days) {
+                  console.log('already exists append')
+                } else {
+                  console.log('does not exists add new and append')
+                  days[date.split(' ')[0]] = {}
+                }
+                days[date.split(' ')[0]][k] = {
+                  id: c.id,
+                  name: c.name,
+                  parent: c.parent,
+                  type: c.type
+                }
+              })
+            }
+          })
+        })
+        c.events.forEach(event => {
+          const tempData = {}
+          tempData.id = c.id
+          tempData.event = event
+          const infos = this.getEventInformation(tempData)
+          if (infos.date) {
+            infos.date.forEach(date => {
+              Object.entries(days).forEach(([infoK, infoC]) => {
+                if (infoK === date.day) {
+                  Object.entries(infoC).forEach(([eventK, eventC]) => {
+                    if (eventC.id === infos.id) {
+                      days[infoK][eventK] = { ...eventC, ...infos }
+                    }
+                  })
+                }
+              })
+            })
+          }
+        })
+      }
+    })
+    return days
+  }
+
+  getEventInformation (event) {
+    const data = {}
+    data.id = event.id
+    event.event.forEach(entry => {
+      entry.content.forEach(content => {
+        if (entry.name === 'location') {
+          if (data.coordinates) {
+            data.coordinates.push(content)
+          } else {
+            data.coordinates = []
+            data.coordinates.push(content)
+          }
+          this.coordiantesToLocation(content.split('-')[0])
+          if (data.locations) {
+            data.locations.push(this.coordiantesToLocation(content))
+          } else {
+            data.locations = []
+            data.locations.push(this.coordiantesToLocation(content))
+          }
+        }
+        if (entry.name === 'date') {
+          if (data.date) {
+            data.date.push({ day: content.split(' ')[0], time: content.split(' ')[1] })
+          } else {
+            data.date = []
+            data.date.push({ day: content.split(' ')[0], time: content.split(' ')[1] })
+          }
+        }
+        if (entry.name === 'bbb') {
+          if (data.bigBlueButton) {
+            data.bigBlueButton.push(content)
+          } else {
+            data.bigBlueButton = []
+            data.bigBlueButton.push(content)
+          }
+        }
+        if (entry.name === 'livestream') {
+          if (data.livestream) {
+            data.livestream.push(content)
+          } else {
+            data.livestream = []
+            data.livestream.push(content)
+          }
+        }
+      })
+    })
+
+    return data
+  }
+
+  coordiantesToLocation (coords) {
+    const found = locationData.find(location => location.coordinates.trim() === coords.split('-')[0].trim())
+    if (found && coords.split('-')[1]) {
+      found.room = coords.split('-')[1]
+    }
+    return found
   }
 
   getByContextSpaceIds (contextSpaceIds) {
