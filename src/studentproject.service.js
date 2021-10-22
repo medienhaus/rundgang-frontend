@@ -326,7 +326,7 @@ export class StudentprojectService {
 
   flattenTree (data) {
     Object.entries(data.treeSection).forEach(([k, c]) => {
-      const tmp = { id: c.id }
+      const tmp = { id: c.id, name: c.name }
       data.flattened.push(tmp)
       data.treeSection = c.child
       if (data.treeSection) {
@@ -340,14 +340,14 @@ export class StudentprojectService {
     let ret
     Object.entries(level).forEach(([k, c]) => {
       if (k === id) {
-        ret = { [parent]: { id: parent, child: { [id]: { id: id } } } }
+        ret = { [parent.id]: { id: parent.id, name: parent.name, child: { [id]: { id: id, name: c.name } } } }
       } else {
         if (c.children && Object.keys(c.children).length > 0) {
           Object.entries(c.children).forEach(([childK, childC]) => {
-            const r = this.searchLevel(id, { [childK]: childC }, k)
+            const r = this.searchLevel(id, { [childK]: childC }, { id: k, name: c.name })
             if (r) {
-              if (parent && Object.keys(parent).length > 0) {
-                ret = { [parent]: { id: parent, child: r } }
+              if (parent.id && Object.keys(parent.id).length > 0) {
+                ret = { [parent.id]: { id: parent.id, name: parent.name, child: r } }
               } else {
                 ret = r
               }
