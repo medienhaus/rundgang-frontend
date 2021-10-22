@@ -308,6 +308,52 @@ export class StudentprojectService {
     return found
   }
 
+
+  function findId(mainId, tree) {
+    Object.entries(tree).forEach(([k, c]) => {
+        const branch = searchLevel(mainId,{[k]:c},{})
+       console.log(flattenTree({treeSection:branch,flattened:[]}))
+    })
+}
+
+
+function flattenTree(data) {
+    Object.entries(data.treeSection).forEach(([k, c]) => {  
+        let tmp = {id:c.id}
+        data.flattened.push(tmp)
+       data.treeSection = c["child"]
+        if(data.treeSection) {
+            flattenTree(data)
+        } 
+    })
+    return data
+}
+
+
+
+function searchLevel(id, level, parent){
+    let ret
+    Object.entries(level).forEach(([k, c]) => {   
+        if(k=== id){  
+           ret = {[parent]:{id:parent,child:{[id]:{id: id}}}}
+        } else { 
+            if(c.children && Object.keys(c.children).length > 0) {
+                Object.entries(c.children).forEach(([childK, childC]) => {
+                     const r = searchLevel(id,{[childK]:childC}, k)    
+                     if(r) {
+                         if(parent && Object.keys(parent).length > 0 ) {
+                            ret = {[parent]:{id: parent,child: r}}      
+                        } else {
+                            ret = r
+                        }
+                     }
+                })
+            } 
+        }
+    })
+    return (ret)
+}
+
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, project => contextSpaceIds.includes(project.parentSpaceId))
   }
