@@ -46,7 +46,8 @@ body{
 }
 
 *{
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
 }
 
 a {
@@ -58,9 +59,14 @@ header{
 	.topline{
 		width: 100%;
 		height: 55px;
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
-		justify-content: space-between;
-		box-sizing: border-box;
+		-webkit-box-pack: justify;
+			-ms-flex-pack: justify;
+				justify-content: space-between;
+		-webkit-box-sizing: border-box;
+				box-sizing: border-box;
 		padding-bottom: 15px;
 		padding-top: 15px;
 		padding-left: 20px;
@@ -107,7 +113,8 @@ header{
 	margin-right: 4px;
 	margin-bottom: 6px;
 	cursor: pointer;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
 }
 
 /* GENERAL STYLES
@@ -155,13 +162,20 @@ strong,b{
 }
 
 .flexwrap{
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+	-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+	-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+			justify-content: space-between;
 }
 
 main{
 	margin-top: 55px;
+	-webkit-transition: opacity .2s;
+	-o-transition: opacity .2s;
 	transition: opacity .2s;
 }
 main.menuopen{
@@ -181,6 +195,8 @@ div.overlay{
 	pointer-events: none;
 	&.menuopen{
 		opacity: .2;
+		-webkit-transition: opacity .4s;
+		-o-transition: opacity .4s;
 		transition: opacity .4s;
 	}
 }
@@ -190,12 +206,19 @@ div.overlay{
    ============================= */
    
 .hamburger {
-	// padding: 15px 15px;
 	display: inline-block;
 	cursor: pointer;
+	-webkit-transition-property: opacity, -webkit-filter;
+	transition-property: opacity, -webkit-filter;
+	-o-transition-property: opacity, filter;
 	transition-property: opacity, filter;
-	transition-duration: 0.15s;
-	transition-timing-function: linear;
+	transition-property: opacity, filter, -webkit-filter;
+	-webkit-transition-duration: 0.15s;
+		 -o-transition-duration: 0.15s;
+			transition-duration: 0.15s;
+	-webkit-transition-timing-function: linear;
+		 -o-transition-timing-function: linear;
+			transition-timing-function: linear;
 	font: inherit;
 	color: inherit;
 	text-transform: none;
@@ -230,9 +253,17 @@ div.overlay{
 	background-color: #000;
 	border-radius: 0px;
 	position: absolute;
+	-webkit-transition-property: -webkit-transform;
+	transition-property: -webkit-transform;
+	-o-transition-property: transform;
 	transition-property: transform;
-	transition-duration: 0.15s;
-	transition-timing-function: ease;
+	transition-property: transform, -webkit-transform;
+	-webkit-transition-duration: 0.15s;
+		 -o-transition-duration: 0.15s;
+			transition-duration: 0.15s;
+	-webkit-transition-timing-function: ease;
+		 -o-transition-timing-function: ease;
+			transition-timing-function: ease;
 }
 .hamburger-inner::before, .hamburger-inner::after {
 	content: "";
@@ -245,29 +276,53 @@ div.overlay{
 	bottom: -10px;
 }
 .hamburger--squeeze .hamburger-inner {
-	transition-duration: 0.075s;
-	transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); 
+	-webkit-transition-duration: 0.075s;
+		 -o-transition-duration: 0.075s;
+			transition-duration: 0.075s;
+	-webkit-transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+		 -o-transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+			transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); 
 }
 .hamburger--squeeze .hamburger-inner::before {
+	-webkit-transition: top 0.075s 0.12s ease, opacity 0.075s ease;
+	-o-transition: top 0.075s 0.12s ease, opacity 0.075s ease;
 	transition: top 0.075s 0.12s ease, opacity 0.075s ease; 
 }
 .hamburger--squeeze .hamburger-inner::after {
-	transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19); 
+	-webkit-transition: bottom 0.075s 0.12s ease, -webkit-transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	transition: bottom 0.075s 0.12s ease, -webkit-transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	-o-transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19), -webkit-transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19); 
 }
 .hamburger--squeeze.is-active .hamburger-inner {
-	transform: rotate(45deg);
-	transition-delay: 0.12s;
-	transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); 
+	-webkit-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+	-webkit-transition-delay: 0.12s;
+		 -o-transition-delay: 0.12s;
+			transition-delay: 0.12s;
+	-webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+		 -o-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+			transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); 
 }
 .hamburger--squeeze.is-active .hamburger-inner::before {
 	top: 0;
 	opacity: 0;
+	-webkit-transition: top 0.075s ease, opacity 0.075s 0.12s ease;
+	-o-transition: top 0.075s ease, opacity 0.075s 0.12s ease;
 	transition: top 0.075s ease, opacity 0.075s 0.12s ease; 
 }
 .hamburger--squeeze.is-active .hamburger-inner::after {
 	bottom: 0;
-	transform: rotate(-90deg);
-	transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); 
+	-webkit-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+			transform: rotate(-90deg);
+	-webkit-transition: bottom 0.075s ease, -webkit-transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+	transition: bottom 0.075s ease, -webkit-transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+	-o-transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+	transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+	transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); 
 }
 
 .menu{
@@ -285,7 +340,10 @@ div.overlay{
 	top: 0;
 	padding: 20px;
 	padding-top: 55px;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+	-webkit-transition: all .5s;
+	-o-transition: all .5s;
 	transition: all .5s;
 	ul{
 		padding: 0!important;
@@ -326,7 +384,8 @@ div.overlay{
 			width: 85px;
 			border: 1px solid black;
 			border-radius: 60px;
-			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+					box-sizing: border-box;
 			position: relative;
 			margin-top: 15px;
 			a{
@@ -366,7 +425,8 @@ div.overlay{
 body.start{
 	.choose{
 		width: 50%;
-		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+				box-sizing: border-box;
 		padding: 20px;
 		padding-top: 20px;
 		.rundganginfo{
@@ -379,8 +439,11 @@ body.start{
 			padding: 0;
 			margin: 0;
 			margin-left: -6px;
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
-			flex-wrap: wrap;
+			-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
 			li{
 				font-weight: 500;
 				font-size: 41px;
@@ -411,6 +474,8 @@ body.start{
 				margin-bottom: 2px;
 				a{
 					color: $grey;
+					-webkit-transition: color .3s;
+					-o-transition: color .3s;
 					transition: color .3s;
 					text-decoration: none;
 					&:hover{
@@ -424,15 +489,20 @@ body.start{
 		position: relative;
 		bottom: unset;
 		width: 100%;
-		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+				box-sizing: border-box;
 		padding: 20px;
 		display: none;
 		ul{
 			list-style: none;
 			padding: 0;
 			margin: 0;
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
-			justify-content: space-between;
+			-webkit-box-pack: justify;
+				-ms-flex-pack: justify;
+					justify-content: space-between;
 		}
 	}
 	.plakat{
@@ -472,8 +542,11 @@ body.start{
    ============================= */
 
 .address-lists {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
 	gap: 10px;
 }
 
@@ -488,6 +561,8 @@ body.start{
 
 .address-lists .address, .tags li {
 	/* display: inline-flex; */
+	-webkit-transition: 100ms linear;
+	-o-transition: 100ms linear;
 	transition: 100ms linear;
 	display: inline-block;
 	@include pill();
@@ -516,13 +591,16 @@ body.start{
 
 .tags {
 	padding: 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
 	list-style: none;
 	gap: 10px;
 }
 
 .leaflet-popup-content-wrapper {
-	box-shadow: 0 3px 14px rgb(0 0 0 / 20%);
+	-webkit-box-shadow: 0 3px 14px rgb(0 0 0 / 20%);
+			box-shadow: 0 3px 14px rgb(0 0 0 / 20%);
 	border: 1px solid #C4C4C4;
 }
 
@@ -587,8 +665,11 @@ body.programm{
 		padding-right: 20px;
 		ul{
 			list-style: none;
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
-			flex-wrap: wrap;
+			-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
 			margin: 0;
 			padding: 0;
 			li:not(.back){
@@ -611,6 +692,8 @@ body.programm{
 					vertical-align: -7px;
 					margin-right: 5px;
 					opacity: .5;
+					-webkit-transition: opacity .3s;
+					-o-transition: opacity .3s;
 					transition: opacity .3s;
 					cursor: pointer;
 					&:hover{
@@ -648,6 +731,8 @@ body.programm{
 				}
 			}
 			ul.active {
+				display: -webkit-box;
+				display: -ms-flexbox;
 				display: flex;
 			}
 		}
@@ -664,9 +749,14 @@ body.programm{
 		margin-top: 20px;
 		padding-left: 20px;
 		padding-right: 20px;
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
+		-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+		-webkit-box-pack: justify;
+			-ms-flex-pack: justify;
+				justify-content: space-between;
 		.projecttile{
 			width: calc(25% - 15px);
 			position: relative;
@@ -691,8 +781,11 @@ body.programm{
 				line-height: 19px;
 				color: white;
 				padding: 10px;
-				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+						box-sizing: border-box;
 				pointer-events: none;
+				-webkit-transition: opacity .3s;
+				-o-transition: opacity .3s;
 				transition: opacity .3s;
 				height: 100%;
 				width: 100%;
@@ -735,23 +828,36 @@ body.programm{
 					position: relative;
 					span{
 						background-color: white;
-						width: 6px;
-						height: 6px;
+						width: 8px;
+						height: 8px;
 						border-radius: 20px;
 						position: absolute;
 						display: inline-block;
-						top: 10px;
+						top: 9px;
 						left: 10px;
-						animation-duration: .8s;
-						animation-iteration-count: infinite;
-						animation-name: blink;
+						-webkit-animation-duration: .8s;
+								animation-duration: .8s;
+						-webkit-animation-iteration-count: infinite;
+								animation-iteration-count: infinite;
+						-webkit-animation-name: blink;
+								animation-name: blink;
 						animation-direction: alternate-reverse;
-						animation-timing-function: linear;
+						-webkit-animation-timing-function: linear;
+								animation-timing-function: linear;
 					}
 				}
 				.livein{
 					span{
-						animation:1s seconds infinite step-end;
+						-webkit-animation:1s seconds infinite step-end;
+								animation:1s seconds infinite step-end;
+					}
+				}
+				@-webkit-keyframes blink {
+					from {
+						opacity: 1;
+					}
+					to {
+						opacity: .2;
 					}
 				}
 				@keyframes blink {
@@ -760,6 +866,14 @@ body.programm{
 					}
 					to {
 						opacity: .2;
+					}
+				}
+				@-webkit-keyframes seconds {
+					0% {
+						opacity: 1;
+					}
+					50% {
+						opacity: 0;
 					}
 				}
 				@keyframes seconds {
@@ -847,7 +961,8 @@ body.programm{
 		position: relative;
 		padding-top: 45px;
 		padding-bottom: 60px;
-		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+				box-sizing: border-box;
 		margin: 0 auto;
 		.thumb img{
 			margin-top: 0;
@@ -898,7 +1013,8 @@ body.programm{
 			margin-top: 40px;
 			margin-bottom: 40px;
 			padding: 25px;
-			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+					box-sizing: border-box;
 			font-size: 14px;
 			line-height: 20px;
 			font-family: "Lucida Console", Monaco, monospace;
@@ -953,7 +1069,8 @@ body.programm{
 			}
 		}
 		div.audio{
-			box-shadow: none;
+			-webkit-box-shadow: none;
+					box-shadow: none;
 			width: 100%;
 			padding-left: 0;
 			padding-right: 0;
@@ -973,7 +1090,8 @@ body.programm{
 		width: 50%;
 		position: relative;
 		padding-bottom: 100px;
-		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+				box-sizing: border-box;
 		margin: 0 auto;
 		div.label{
 			margin-bottom: 8px;
@@ -1003,8 +1121,11 @@ body.programm{
 			margin-bottom: 20px;
 		}
 		.flexbox{
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
-			flex-wrap: wrap;
+			-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
 		}
 		.time{
 			font-size: 15px;
@@ -1051,29 +1172,39 @@ body.events{
 			padding-left: 20px;
 		}
 		.event{
+			display: -webkit-box;
+			display: -ms-flexbox;
 			display: flex;
-			justify-content: flex-start;
-			align-items: center;
+			-webkit-box-pack: start;
+				-ms-flex-pack: start;
+					justify-content: flex-start;
+			-webkit-box-align: center;
+				-ms-flex-align: center;
+					align-items: center;
 			padding-right: 20px;
 			padding-left: 20px;
-			box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+					box-sizing: border-box;
 			padding-top: 7px;
 			padding-bottom: 7px;
 			.time{
 				width: 150px;
-				font-feature-settings: "tnum" 1;
+				-webkit-font-feature-settings: "tnum" 1;
+						font-feature-settings: "tnum" 1;
 				font-size: 15px;
 				font-weight: 500;
 			}
 			h3{
 				width: 550px;
-				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+						box-sizing: border-box;
 				padding-left: 25px;
 				font-size: 16px;
 			}
 			.tags{
 				padding-left: 80px;
-				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+						box-sizing: border-box;
 				width: calc(100% - 700px);
 				ul{
 					padding: 0;
@@ -1104,7 +1235,8 @@ body.events{
    ============================= */
 .smalltext{
 	max-width: 780px;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
 	padding: 20px;
 }
 
@@ -1113,7 +1245,8 @@ body.events{
 	margin: 0 auto;
 	padding-top: 60px;
 	padding-bottom: 60px;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
 	padding-left: 20px;
 	padding-right: 20px;
 	h2{
@@ -1153,7 +1286,7 @@ body.start .plakat{
 	}
 }
 
-@media not all and (min-resolution:.001dpcm)
+@media not all and (-webkit-min-device-pixel-ratio:0), not all and (-o-min-device-pixel-ratio:0/1), not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
 	header .topline{
 		border-top: 1px solid #C4C4C4;

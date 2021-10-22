@@ -94,6 +94,7 @@
 
   .singleproject .projectmain,
 .singleproject .info {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 20px;
   }
@@ -127,6 +128,7 @@ main.start .plakat {
   }
 
   main.events .day .event {
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
 
@@ -191,8 +193,14 @@ main.programm #filterline .selected > div {
   }
 
   .address-lists {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     padding-right: 20px;
   }
@@ -233,7 +241,9 @@ main.start .choose,
 main.start div.footer.onlymobile,
 .menu,
 .singleproject .projectmain,
-.singleproject .info {
+.singleproject .info,
+main.events .day h2,
+main.events .day .event {
     padding-left: 10px;
     padding-right: 10px;
   }

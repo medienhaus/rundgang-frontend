@@ -20,7 +20,8 @@
 	const secondLevel = document.querySelector('.level.second')
 	const secondLevelLists = secondLevel.querySelectorAll('ul');
 	const backButton = document.querySelectorAll('.level.second .back')
-	const selected = document.querySelector('.selected')
+	const selected = document.querySelector('.selected');
+	const projectsContainer = document.querySelector('.projectswrap');
 	
 	function activeFirstLevel() {
 		firstLevel.classList.add('active');
@@ -118,6 +119,9 @@
 		selectors: {
 			target: '[data-ref="item"]'
 		},
+		animation: {
+			queueLimit: 10,
+		}
 	});
 
 	function filterSlides() {
@@ -128,15 +132,20 @@
 
 		let selectors = [];
 		const orSelectors = [];
+		const queryStrings = {};
 
 		selectedControls.forEach((selectedControl) => {
 			const parent = selectedControl.getAttribute('data-parent-id')
+			
+			queryStrings[parent] = [];
 
 			const parents = document.querySelectorAll(`[data-parent-id=${parent}]`);
 			// it means there multiple toplevel selected
 			if (parents.length > 1) {
 				parents.forEach((p) => {
 					const filter = p.getAttribute('data-filter');
+					queryStrings[parent].push(filter);
+
 					if ( orSelectors.indexOf(`[data-${parent}="${filter}"]`) === -1 ) {
 						orSelectors.push(`[data-${parent}="${filter}"]`);
 					}
@@ -144,8 +153,26 @@
 			} else {
 				const filter = selectedControl.getAttribute('data-filter');
 				selectors.push(`[data-${parent}="${filter}"]`);
+				queryStrings[parent].push(filter);
 			}
 		});
+
+		if ( event.isTrusted ) {
+			let url = []; 
+			for(let queryString in queryStrings) { 
+				url.push(`${queryString}=${queryStrings[queryString].join(',')}`)  
+			}
+
+			const newQueryString = url.length ? '?' + url.join('&') : '';
+			let newURL = '';
+
+			if ( window.location.href.match(/\?/) ) {
+				newURL = window.location.href.replace(/\?[\w=,&#]*/, newQueryString);
+			} else {
+				newURL = window.location.href += newQueryString;
+			}
+			window.history.pushState({page: "filterpage"}, "filter page", newURL);
+		}
 
 		if (orSelectors.length && selectors.length) {
 			// merge all or selectors with and selectors
@@ -167,4 +194,37 @@
 		}
 
 	}
+
+	// check filters by url
+	const searchParams = [];
+	document.querySelectorAll('.level.first ul li').forEach((elm) => {
+		const filterId = elm.getAttribute('data-id');
+		if (filterId !== 'all') {
+			searchParams.push(filterId);
+		}
+	});
+
+	function filterByURL() {
+		const search = new URLSearchParams(window.location.search);
+		let searchParamFound = false;
+		document.querySelector('.selected.controls').innerHTML = '';
+		searchParams.forEach((parentValue, i) => {
+			if (search.has(parentValue)) {
+				searchParamFound = true;
+				const values = search.get(parentValue).split(',');
+				values.forEach((childValue, index) => {
+					document.querySelector(`#${parentValue} [data-toggle="${childValue}"]`).click();
+				})
+			}
+		});
+	}
+
+	filterByURL();
+	// show filters slides
+	projectsContainer.style.display = 'flex';
+
+	window.addEventListener('popstate', function (event) {
+		filterByURL();
+    });
+
 })();
