@@ -129,6 +129,22 @@ export class AppController {
     return this.studentprojectService.getAllEventsByDay()
   }
 
+  @Get('/api/:id/branch')
+  @Bind(Param())
+  apiGetBranchById ({ id }) {
+    const branch = this.studentprojectService.findId({ id }, this.apiGetStructure(), false)
+    if (!branch) throw new NotFoundException()
+    return branch
+  }
+
+  @Get('/api/:id/flatBranch')
+  @Bind(Param())
+  apiGetFlatBranchById ({ id }) {
+    const branch = this.studentprojectService.findId({ id }, this.apiGetStructure(), true)
+    if (!branch) throw new NotFoundException()
+    return branch
+  }
+
   @Get('/api/:id')
   @Bind(Param())
   async apiGetSingle ({ id }) {
