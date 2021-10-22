@@ -81,14 +81,7 @@ export class StudentprojectService {
       if (metaEvent.content.deleted) return
 
       // robert
-      const avatar = await matrixClient.getStateEvent(spaceId, 'm.room.avatar').catch(() => {})
-
-      const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId)
-      const authorNames = []
-
-      for (const [key, value] of Object.entries(joinedMembers.joined)) {
-        authorNames.push(value.display_name)
-      }
+      const avatar = _.find(stateEvents, { type: 'm.room.avatar' })
 
       let credit = ''
       let published = ''
@@ -99,7 +92,7 @@ export class StudentprojectService {
       if (metaEvent.content.published) {
         published = metaEvent.content.published
       } else {
-        const joinRule = await matrixClient.getStateEvent(spaceId, 'm.room.join_rules').catch(() => { }) // cleanup legacy
+        const joinRule = _.find(stateEvents, { type: 'm.room.join_rules' })
 
         published = joinRule.join_rule === 'invite' ? 'draft' : 'public'
       }
@@ -119,6 +112,12 @@ export class StudentprojectService {
         const topicEn = en[0].topic || undefined
         const de = hierarchy.rooms.filter(room => room.name === 'de')
         const topicDe = de[0].topic || undefined
+        // fetch authors aka. collaborators
+        const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId)
+        const authorNames = []
+        for (const [key, value] of Object.entries(joinedMembers.joined)) {
+          authorNames.push(value.display_name)
+        }
         // fetch location
         const req = {
           method: 'GET',
@@ -160,11 +159,10 @@ export class StudentprojectService {
             }
           }))
         }
-        // console.log(eventArray.filter(event => event))
 
         // fetch events
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
