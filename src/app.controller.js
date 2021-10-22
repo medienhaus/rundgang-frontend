@@ -107,7 +107,8 @@ export class AppController {
   async getStudentprojectEnglish ({ id }) {
     const project = await this.studentprojectService.get(id, 'en')
     if (!project) throw new NotFoundException()
-    return { languageSwitchLink: `/c/${id}`, studentproject: project }
+    const parentId = project.parentSpaceId
+    return { languageSwitchLink: `/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
   }
 
   @Get('/api/all')

@@ -31,7 +31,9 @@
         {{#if studentproject.parent}}
             <div class="label">Context</div>
             <div class="tagbubble">
-                <span>{{ studentproject.parent }}</span>
+                {{#each bubbles as |hirachyElement|}}
+                    <span>{{ hirachyElement.name }}</span>
+                {{/each}}
             </div>
         {{/if}}
     </div>
