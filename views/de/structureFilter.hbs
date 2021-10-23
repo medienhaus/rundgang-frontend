@@ -2,6 +2,7 @@
 
 <main class="programm">
     <hr>
+    <h2>Filter:</h2>
     <div>parents:
         <ul>
             {{#each filterParents as |parent|}}
@@ -9,7 +10,7 @@
             {{/each}}
         </ul>
     </div>
-    Filter:<h3> {{filterData.name}}</h3>
+    <h3> {{filterData.name}}</h3>
     <div> children:
         <ul>
             {{#each filterData.children as |child|}}

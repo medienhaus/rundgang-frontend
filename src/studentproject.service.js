@@ -315,6 +315,7 @@ export class StudentprojectService {
       if (flat) {
         const flatTree = this.flattenTree({ treeSection: branch, flattened: [] })
         if (flatTree && flatTree.flattened) {
+          flatTree.flattened.pop()
           ret = flatTree.flattened
         }
       } else {
