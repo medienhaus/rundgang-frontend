@@ -34,7 +34,7 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent, parentSpaceId) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, authorIds, credit, published, topicEn, topicDe, events, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
@@ -45,6 +45,7 @@ export class StudentprojectService {
         thumbnail: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail, 800, 800, 'scale') : '',
         thumbnail_full_size: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail) : '',
         authors: authors,
+        authorIds: authorIds,
         credit: credit,
         published: published,
         parent: parent,
@@ -115,8 +116,10 @@ export class StudentprojectService {
         // fetch authors aka. collaborators
         const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId).catch(() => {})
         const authorNames = []
+        const authorIds = []
         for (const [key, value] of Object.entries(joinedMembers?.joined)) {
           authorNames.push(value.display_name)
+          authorIds.push(key)
         }
         // fetch location
         const req = {
@@ -162,7 +165,7 @@ export class StudentprojectService {
 
         // fetch events
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, authorIds, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
