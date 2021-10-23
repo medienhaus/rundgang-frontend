@@ -119,7 +119,7 @@ export class StudentprojectService {
         const authorIds = []
         for (const [key, value] of Object.entries(joinedMembers?.joined)) {
           authorNames.push(value.display_name)
-          authorIds.push(key)
+          authorIds.push({ id: key, name: value.display_name })
         }
         // fetch location
         const req = {
@@ -462,7 +462,7 @@ export class StudentprojectService {
     Object.entries(this.studentprojects).forEach(([projectKey, projectContent]) => {
       if (projectContent.authorIds && projectContent.authorIds.length > 0) {
         projectContent.authorIds.forEach(userId => {
-          if (userId === id) {
+          if (userId.id === id) {
             ret[projectKey] = projectContent
           }
         })
