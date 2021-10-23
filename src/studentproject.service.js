@@ -113,9 +113,9 @@ export class StudentprojectService {
         const de = hierarchy.rooms.filter(room => room.name === 'de')
         const topicDe = de[0].topic || undefined
         // fetch authors aka. collaborators
-        const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId)
+        const joinedMembers = await matrixClient.getJoinedRoomMembers(spaceId).catch(() => {})
         const authorNames = []
-        for (const [key, value] of Object.entries(joinedMembers.joined)) {
+        for (const [key, value] of Object.entries(joinedMembers?.joined)) {
           authorNames.push(value.display_name)
         }
         // fetch location
