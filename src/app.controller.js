@@ -2,6 +2,7 @@ import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render }
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
+import { filter } from 'lodash'
 
 @Controller()
 @Dependencies(AppService, 'STUDENTPROJECT_PROVIDER')
@@ -116,8 +117,12 @@ export class AppController {
   @Render('de/structureFilter.hbs')
   getFilterByStructureElement ({ id }) {
     const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    const filterParents = this.studentprojectService.findId({ id }, this.apiGetStructure(), true)
+    if (filterParents && filterParents && filterParents.length > 0) {
+      filterParents.pop()
+    }
     if (!matchedStudentProjects) throw new NotFoundException()
-    return { languageSwitchLink: `/en/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+    return { languageSwitchLink: `/en/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: filterParents }
   }
 
   @Get('/en/filter/structure/:id')
@@ -125,9 +130,12 @@ export class AppController {
   @Render('de/structureFilter.hbs')
   getFilterByStructureElementEnglish ({ id }) {
     const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
-    console.log(this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()))
+    const filterParents = this.studentprojectService.findId({ id }, this.apiGetStructure(), true)
+    if (filterParents && filterParents && filterParents.length > 0) {
+      filterParents.pop()
+    }
     if (!matchedStudentProjects) throw new NotFoundException()
-    return { languageSwitchLink: `/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+    return { languageSwitchLink: `/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: filterParents }
   }
 
   @Get('/filter/user/:id')
