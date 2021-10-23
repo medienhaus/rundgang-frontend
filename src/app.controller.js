@@ -97,7 +97,8 @@ export class AppController {
   async getStudentproject ({ id }) {
     const project = await this.studentprojectService.get(id, 'de')
     if (!project) throw new NotFoundException()
-    return { languageSwitchLink: `/en/c/${id}`, studentproject: project }
+    const parentId = project.parentSpaceId
+    return { languageSwitchLink: `/en/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
   }
 
   @Get('/en/c/:id')
@@ -106,7 +107,8 @@ export class AppController {
   async getStudentprojectEnglish ({ id }) {
     const project = await this.studentprojectService.get(id, 'en')
     if (!project) throw new NotFoundException()
-    return { languageSwitchLink: `/c/${id}`, studentproject: project }
+    const parentId = project.parentSpaceId
+    return { languageSwitchLink: `/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
   }
 
   @Get('/api/all')
@@ -127,6 +129,22 @@ export class AppController {
   @Get('/api/events/day')
   apiGetEventsByDay () {
     return this.studentprojectService.getAllEventsByDay()
+  }
+
+  @Get('/api/struct/:id/branch')
+  @Bind(Param())
+  apiGetBranchById ({ id }) {
+    const branch = this.studentprojectService.findId({ id }, this.apiGetStructure(), false)
+    if (!branch) throw new NotFoundException()
+    return branch
+  }
+
+  @Get('/api/struct/:id/flatBranch')
+  @Bind(Param())
+  apiGetFlatBranchById ({ id }) {
+    const branch = this.studentprojectService.findId({ id }, this.apiGetStructure(), true)
+    if (!branch) throw new NotFoundException()
+    return branch
   }
 
   @Get('/api/:id')

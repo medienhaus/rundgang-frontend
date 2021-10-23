@@ -129,8 +129,8 @@ export class StudentprojectService {
         if (events.length > 0) {
           const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
 
-          async function fetchContent (roomId) {
-            const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${roomId}/messages?limit=99&dir=b`, req)
+          async function fetchContent (key) {
+            const result = await httpService.axiosRef(configService.get('matrix.homeserver_base_url') + `/_matrix/client/r0/rooms/${key}/messages?limit=99&dir=b`, req)
             const data = result.data
             const htmlString = data.chunk.map(type => {
               if (type.type === 'm.room.message' && type.content['m.new_content'] === undefined && type.redacted_because === undefined) {
@@ -193,9 +193,9 @@ export class StudentprojectService {
 
   getAllEvents () {
     const events = {}
-    Object.entries(this.studentprojects).forEach(([k, c]) => {
-      if (c.events && c.events.length > 0) {
-        events[k] = c
+    Object.entries(this.studentprojects).forEach(([key, content]) => {
+      if (content.events && content.events.length > 0) {
+        events[key] = content
       }
     })
     return events
@@ -205,10 +205,10 @@ export class StudentprojectService {
     const days = {}
     const events = this.getAllEvents()
 
-    Object.entries(events).forEach(([k, c]) => {
-      if (c.events && c.events.length > 0) {
-        // events[k] = c
-        c.events.forEach(event => {
+    Object.entries(events).forEach(([key, content]) => {
+      if (content.events && content.events.length > 0) {
+        // events[key] = content
+        content.events.forEach(event => {
           event.forEach(entry => {
             if (entry.name === 'date') {
               entry.content.forEach(date => {
@@ -216,19 +216,19 @@ export class StudentprojectService {
                 } else {
                   days[date.split(' ')[0]] = {}
                 }
-                days[date.split(' ')[0]][k] = {
-                  id: c.id,
-                  name: c.name,
-                  parent: c.parent,
-                  type: c.type
+                days[date.split(' ')[0]][key] = {
+                  id: content.id,
+                  name: content.name,
+                  parent: content.parent,
+                  type: content.type
                 }
               })
             }
           })
         })
-        c.events.forEach(event => {
+        content.events.forEach(event => {
           const tempData = {}
-          tempData.id = c.id
+          tempData.id = content.id
           tempData.event = event
           const infos = this.getEventInformation(tempData)
           if (infos.date) {
@@ -308,8 +308,59 @@ export class StudentprojectService {
     return found
   }
 
+  findId (mainId, tree, flat) {
+    let ret
+    Object.entries(tree).forEach(([key, content]) => {
+      const branch = this.searchLevel(mainId.id, { [key]: content }, {})
+      if (flat) {
+        const flatTree = this.flattenTree({ treeSection: branch, flattened: [] })
+        if (flatTree && flatTree.flattened) {
+          ret = flatTree.flattened
+        }
+      } else {
+        ret = branch
+      }
+    })
+    return ret
+  }
+
+  flattenTree (data) {
+    Object.entries(data.treeSection).forEach(([key, content]) => {
+      const tmp = { id: content.id, name: content.name }
+      data.flattened.push(tmp)
+      data.treeSection = content.child
+      if (data.treeSection) {
+        this.flattenTree(data)
+      }
+    })
+    return data
+  }
+
+  searchLevel (id, level, parent) {
+    let ret
+    Object.entries(level).forEach(([key, content]) => {
+      if (key === id) {
+        ret = { [parent.id]: { id: parent.id, name: parent.name, child: { [id]: { id: id, name: content.name } } } }
+      } else {
+        if (content.children && Object.keys(content.children).length > 0) {
+          Object.entries(content.children).forEach(([childK, childC]) => {
+            const r = this.searchLevel(id, { [childK]: childC }, { id: key, name: content.name })
+            if (r) {
+              if (parent.id && Object.keys(parent.id).length > 0) {
+                ret = { [parent.id]: { id: parent.id, name: parent.name, child: r } }
+              } else {
+                ret = r
+              }
+            }
+          })
+        }
+      }
+    })
+    return (ret)
+  }
+
   getByContextSpaceIds (contextSpaceIds) {
-    return _.filter(this.studentprojects, project => contextSpaceIds.includes(project.parentSpaceId))
+    return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
 
   async get (id, language = 'en') {
