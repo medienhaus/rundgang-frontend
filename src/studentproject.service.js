@@ -442,6 +442,20 @@ export class StudentprojectService {
     return ret
   }
 
+  getProjectsByUserId (id) {
+    const ret = {}
+    Object.entries(this.studentprojects).forEach(([projectKey, projectContent]) => {
+      if (projectContent.authorIds && projectContent.authorIds.length > 0) {
+        projectContent.authorIds.forEach(userId => {
+          if (userId === id) {
+            ret[projectKey] = projectContent
+          }
+        })
+      }
+    })
+    return ret
+  }
+
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
