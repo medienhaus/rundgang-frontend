@@ -360,15 +360,62 @@ export class StudentprojectService {
   }
 
   getProjectsByLevel (levelId, tree, onlyCurrentLevel) {
+    let matchingProjects = {}
+    if (onlyCurrentLevel) {
+      Object.entries(this.studentprojects).forEach(([key, content]) => {
+        if (content.parentSpaceId === levelId.id) {
+          console.log(content.parentSpaceId)
+          matchingProjects[key] = content
+        }
+      })
+    } else {
+      matchingProjects = { ...this.collectingProjectsFromCollectedChildren(levelId, tree) }
+    }
+    return matchingProjects
+  }
+
+  collectingProjectsFromCollectedChildren (entryId, tree) {
     const matchingProjects = {}
-    Object.entries(this.studentprojects).forEach(([key, content]) => {
-      console.log()
-      if (content.parentSpaceId === levelId.id) {
-        console.log(content.parentSpaceId)
-        matchingProjects[key] = content
-      }
+    Object.entries(tree).forEach(([key, content]) => {
+      const collectedChildren = this.searchLevelforAllChildren(entryId.id, { [key]: content })
+      Object.entries(collectedChildren).forEach(([childrenKey, childrenContent]) => {
+        Object.entries(this.studentprojects).forEach(([projectKey, projectContent]) => {
+          if (projectContent.parentSpaceId === childrenKey) {
+            matchingProjects[projectKey] = projectContent
+          }
+        })
+      })
     })
     return matchingProjects
+  }
+
+  searchLevelforAllChildren (id, level) {
+    let ret
+    Object.entries(level).forEach(([key, content]) => {
+      if (key === id) {
+        const foundChildrenInTreeSection = this.collectingChildrenFromEntryPoint(content, {})
+        ret = { ...foundChildrenInTreeSection }
+      } else {
+        if (content.children && Object.keys(content.children).length > 0) {
+          Object.entries(content.children).forEach(([childK, childC]) => {
+            const res = this.searchLevelforAllChildren(id, { [childK]: childC })
+            if (res)ret = res
+          })
+        }
+      }
+    })
+    return (ret)
+  }
+
+  collectingChildrenFromEntryPoint (treeSection, foundChildren) {
+    foundChildren[treeSection.id] = { id: treeSection.id, name: treeSection.name }
+    if (treeSection.children && Object.keys(treeSection.children).length > 0) {
+      Object.entries(treeSection.children).forEach(([key, content]) => {
+        const dataFromNewLevel = this.collectingChildrenFromEntryPoint(content, foundChildren)
+        foundChildren = { ...foundChildren, ...dataFromNewLevel }
+      })
+    }
+    return foundChildren
   }
 
   getByContextSpaceIds (contextSpaceIds) {

@@ -155,6 +155,14 @@ export class AppController {
     return projects
   }
 
+  @Get('/api/struct/:id/projects/withChildLevels')
+  @Bind(Param())
+  apiGetProjectsByLevelWithChildLevel ({ id }) {
+    const projects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    if (!projects) throw new NotFoundException()
+    return projects
+  }
+
   @Get('/api/:id')
   @Bind(Param())
   async apiGetSingle ({ id }) {
