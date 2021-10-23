@@ -445,6 +445,18 @@ export class StudentprojectService {
     return ret
   }
 
+  async getUserDataByUserId (id) {
+    const displayNameRequest = await (this.httpService.axiosRef(this.configService.get('matrix.homeserver_base_url') + '/_matrix/client/r0/profile/' + id.id + '/displayname', {
+      method: 'GET'
+    }
+    ))
+
+    const ret = { id: id.id }
+    ret.projects = this.getProjectsByUserId(id.id)
+    if (displayNameRequest && displayNameRequest.data) ret.name = displayNameRequest.data.displayname
+    return ret
+  }
+
   getProjectsByUserId (id) {
     const ret = {}
     Object.entries(this.studentprojects).forEach(([projectKey, projectContent]) => {

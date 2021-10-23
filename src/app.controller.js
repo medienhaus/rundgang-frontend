@@ -184,6 +184,14 @@ export class AppController {
     return projects
   }
 
+  @Get('/api/user/:id/')
+  @Bind(Param())
+  apiGetUserDataByUserId ({ id }) {
+    const userdata = this.studentprojectService.getUserDataByUserId({ id })
+    if (!userdata) throw new NotFoundException()
+    return userdata
+  }
+
   @Get('/api/:id')
   @Bind(Param())
   async apiGetSingle ({ id }) {
