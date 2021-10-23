@@ -2,6 +2,21 @@
 
 <main class="programm">
     <hr>
+    <div>parents:
+        <ul>
+            {{#each filterParents as |parent|}}
+           <a href="/filter/structure/{{parent.id}}"> <li>{{parent.name}}</li></a>
+            {{/each}}
+        </ul>
+    </div>
+    Filter:<h3> {{filterData.name}}</h3>
+    <div> children:
+        <ul>
+            {{#each filterData.children as |child|}}
+            <a href="/filter/structure/{{child.id}}"><li>{{child.name}}</li></a>
+            {{/each}}
+        </ul>
+    </div>
     <div class="projectswrap">
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">

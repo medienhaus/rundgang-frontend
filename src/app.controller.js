@@ -111,22 +111,23 @@ export class AppController {
     return { languageSwitchLink: `/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
   }
 
-  @Get('/filter/:id')
+  @Get('/filter/structure/:id')
   @Bind(Param())
   @Render('de/structureFilter.hbs')
   getFilterByStructureElement ({ id }) {
     const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
     if (!matchedStudentProjects) throw new NotFoundException()
-    return { languageSwitchLink: `/en/filter/${id}`, studentprojects: matchedStudentProjects }
+    return { languageSwitchLink: `/en/filter/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
   }
 
-  @Get('/en/filter/:id')
+  @Get('/en/filter/structure/:id')
   @Bind(Param())
   @Render('de/structureFilter.hbs')
   getFilterByStructureElementEnglish ({ id }) {
     const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    console.log(this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()))
     if (!matchedStudentProjects) throw new NotFoundException()
-    return { languageSwitchLink: `/filter/${id}`, studentprojects: matchedStudentProjects }
+    return { languageSwitchLink: `/filter/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
   }
 
   // --------REST API's---------- //

@@ -419,6 +419,10 @@ export class StudentprojectService {
   }
 
   getStructureElementById (id, tree) {
+    return this.getStructureElementByIdFunction(id.id, tree)
+  }
+
+  getStructureElementByIdFunction (id, tree) {
     let ret
     Object.entries(tree).forEach(([key, content]) => {
       if (key === id) {
@@ -426,7 +430,7 @@ export class StudentprojectService {
       } else {
         if (content.children && Object.keys(content.children).length > 0) {
           Object.entries(content.children).forEach(([childKey, childContent]) => {
-            const res = this.getStructureElementById(id, { [childKey]: childContent })
+            const res = this.getStructureElementByIdFunction(id, { [childKey]: childContent })
             if (res) {
               ret = res
             }
