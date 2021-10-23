@@ -1,4 +1,4 @@
-import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render } from '@nestjs/common'
+import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render, Response } from '@nestjs/common'
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
@@ -92,23 +92,33 @@ export class AppController {
   }
 
   @Get('/c/:id')
-  @Bind(Param())
-  @Render('de/studentproject.hbs')
-  async getStudentproject ({ id }) {
+  @Bind(Response(), Param())
+  async getStudentproject (res, { id }) {
     const project = await this.studentprojectService.get(id, 'de')
     if (!project) throw new NotFoundException()
-    const parentId = project.parentSpaceId
-    return { languageSwitchLink: `/en/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
+    // If there's no German content for this project redirect to the English version
+    if (project.formatted_content === '' && !project.topicDe) return res.redirect(`/en/c/${id}`)
+
+    return res.render('de/studentproject.hbs', {
+      languageSwitchLink: `/en/c/${id}`,
+      studentproject: project,
+      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+    })
   }
 
   @Get('/en/c/:id')
-  @Bind(Param())
-  @Render('en/studentproject.hbs')
-  async getStudentprojectEnglish ({ id }) {
+  @Bind(Response(), Param())
+  async getStudentprojectEnglish (res, { id }) {
     const project = await this.studentprojectService.get(id, 'en')
     if (!project) throw new NotFoundException()
-    const parentId = project.parentSpaceId
-    return { languageSwitchLink: `/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
+    // If there's no English content for this project redirect to the German version
+    if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
+
+    return res.render('en/studentproject.hbs', {
+      languageSwitchLink: `/c/${id}`,
+      studentproject: project,
+      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+    })
   }
 
   @Get('/api/all')
