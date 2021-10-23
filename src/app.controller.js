@@ -111,6 +111,26 @@ export class AppController {
     return { languageSwitchLink: `/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
   }
 
+  @Get('/filter/:id')
+  @Bind(Param())
+  @Render('de/structureFilter.hbs')
+  getFilterByStructureElement ({ id }) {
+    const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    if (!matchedStudentProjects) throw new NotFoundException()
+    return { languageSwitchLink: `/en/filter/${id}`, studentprojects: matchedStudentProjects }
+  }
+
+  @Get('/en/filter/:id')
+  @Bind(Param())
+  @Render('de/structureFilter.hbs')
+  getFilterByStructureElementEnglish ({ id }) {
+    const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    if (!matchedStudentProjects) throw new NotFoundException()
+    return { languageSwitchLink: `/filter/${id}`, studentprojects: matchedStudentProjects }
+  }
+
+  // --------REST API's---------- //
+
   @Get('/api/all')
   apiGetAll () {
     return this.studentprojectService.getAll()
