@@ -193,9 +193,9 @@ export class StudentprojectService {
 
   getAllEvents () {
     const events = {}
-    Object.entries(this.studentprojects).forEach(([k, c]) => {
-      if (c.events && c.events.length > 0) {
-        events[k] = c
+    Object.entries(this.studentprojects).forEach(([roomId, project]) => {
+      if (project.events && project.events.length > 0) {
+        events[roomId] = project
       }
     })
     return events
@@ -205,10 +205,10 @@ export class StudentprojectService {
     const days = {}
     const events = this.getAllEvents()
 
-    Object.entries(events).forEach(([k, c]) => {
-      if (c.events && c.events.length > 0) {
-        // events[k] = c
-        c.events.forEach(event => {
+    Object.entries(events).forEach(([roomId, project]) => {
+      if (project.events && project.events.length > 0) {
+        // events[roomId] = project
+        project.events.forEach(event => {
           event.forEach(entry => {
             if (entry.name === 'date') {
               entry.content.forEach(date => {
@@ -216,19 +216,19 @@ export class StudentprojectService {
                 } else {
                   days[date.split(' ')[0]] = {}
                 }
-                days[date.split(' ')[0]][k] = {
-                  id: c.id,
-                  name: c.name,
-                  parent: c.parent,
-                  type: c.type
+                days[date.split(' ')[0]][roomId] = {
+                  id: project.id,
+                  name: project.name,
+                  parent: project.parent,
+                  type: project.type
                 }
               })
             }
           })
         })
-        c.events.forEach(event => {
+        project.events.forEach(event => {
           const tempData = {}
-          tempData.id = c.id
+          tempData.id = project.id
           tempData.event = event
           const infos = this.getEventInformation(tempData)
           if (infos.date) {
@@ -310,8 +310,8 @@ export class StudentprojectService {
 
   findId (mainId, tree, flat) {
     let ret
-    Object.entries(tree).forEach(([k, c]) => {
-      const branch = this.searchLevel(mainId.id, { [k]: c }, {})
+    Object.entries(tree).forEach(([roomId, project]) => {
+      const branch = this.searchLevel(mainId.id, { [roomId]: project }, {})
       if (flat) {
         const flatTree = this.flattenTree({ treeSection: branch, flattened: [] })
         if (flatTree && flatTree.flattened) {
@@ -325,10 +325,10 @@ export class StudentprojectService {
   }
 
   flattenTree (data) {
-    Object.entries(data.treeSection).forEach(([k, c]) => {
-      const tmp = { id: c.id, name: c.name }
+    Object.entries(data.treeSection).forEach(([roomId, project]) => {
+      const tmp = { id: project.id, name: project.name }
       data.flattened.push(tmp)
-      data.treeSection = c.child
+      data.treeSection = project.child
       if (data.treeSection) {
         this.flattenTree(data)
       }
@@ -338,13 +338,13 @@ export class StudentprojectService {
 
   searchLevel (id, level, parent) {
     let ret
-    Object.entries(level).forEach(([k, c]) => {
-      if (k === id) {
-        ret = { [parent.id]: { id: parent.id, name: parent.name, child: { [id]: { id: id, name: c.name } } } }
+    Object.entries(level).forEach(([roomId, project]) => {
+      if (roomId === id) {
+        ret = { [parent.id]: { id: parent.id, name: parent.name, child: { [id]: { id: id, name: project.name } } } }
       } else {
-        if (c.children && Object.keys(c.children).length > 0) {
-          Object.entries(c.children).forEach(([childK, childC]) => {
-            const r = this.searchLevel(id, { [childK]: childC }, { id: k, name: c.name })
+        if (project.children && Object.keys(project.children).length > 0) {
+          Object.entries(project.children).forEach(([childK, childC]) => {
+            const r = this.searchLevel(id, { [childK]: childC }, { id: roomId, name: project.name })
             if (r) {
               if (parent.id && Object.keys(parent.id).length > 0) {
                 ret = { [parent.id]: { id: parent.id, name: parent.name, child: r } }
