@@ -117,7 +117,7 @@ export class AppController {
   getFilterByStructureElement ({ id }) {
     const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
     if (!matchedStudentProjects) throw new NotFoundException()
-    return { languageSwitchLink: `/en/filter/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+    return { languageSwitchLink: `/en/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
   }
 
   @Get('/en/filter/structure/:id')
@@ -127,7 +127,25 @@ export class AppController {
     const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
     console.log(this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()))
     if (!matchedStudentProjects) throw new NotFoundException()
-    return { languageSwitchLink: `/filter/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+    return { languageSwitchLink: `/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+  }
+
+  @Get('/filter/user/:id')
+  @Bind(Param())
+  @Render('de/userFilter.hbs')
+  async getFilterByUserId ({ id }) {
+    const userData = await this.studentprojectService.getUserDataByUserId({ id })
+    if (!userData) throw new NotFoundException()
+    return { languageSwitchLink: `/en/filter/user/${id}`, userData: userData }
+  }
+
+  @Get('/en/filter/user/:id')
+  @Bind(Param())
+  @Render('de/userFilter.hbs')
+  async getFilterByUserIdEnglish ({ id }) {
+    const userData = await this.studentprojectService.getUserDataByUserId({ id })
+    if (!userData) throw new NotFoundException()
+    return { languageSwitchLink: `/filter/user/${id}`, userData: userData }
   }
 
   // --------REST API's---------- //
