@@ -359,6 +359,18 @@ export class StudentprojectService {
     return (ret)
   }
 
+  getProjectsByLevel (levelId, tree, onlyCurrentLevel) {
+    const matchingProjects = {}
+    Object.entries(this.studentprojects).forEach(([key, content]) => {
+      console.log()
+      if (content.parentSpaceId === levelId.id) {
+        console.log(content.parentSpaceId)
+        matchingProjects[key] = content
+      }
+    })
+    return matchingProjects
+  }
+
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
