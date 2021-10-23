@@ -2,7 +2,7 @@
 const strukturDev = {
   "!ijJyXjLNqgeJkRerIG:dev.medienhaus.udk-berlin.de": {
     "id": "!ijJyXjLNqgeJkRerIG:dev.medienhaus.udk-berlin.de",
-    "name": "sose2021",
+    "name": "Rundgang 2021",
     "type": "semester",
     "children": {
       "!PQjOBeOlFGvcYyaPIe:dev.medienhaus.udk-berlin.de": {
