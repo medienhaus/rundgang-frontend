@@ -1266,6 +1266,10 @@ main.events .day .event .tags ul li {
   margin-bottom: 6px;
   font-weight: 500;
 }
+main.events .day .event .tags ul li a {
+  color: inherit;
+  text-decoration: none;
+}
 main.events .day .event .tags ul li.online {
   background-color: #00C770;
 }
