@@ -418,6 +418,64 @@ export class StudentprojectService {
     return foundChildren
   }
 
+  bringingOrderToEventsAndSanitize (data) { // function can be trashed after rundgang. Not generalizable at all, just to fetch deprecated user input.
+    const ret = {
+      '2021-10-28': data['2021-10-28'],
+      '2021-10-29': data['2021-10-29'],
+      '2021-10-30': data['2021-10-30'],
+      '2021-10-31': data['2021-10-31']
+    }
+    Object.entries(data).forEach(([key, content]) => {
+      switch (key) {
+        case '29.10.2021-':
+          ret['2021-10-29'] = { ...ret['2021-10-29'], ...content }
+          break
+        case '29.10.2021-31.10.2021':
+          ret['2021-10-29'] = { ...ret['2021-10-29'], ...content }
+          ret['2021-10-30'] = { ...ret['2021-10-30'], ...content }
+          ret['2021-10-31'] = { ...ret['2021-10-31'], ...content }
+          break
+        case '29.10.2021':
+          ret['2021-10-29'] = { ...ret['2021-10-29'], ...content }
+          break
+        case '31.10.21':
+          ret['2021-10-31'] = { ...ret['2021-10-31'], ...content }
+          break
+        case '30.10.2021':
+          ret['2021-10-30'] = { ...ret['2021-10-30'], ...content }
+          break
+        default:
+          break
+      }
+    })
+    Object.entries(ret).forEach(([dayKey, dayContent]) => {
+      if (!dayContent) {
+        delete ret[dayKey]
+      }
+    })
+    Object.entries(ret).forEach(([dayKey, dayContent]) => {
+      Object.entries(dayContent).forEach(([eventKey, eventContent]) => {
+        if (eventContent.date) {
+          eventContent.date.forEach(date => {
+            if (date.time.length === 5) {
+              if (date.time[2] !== ':') {
+                const d = date.time.replace('-', ':')
+                date.time = d
+              }
+              if (/^-?\d+$/.test(date.time.substring(0, 1)) && /^-?\d+$/.test(date.time.substring(3, 4))) { // checking if both time parameter are numbers
+              } else {
+                date.time = 'n/a'
+              }
+            } else {
+              date.time = 'n/a'
+            }
+          })
+        }
+      })
+    })
+    return ret
+  }
+    
   getStructureElementById (id, tree) {
     return this.getStructureElementByIdFunction(id.id, tree)
   }

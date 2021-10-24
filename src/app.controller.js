@@ -100,13 +100,13 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { pageTitle: 'Zeitplan', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.getAllEventsByDay() }
+    return { pageTitle: 'Zeitplan', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
   }
 
   @Get('/en/events')
   @Render('en/events.hbs')
   getAllEventsEnglish () {
-    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.getAllEventsByDay() }
+    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
   }
 
   @Get('/orte')
@@ -170,7 +170,7 @@ export class AppController {
 
   @Get('/api/events/day')
   apiGetEventsByDay () {
-    return this.studentprojectService.getAllEventsByDay()
+    return this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
   }
 
   @Get('/api/struct/:id/branch')
