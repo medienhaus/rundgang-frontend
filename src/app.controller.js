@@ -52,7 +52,7 @@ export class AppController {
       studentprojects: contextSpaceId
         ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
         : this.studentprojectService.getAll(),
-      filterData: this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()),
+      filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
     }
   }
