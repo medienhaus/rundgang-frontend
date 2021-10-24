@@ -135,3 +135,15 @@ slider.addEventListener('mousemove', (e) => {
 slider.addEventListener('mousedown', startDragging, false)
 slider.addEventListener('mouseup', stopDragging, false)
 slider.addEventListener('mouseleave', stopDragging, false)
+
+/// /// adding zooming on location if get paramter exists
+const urlParams = new URLSearchParams(window.location.search)
+if (urlParams.get('coords')) {
+  const urlCoords = urlParams.get('coords').split(',')
+  map.setView(L.latLng(urlCoords[0].trim(), urlCoords[1].trim()), 18, {
+    animate: true,
+    pan: {
+      duration: 0
+    }
+  })
+}
