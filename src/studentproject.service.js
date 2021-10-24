@@ -441,6 +441,17 @@ export class StudentprojectService {
     return ret
   }
 
+  getStrucureElementByIdFilteredOutEmptyOnes (level, tree) {
+    const ret = { ...level }
+    Object.entries(level.children).forEach(([key, content]) => {
+      const projects = this.getProjectsByLevel({ id: key }, tree, false)
+      if (Object.keys(projects).length === 0) {
+        delete ret.children[key]
+      }
+    })
+    return ret
+  }
+
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
