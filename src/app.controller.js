@@ -137,6 +137,27 @@ export class AppController {
     })
   }
 
+  @Get('/filter/structure/:id')
+  @Bind(Param())
+  @Render('de/structureFilter.hbs')
+  getFilterByStructureElement ({ id }) {
+    const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    if (!matchedStudentProjects) throw new NotFoundException()
+    return { languageSwitchLink: `/en/filter/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+  }
+
+  @Get('/en/filter/structure/:id')
+  @Bind(Param())
+  @Render('de/structureFilter.hbs')
+  getFilterByStructureElementEnglish ({ id }) {
+    const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    console.log(this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()))
+    if (!matchedStudentProjects) throw new NotFoundException()
+    return { languageSwitchLink: `/filter/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: this.studentprojectService.findId({ id }, this.apiGetStructure(), true) }
+  }
+
+  // --------REST API's---------- //
+
   @Get('/api/all')
   apiGetAll () {
     return this.studentprojectService.getAll()
