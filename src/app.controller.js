@@ -1,4 +1,4 @@
-import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render } from '@nestjs/common'
+import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render, Response } from '@nestjs/common'
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
@@ -22,19 +22,31 @@ export class AppController {
   @Get('/programm')
   @Render('de/programm.hbs')
   getAllEnglish () {
-    return { languageSwitchLink: '/en/program', studentprojects: this.studentprojectService.getAll() }
+    return {
+      pageTitle: 'Programm',
+      activePageProgram: true,
+      languageSwitchLink: '/en/program',
+      studentprojects: this.studentprojectService.getAll()
+    }
   }
 
   @Get('/en/program')
   @Render('en/program.hbs')
   getAll () {
-    return { languageSwitchLink: '/programm', studentprojects: this.studentprojectService.getAll() }
+    return {
+      pageTitle: 'Program',
+      activePageProgram: true,
+      languageSwitchLink: '/programm',
+      studentprojects: this.studentprojectService.getAll()
+    }
   }
 
   @Get('/beratungsangebote')
   @Render('de/programm.hbs')
   getBeratungsangebote () {
     return {
+      pageTitle: 'Beratungsangebote',
+      activePageAdvisoryServices: true,
       languageSwitchLink: '/en/advisory-services',
       studentprojects: this.studentprojectService.getByContextSpaceIds([
         '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
@@ -53,6 +65,8 @@ export class AppController {
   @Render('en/program.hbs')
   getBeratungsangeboteEnglish () {
     return {
+      pageTitle: 'Advisory Services',
+      activePageAdvisoryServices: true,
       languageSwitchLink: '/beratungsangebote',
       studentprojects: this.studentprojectService.getByContextSpaceIds([
         '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
@@ -70,13 +84,13 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.getAllEventsByDay() }
+    return { pageTitle: 'Zeitplan', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.getAllEventsByDay() }
   }
 
   @Get('/en/events')
   @Render('en/events.hbs')
   getAllEventsEnglish () {
-    return { languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.getAllEventsByDay() }
+    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.getAllEventsByDay() }
   }
 
   @Get('/orte')
@@ -92,23 +106,35 @@ export class AppController {
   }
 
   @Get('/c/:id')
-  @Bind(Param())
-  @Render('de/studentproject.hbs')
-  async getStudentproject ({ id }) {
+  @Bind(Response(), Param())
+  async getStudentproject (res, { id }) {
     const project = await this.studentprojectService.get(id, 'de')
     if (!project) throw new NotFoundException()
-    const parentId = project.parentSpaceId
-    return { languageSwitchLink: `/en/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
+    // If there's no German content for this project redirect to the English version
+    if (project.formatted_content === '' && !project.topicDe) return res.redirect(`/en/c/${id}`)
+
+    return res.render('de/studentproject.hbs', {
+      pageTitle: project.name,
+      languageSwitchLink: `/en/c/${id}`,
+      studentproject: project,
+      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+    })
   }
 
   @Get('/en/c/:id')
-  @Bind(Param())
-  @Render('en/studentproject.hbs')
-  async getStudentprojectEnglish ({ id }) {
+  @Bind(Response(), Param())
+  async getStudentprojectEnglish (res, { id }) {
     const project = await this.studentprojectService.get(id, 'en')
     if (!project) throw new NotFoundException()
-    const parentId = project.parentSpaceId
-    return { languageSwitchLink: `/c/${id}`, studentproject: project, bubbles: this.studentprojectService.findId({ id: parentId }, this.apiGetStructure(), true) }
+    // If there's no English content for this project redirect to the German version
+    if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
+
+    return res.render('en/studentproject.hbs', {
+      pageTitle: project.name,
+      languageSwitchLink: `/c/${id}`,
+      studentproject: project,
+      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+    })
   }
 
   @Get('/filter/structure/:id')

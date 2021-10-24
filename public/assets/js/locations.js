@@ -26,7 +26,7 @@ function randomIntFromInterval (min, max) { // min and max included
 function getIcon () {
   randomMarkerNo = randomIntFromInterval(1, 10)
   return L.icon({
-    iconUrl: '../assets/img/marker/mushroom' + randomMarkerNo + '.svg',
+    iconUrl: '/assets/img/marker/mushroom' + randomMarkerNo + '.svg',
     iconSize: [45, 64], // size of the icon
     shadowSize: [50, 64], // size of the shadow
     iconAnchor: [22, 55], // point of the icon which will correspond to marker's location
