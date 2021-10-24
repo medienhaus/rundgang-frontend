@@ -16,17 +16,21 @@
                         <div class="tags">
                             <ul>
                                 {{#each ../locations as |location|}}
-                                    <li>
-                                        {{location.name}} 
-                                    </li>
-                                    <li>
-                                        {{location.room}} 
-                                    </li>
+                                   <a href="/en/locations?coords={{location.coordinates}}">
+                                        <li>
+                                            {{location.name}} 
+                                        </li>
+                                    </a> 
+                                    <a href="/en/locations?coords={{location.coordinates}}"></a>
+                                        <li>
+                                            {{location.room}} 
+                                        </li>
+                                    </a>
                                 {{/each}}
                                 {{#each ../bigBlueButton as |bbb|}}
-                                    <li class="bbb">
-                                        {{bbb}} 
-                                    </li>
+                                    <a href="{{bbb}} "><li class="bbb">
+                                        video conference
+                                    </li></a>
                                 {{/each}}
                                 {{#each ../livestream as |livestream|}}
                                     <li class="online">
