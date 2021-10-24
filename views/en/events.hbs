@@ -16,16 +16,16 @@
                         <div class="tags">
                             <ul>
                                 {{#each ../locations as |location|}}
-                                   <a href="/en/locations?coords={{location.coordinates}}">
                                         <li>
+                                            <a href="/en/locations?coords={{location.coordinates}}">
                                             {{location.name}} 
+                                            </a> 
                                         </li>
-                                    </a> 
-                                    <a href="/en/locations?coords={{location.coordinates}}">
                                         <li>
+                                             <a href="/en/locations?coords={{location.coordinates}}">
                                             {{location.room}} 
+                                             </a>
                                         </li>
-                                    </a>
                                 {{/each}}
                                 {{#each ../bigBlueButton as |bbb|}}
                                     <a href="{{bbb}} ">
