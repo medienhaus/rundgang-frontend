@@ -14,7 +14,7 @@ const map = L.map('map', {
 
 // https://osm-tileserver.medienhaus.udk-berlin.de/osm_tiles/{z}/{x}/{y}.{ext} https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}
 const Stamen_TonerLite = L.tileLayer('https://osm.udk-berlin.de/tile/{z}/{x}/{y}.{ext}', {
-  minZoom: 0,
+  minZoom: 11,
   maxZoom: 20,
   ext: 'png'
 }).addTo(map)
