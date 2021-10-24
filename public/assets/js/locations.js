@@ -55,7 +55,7 @@ function addressClickHandler (el, index) {
   const latLon = L.latLng(lat, lng)
   markers[index].openPopup(latLon)
 
-  map.setView(latLon, zoom, {
+  map.setView(latLon, 18, {
     animate: true,
     pan: {
       duration: 0.5
