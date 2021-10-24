@@ -646,6 +646,11 @@ main.start div.rundang.greypill {
   margin-bottom: 10px !important;
 }
 
+ul.tags li a {
+  color: white;
+  text-decoration: none;
+}
+
 /* .leaflet-popup.leaflet-zoom-animated {
 	left: 25px !important;
 } */
@@ -690,6 +695,10 @@ main.programm #filterline ul li:not(.back) {
   box-sizing: border-box;
   background: black;
   color: white;
+}
+main.programm #filterline ul li:not(.back) a {
+  color: white;
+  text-decoration: none;
 }
 main.programm #filterline ul li.back {
   font-weight: 500;
@@ -787,7 +796,7 @@ main.programm .projectswrap .projecttile h2 {
 }
 main.programm .projectswrap .projecttile .info {
   font-size: 16px;
-  margin-bottom: 80px;
+  margin-bottom: 30px;
   line-height: 1.2;
   margin-top: 7px;
 }
@@ -828,6 +837,15 @@ main.programm .projectswrap .projecttile .image {
   background-color: #c7c7c7;
   position: relative;
   line-height: 0;
+  display: flex;
+  max-height: 80vh;
+}
+main.programm .projectswrap .projecttile .image img {
+  width: 100%;
+  height: auto;
+  opacity: 0.9;
+  object-position: center;
+  object-fit: cover;
 }
 main.programm .projectswrap .projecttile .image .flags {
   position: absolute;
@@ -929,11 +947,6 @@ main.programm .projectswrap .projecttile .image .livein span {
     opacity: 0;
   }
 }
-main.programm .projectswrap .projecttile .image img {
-  width: 100%;
-  height: auto;
-  opacity: 0.9;
-}
 main.programm .projectswrap .projecttile .image:hover .hoverinfo {
   opacity: 1;
 }
@@ -966,7 +979,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   width: 26px;
   height: 26px;
   position: fixed;
-  left: 28px;
+  left: 20px;
   top: 70px;
   background-image: url("../img/back.svg");
   background-repeat: no-repeat;
@@ -1036,12 +1049,14 @@ main.programm .projectswrap .projecttile a.blocklink {
   background-color: rgba(0, 0, 0, 0.05);
   border-left: 4px solid rgba(0, 0, 0, 0.05);
   padding: 25px;
-}
-.singleproject .projectmain blockquote:before {
-  content: open-quote;
-}
-.singleproject .projectmain blockquote:after {
-  content: close-quote;
+  /*
+  &:before {
+  	content: open-quote;
+  }
+  &:after {
+  	content: close-quote;
+  }
+  */
 }
 .singleproject .projectmain div.code {
   background-color: rgba(0, 0, 0, 0.05);
