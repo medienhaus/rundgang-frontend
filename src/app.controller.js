@@ -19,25 +19,41 @@ export class AppController {
   @Render('en/index.hbs')
   rootEnglish () { return { languageSwitchLink: '/' } }
 
-  @Get('/programm')
+  @Get('/programm/:contextSpaceId?')
   @Render('de/programm.hbs')
-  getAllEnglish () {
+  @Bind(Param('contextSpaceId'))
+  getAll (contextSpaceId) {
+    // If we are not filtering by a given context show the filter data for the root context
+    if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
+
     return {
       pageTitle: 'Programm',
       activePageProgram: true,
       languageSwitchLink: '/en/program',
-      studentprojects: this.studentprojectService.getAll()
+      studentprojects: contextSpaceId
+        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
+        : this.studentprojectService.getAll(),
+      filterData: this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()),
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
     }
   }
 
-  @Get('/en/program')
+  @Get('/en/program/:contextSpaceId?')
   @Render('en/program.hbs')
-  getAll () {
+  @Bind(Param('contextSpaceId'))
+  getAllEnglish (contextSpaceId) {
+    // If we are not filtering by a given context show the filter data for the root context
+    if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
+
     return {
       pageTitle: 'Program',
       activePageProgram: true,
       languageSwitchLink: '/programm',
-      studentprojects: this.studentprojectService.getAll()
+      studentprojects: contextSpaceId
+        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
+        : this.studentprojectService.getAll(),
+      filterData: this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()),
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
     }
   }
 
