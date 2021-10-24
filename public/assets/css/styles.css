@@ -646,6 +646,10 @@ main.start div.rundang.greypill {
   margin-bottom: 10px !important;
 }
 
+.leaflet-tile-pane {
+  filter: grayscale(1);
+}
+
 ul.tags li a {
   color: white;
   text-decoration: none;
