@@ -646,6 +646,10 @@ main.start div.rundang.greypill {
   margin-bottom: 10px !important;
 }
 
+.leaflet-tile-pane {
+  filter: grayscale(1);
+}
+
 ul.tags li a {
   color: white;
   text-decoration: none;
@@ -773,21 +777,15 @@ main.programm hr {
   outline: 0;
 }
 main.programm .projectswrap {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
 }
 main.programm .projectswrap .projecttile {
-  width: calc(25% - 15px);
-  position: relative;
+  background-color: rgb(240, 240, 240);
 }
 main.programm .projectswrap .projecttile h2 {
   font-size: 16px;
@@ -796,9 +794,11 @@ main.programm .projectswrap .projecttile h2 {
 }
 main.programm .projectswrap .projecttile .info {
   font-size: 16px;
-  margin-bottom: 30px;
   line-height: 1.2;
-  margin-top: 7px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 main.programm .projectswrap .projecttile .hoverinfo {
   opacity: 0;
