@@ -21,16 +21,18 @@
                                             {{location.name}} 
                                         </li>
                                     </a> 
-                                    <a href="/en/locations?coords={{location.coordinates}}"></a>
+                                    <a href="/en/locations?coords={{location.coordinates}}">
                                         <li>
                                             {{location.room}} 
                                         </li>
                                     </a>
                                 {{/each}}
                                 {{#each ../bigBlueButton as |bbb|}}
-                                    <a href="{{bbb}} "><li class="bbb">
-                                        video conference
-                                    </li></a>
+                                    <a href="{{bbb}} ">
+                                        <li class="bbb">
+                                            video conference
+                                        </li>
+                                    </a>
                                 {{/each}}
                                 {{#each ../livestream as |livestream|}}
                                     <li class="online">
