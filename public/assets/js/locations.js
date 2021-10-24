@@ -1,4 +1,4 @@
-const zoom = 18
+const zoom = 13
 const markers = []
 const addresses = document.querySelectorAll('.address')
 const firstAddress = document.querySelector('.address')
@@ -14,7 +14,7 @@ const map = L.map('map', {
 
 // https://osm-tileserver.medienhaus.udk-berlin.de/osm_tiles/{z}/{x}/{y}.{ext} https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}
 const Stamen_TonerLite = L.tileLayer('https://osm.udk-berlin.de/tile/{z}/{x}/{y}.{ext}', {
-  minZoom: 0,
+  minZoom: 11,
   maxZoom: 20,
   ext: 'png'
 }).addTo(map)
@@ -26,7 +26,7 @@ function randomIntFromInterval (min, max) { // min and max included
 function getIcon () {
   randomMarkerNo = randomIntFromInterval(1, 10)
   return L.icon({
-    iconUrl: '../assets/img/marker/mushroom' + randomMarkerNo + '.svg',
+    iconUrl: '/assets/img/marker/mushroom' + randomMarkerNo + '.svg',
     iconSize: [45, 64], // size of the icon
     shadowSize: [50, 64], // size of the shadow
     iconAnchor: [22, 55], // point of the icon which will correspond to marker's location
@@ -55,7 +55,7 @@ function addressClickHandler (el, index) {
   const latLon = L.latLng(lat, lng)
   markers[index].openPopup(latLon)
 
-  map.setView(latLon, zoom, {
+  map.setView(latLon, 18, {
     animate: true,
     pan: {
       duration: 0.5
@@ -135,3 +135,15 @@ slider.addEventListener('mousemove', (e) => {
 slider.addEventListener('mousedown', startDragging, false)
 slider.addEventListener('mouseup', stopDragging, false)
 slider.addEventListener('mouseleave', stopDragging, false)
+
+/// /// adding zooming on location if get paramter exists
+const urlParams = new URLSearchParams(window.location.search)
+if (urlParams.get('coords')) {
+  const urlCoords = urlParams.get('coords').split(',')
+  map.setView(L.latLng(urlCoords[0].trim(), urlCoords[1].trim()), 18, {
+    animate: true,
+    pan: {
+      duration: 0
+    }
+  })
+}

@@ -33,8 +33,8 @@
         {{#if studentproject.parent}}
             <div class="label">Kontext</div>
             <div class="tagbubble">
-                {{#each bubbles as |hirachyElement|}}
-                <span>{{ hirachyElement.name }}</span>
+                {{#each bubbles as |hierarchyElement|}}
+                    <span><a href="/programm/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
                 {{/each}}
             </div>
         {{/if}}
@@ -42,5 +42,6 @@
 </main>
 
 <script src="/assets/js/green-audio-player.min.js"></script>
+<script src="/assets/js/studentproject.js"></script>
 
 {{> de/partials/footer }}

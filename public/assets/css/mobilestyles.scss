@@ -36,6 +36,9 @@
 	.singleproject .info{
 		width: 75%;
 	}
+	body.programm .projectswrap .projecttile{
+		width: calc(33% - 15px);
+	}
 }
 
 
@@ -60,9 +63,6 @@
 	.singleproject .projectmain,
 	.singleproject .info{
 		width: 85%;
-	}
-	body.programm .projectswrap .projecttile{
-		width: calc(33% - 15px);
 	}
 	.singleproject .back{
 		display: none;

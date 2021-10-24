@@ -475,6 +475,40 @@ export class StudentprojectService {
     })
     return ret
   }
+    
+  getStructureElementById (id, tree) {
+    return this.getStructureElementByIdFunction(id.id, tree)
+  }
+
+  getStructureElementByIdFunction (id, tree) {
+    let ret
+    Object.entries(tree).forEach(([key, content]) => {
+      if (key === id) {
+        ret = content
+      } else {
+        if (content.children && Object.keys(content.children).length > 0) {
+          Object.entries(content.children).forEach(([childKey, childContent]) => {
+            const res = this.getStructureElementByIdFunction(id, { [childKey]: childContent })
+            if (res) {
+              ret = res
+            }
+          })
+        }
+      }
+    })
+    return ret
+  }
+
+  getStrucureElementByIdFilteredOutEmptyOnes (level, tree) {
+    const ret = { ...level }
+    Object.entries(level.children).forEach(([key, content]) => {
+      const projects = this.getProjectsByLevel({ id: key }, tree, false)
+      if (Object.keys(projects).length === 0) {
+        delete ret.children[key]
+      }
+    })
+    return ret
+  }
 
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))

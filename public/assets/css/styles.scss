@@ -644,6 +644,10 @@ body.start{
 	margin-bottom: 10px!important;
 }
 
+.leaflet-popup-content ul.tags li a{
+	color: white;
+}
+
 /* .leaflet-popup.leaflet-zoom-animated {
 	left: 25px !important;
 } */
@@ -767,7 +771,7 @@ body.programm{
 			}
 			.info{
 				font-size: 16px;
-				margin-bottom: 80px;
+				margin-bottom: 30px;
 				line-height: 1.2;
 				margin-top: 7px;
 			}
@@ -808,6 +812,15 @@ body.programm{
 				background-color: #c7c7c7;
 				position: relative;
 				line-height: 0;
+				display: flex;
+				max-height: 80vh;
+				img{
+					width: 100%;
+					height: auto;
+					opacity: .9;
+					object-position: center;
+					object-fit: cover;
+				}
 				.flags{
 					position: absolute;
 					right: 3px;
@@ -884,11 +897,6 @@ body.programm{
 						opacity: 0;
 					}
 				}
-				img{
-					width: 100%;
-					height: auto;
-					opacity: .9;
-				}
 			}
 			.image:hover .hoverinfo{
 				opacity: 1;
@@ -930,7 +938,7 @@ body.programm{
 		width: 26px;
 		height: 26px;
 		position: fixed;
-		left: 28px;
+		left: 20px;
 		top: 70px;
 		background-image: url('../img/back.svg');
 		background-repeat: no-repeat;
@@ -999,12 +1007,14 @@ body.programm{
 			background-color: rgba(0,0,0,0.05);
 			border-left: 4px solid rgba(0,0,0,0.05);
 			padding: 25px;
+			/*
 			&:before {
 				content: open-quote;
 			}
 			&:after {
 				content: close-quote;
 			}
+			*/
 		}
 		div.code{
 			background-color: rgba(0,0,0,0.05);

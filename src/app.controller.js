@@ -19,22 +19,50 @@ export class AppController {
   @Render('en/index.hbs')
   rootEnglish () { return { languageSwitchLink: '/' } }
 
-  @Get('/programm')
+  @Get('/programm/:contextSpaceId?')
   @Render('de/programm.hbs')
-  getAllEnglish () {
-    return { languageSwitchLink: '/en/program', studentprojects: this.studentprojectService.getAll() }
+  @Bind(Param('contextSpaceId'))
+  getAll (contextSpaceId) {
+    // If we are not filtering by a given context show the filter data for the root context
+    if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
+
+    return {
+      pageTitle: 'Programm',
+      activePageProgram: true,
+      languageSwitchLink: '/en/program',
+      studentprojects: contextSpaceId
+        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
+        : this.studentprojectService.getAll(),
+      filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
+    }
   }
 
-  @Get('/en/program')
+  @Get('/en/program/:contextSpaceId?')
   @Render('en/program.hbs')
-  getAll () {
-    return { languageSwitchLink: '/programm', studentprojects: this.studentprojectService.getAll() }
+  @Bind(Param('contextSpaceId'))
+  getAllEnglish (contextSpaceId) {
+    // If we are not filtering by a given context show the filter data for the root context
+    if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
+
+    return {
+      pageTitle: 'Program',
+      activePageProgram: true,
+      languageSwitchLink: '/programm',
+      studentprojects: contextSpaceId
+        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
+        : this.studentprojectService.getAll(),
+      filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
+    }
   }
 
   @Get('/beratungsangebote')
   @Render('de/programm.hbs')
   getBeratungsangebote () {
     return {
+      pageTitle: 'Beratungsangebote',
+      activePageAdvisoryServices: true,
       languageSwitchLink: '/en/advisory-services',
       studentprojects: this.studentprojectService.getByContextSpaceIds([
         '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
@@ -53,6 +81,8 @@ export class AppController {
   @Render('en/program.hbs')
   getBeratungsangeboteEnglish () {
     return {
+      pageTitle: 'Advisory Services',
+      activePageAdvisoryServices: true,
       languageSwitchLink: '/beratungsangebote',
       studentprojects: this.studentprojectService.getByContextSpaceIds([
         '!tqonxsqROerKlklkKl:content.udk-berlin.de', // Zentralinstitut für Weiterbildung (ZIW)
@@ -70,13 +100,13 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return { pageTitle: 'Zeitplan', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
   }
 
   @Get('/en/events')
   @Render('en/events.hbs')
   getAllEventsEnglish () {
-    return { languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
   }
 
   @Get('/orte')
@@ -100,6 +130,7 @@ export class AppController {
     if (project.formatted_content === '' && !project.topicDe) return res.redirect(`/en/c/${id}`)
 
     return res.render('de/studentproject.hbs', {
+      pageTitle: project.name,
       languageSwitchLink: `/en/c/${id}`,
       studentproject: project,
       bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
@@ -115,6 +146,7 @@ export class AppController {
     if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
 
     return res.render('en/studentproject.hbs', {
+      pageTitle: project.name,
       languageSwitchLink: `/c/${id}`,
       studentproject: project,
       bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
