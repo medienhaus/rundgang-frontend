@@ -31,10 +31,6 @@
 .singleproject .info {
     width: 75%;
   }
-
-  main.programm .projectswrap .projecttile {
-    width: calc(33% - 15px);
-  }
 }
 @media only screen and (max-width: 1100px) {
   main.start .choose ul li {
@@ -123,10 +119,6 @@ main.start .plakat {
     margin-top: 35px;
   }
 
-  main.programm .projectswrap .projecttile {
-    width: calc(50% - 15px);
-  }
-
   main.events .day .event {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
@@ -159,7 +151,7 @@ main.events .day .event .tags {
 }
 @media only screen and (max-width: 550px) {
   main.programm .projectswrap .projecttile {
-    width: 100%;
+    width: calc(100% - 20px);
   }
 
   main.programm #filterline ul li.back {
