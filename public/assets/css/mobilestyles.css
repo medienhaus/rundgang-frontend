@@ -151,7 +151,7 @@ main.events .day .event .tags {
 }
 @media only screen and (max-width: 550px) {
   main.programm .projectswrap .projecttile {
-    width: calc(100% - 20px);
+    width: 100%;
   }
 
   main.programm #filterline ul li.back {
