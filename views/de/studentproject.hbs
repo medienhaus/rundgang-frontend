@@ -7,8 +7,8 @@
         <h2 class="projecttitle">{{ studentproject.name }}</h2>
 
         <div class="students tagbubble">
-            {{#each studentproject.authors}}
-                <span>{{.}}</span>
+             {{#each studentproject.authorIds as |author|}}
+              <a href="/filter/user/{{author.id}}"><span>{{author.name}}</span></a>
             {{/each}}
             {{#if studentproject.credits}}
                 {{#each studentproject.credits}}
@@ -34,7 +34,7 @@
             <div class="label">Kontext</div>
             <div class="tagbubble">
                 {{#each bubbles as |hirachyElement|}}
-                <span>{{ hirachyElement.name }}</span>
+                <a href="/filter/structure/{{hirachyElement.id}}"><span>{{ hirachyElement.name }}</span></a>
                 {{/each}}
             </div>
         {{/if}}

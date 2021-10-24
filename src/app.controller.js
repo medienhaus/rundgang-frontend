@@ -2,6 +2,7 @@ import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render, 
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
+import { filter } from 'lodash'
 
 @Controller()
 @Dependencies(AppService, 'STUDENTPROJECT_PROVIDER')
@@ -137,6 +138,52 @@ export class AppController {
     })
   }
 
+  @Get('/filter/structure/:id')
+  @Bind(Param())
+  @Render('de/structureFilter.hbs')
+  getFilterByStructureElement ({ id }) {
+    const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    const filterParents = this.studentprojectService.findId({ id }, this.apiGetStructure(), true)
+    if (filterParents && filterParents && filterParents.length > 0) {
+      filterParents.pop()
+    }
+    if (!matchedStudentProjects) throw new NotFoundException()
+    return { languageSwitchLink: `/en/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: filterParents }
+  }
+
+  @Get('/en/filter/structure/:id')
+  @Bind(Param())
+  @Render('de/structureFilter.hbs')
+  getFilterByStructureElementEnglish ({ id }) {
+    const matchedStudentProjects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
+    const filterParents = this.studentprojectService.findId({ id }, this.apiGetStructure(), true)
+    if (filterParents && filterParents && filterParents.length > 0) {
+      filterParents.pop()
+    }
+    if (!matchedStudentProjects) throw new NotFoundException()
+    return { languageSwitchLink: `/filter/structure/${id}`, studentprojects: matchedStudentProjects, filterData: this.studentprojectService.getStructureElementById({ id }, this.apiGetStructure()), filterParents: filterParents }
+  }
+
+  @Get('/filter/user/:id')
+  @Bind(Param())
+  @Render('de/userFilter.hbs')
+  async getFilterByUserId ({ id }) {
+    const userData = await this.studentprojectService.getUserDataByUserId({ id })
+    if (!userData) throw new NotFoundException()
+    return { languageSwitchLink: `/en/filter/user/${id}`, userData: userData }
+  }
+
+  @Get('/en/filter/user/:id')
+  @Bind(Param())
+  @Render('de/userFilter.hbs')
+  async getFilterByUserIdEnglish ({ id }) {
+    const userData = await this.studentprojectService.getUserDataByUserId({ id })
+    if (!userData) throw new NotFoundException()
+    return { languageSwitchLink: `/filter/user/${id}`, userData: userData }
+  }
+
+  // --------REST API's---------- //
+
   @Get('/api/all')
   apiGetAll () {
     return this.studentprojectService.getAll()
@@ -187,6 +234,14 @@ export class AppController {
     const projects = this.studentprojectService.getProjectsByLevel({ id }, this.apiGetStructure(), false)
     if (!projects) throw new NotFoundException()
     return projects
+  }
+
+  @Get('/api/user/:id/')
+  @Bind(Param())
+  apiGetUserDataByUserId ({ id }) {
+    const userdata = this.studentprojectService.getUserDataByUserId({ id })
+    if (!userdata) throw new NotFoundException()
+    return userdata
   }
 
   @Get('/api/:id')
