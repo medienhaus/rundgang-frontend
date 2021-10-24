@@ -1,7 +1,28 @@
 {{> en/partials/header }}
 
 <main class="programm">
-    <hr>
+    {{#if filterData}}
+        <div id="filterline">
+            <div>
+                {{#each filterParents as |parent|}}
+                    <ul style="margin-left: calc({{@index}} * 20px)">
+                        {{#if parent.id}}
+                            <li><a href="/en/program/{{parent.id}}">{{parent.name}}</a></li>
+                        {{/if}}
+                        {{#greaterThan ../filterParents.length @index}}
+                        {{else}}
+                            <ul style="margin-left: 20px">
+                                {{#each ../filterData.children as |child|}}
+                                    <li><a href="/en/program/{{child.id}}">{{child.name}}</a></li>
+                                {{/each}}
+                            </ul>
+                        {{/greaterThan}}
+                    </ul>
+                {{/each}}
+            </div>
+        </div>
+        <hr>
+    {{/if}}
     <div class="projectswrap">
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
