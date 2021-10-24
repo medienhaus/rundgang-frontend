@@ -1,4 +1,4 @@
-const zoom = 18
+const zoom = 13
 const markers = []
 const addresses = document.querySelectorAll('.address')
 const firstAddress = document.querySelector('.address')
