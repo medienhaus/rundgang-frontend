@@ -6,7 +6,7 @@
   }
 }
 @media only screen and (max-width: 1500px) {
-  main.start .choose ul li {
+  body.start .choose ul li {
     font-size: 30px;
   }
 }
@@ -33,19 +33,19 @@
   }
 }
 @media only screen and (max-width: 1100px) {
-  main.start .choose ul li {
+  body.start .choose ul li {
     font-size: 25px;
   }
 
-  main.events .day .event h3 {
+  body.events .day .event h3 {
     width: 350px;
   }
 
-  main.events .day .event .tags {
+  body.events .day .event .tags {
     padding-left: 30px;
   }
 
-  main.events .day .event .tags {
+  body.events .day .event .tags {
     width: calc(100% - 500px);
   }
 }
@@ -71,12 +71,12 @@
   }
 }
 @media only screen and (max-width: 940px) {
-  main.start .choose div.footer ul li {
+  body.start .choose div.footer ul li {
     font-size: 12px;
     letter-spacing: -0.5px;
   }
 
-  main.start .choose ul li {
+  body.start .choose ul li {
     letter-spacing: -0.3px;
     font-weight: 400;
   }
@@ -95,43 +95,43 @@
     padding: 20px;
   }
 
-  main.start .choose ul li {
+  body.start .choose ul li {
     font-weight: 400;
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  main.start div.greypill {
+  body.start div.greypill {
     font-weight: 400;
     margin-top: 15px;
   }
 
-  main.start .choose,
-main.start .plakat {
+  body.start .choose,
+body.start .plakat {
     width: 100%;
     position: relative;
   }
 
-  main.start .choose div.footer {
+  body.start .choose div.footer {
     width: 100%;
     position: relative;
     margin-top: 35px;
   }
 
-  main.events .day .event {
+  body.events .day .event {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
 
-  main.events .day .event .time,
-main.events .day .event h3,
-main.events .day .event .tags {
+  body.events .day .event .time,
+body.events .day .event h3,
+body.events .day .event .tags {
     width: 100%;
     padding: 0;
   }
 
-  main.events .day .event .tags {
+  body.events .day .event .tags {
     margin-top: 5px;
     margin-bottom: 20px;
   }
@@ -140,7 +140,7 @@ main.events .day .event .tags {
     display: none;
   }
 
-  main.start div.footer.onlymobile {
+  body.start div.footer.onlymobile {
     display: block;
   }
 }
@@ -150,17 +150,17 @@ main.events .day .event .tags {
   }
 }
 @media only screen and (max-width: 550px) {
-  main.programm .projectswrap .projecttile {
+  body.programm .projectswrap .projecttile {
     width: 100%;
   }
 
-  main.programm #filterline ul li.back {
+  body.programm #filterline ul li.back {
     width: 100%;
   }
 
-  main.programm #filterline ul li:not(.back),
-main.programm #filterline ul li.back,
-main.programm #filterline .selected > div {
+  body.programm #filterline ul li:not(.back),
+body.programm #filterline ul li.back,
+body.programm #filterline .selected > div {
     margin-top: 5px;
     margin-bottom: 6px;
   }
@@ -204,7 +204,7 @@ main.programm #filterline .selected > div {
     height: calc(100vh - 133px);
   }
 
-  main.programm #filterline {
+  body.programm #filterline {
     margin-top: 65px;
   }
 
@@ -227,15 +227,15 @@ main.programm #filterline .selected > div {
   }
 
   header .topline,
-main.programm #filterline,
-main.programm .projectswrap,
-main.start .choose,
-main.start div.footer.onlymobile,
+body.programm #filterline,
+body.programm .projectswrap,
+body.start .choose,
+body.start div.footer.onlymobile,
 .menu,
 .singleproject .projectmain,
 .singleproject .info,
-main.events .day h2,
-main.events .day .event {
+body.events .day h2,
+body.events .day .event {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -249,7 +249,7 @@ main.events .day .event {
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  main.start .choose ul li {
+  body.start .choose ul li {
     font-size: 20px;
     padding: 7px;
     padding-left: 15px;
@@ -294,7 +294,7 @@ main.events .day .event {
   }
 }
 @media only screen and (max-width: 340px) {
-  main.programm .projectswrap {
+  body.programm .projectswrap {
     grid-template-columns: none;
   }
 }

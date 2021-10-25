@@ -651,9 +651,17 @@ body.start{
 .leaflet-popup{
 	margin-bottom: 10px!important;
 }
-
+.leaflet-popup-content ul.tags{
+	margin-top: 10px;
+	margin-left: -2px;
+}
+.leaflet-popup-content ul.tags li{
+	line-height: auto;
+}
 .leaflet-popup-content ul.tags li a{
 	color: white;
+	text-decoration: none;
+	line-height: auto;
 }
 
 .leaflet-tile-pane {
@@ -692,6 +700,10 @@ body.programm{
 				@include pill();
 				background: black;
 				color: white;
+			}
+			li a{
+				color: white;
+				text-decoration: none;
 			}
 			li.back{
 				font-weight: 500;
@@ -1225,6 +1237,7 @@ body.events{
 				font-size: 16px;
 				a{
 					color: inherit;
+					text-decoration: none;
 				}
 			}
 			.tags{
@@ -1240,6 +1253,10 @@ body.events{
 					margin-right: 2px;
 					margin-bottom: 6px;
 					font-weight: 500;
+					a{
+						text-decoration: none;
+						color: white;
+					}
 				}
 				ul li.online{
 					background-color: $green;
@@ -1291,8 +1308,8 @@ main.hours > div{
 		list-style: none;
 		margin-top: 10px;
 		margin-bottom: 10px;
-		li{
-			
+		li.closed{
+			color: $grey;
 		}
 	}
 	h3{
