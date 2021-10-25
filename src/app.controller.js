@@ -121,6 +121,14 @@ export class AppController {
     return { languageSwitchLink: '/orte' }
   }
 
+  @Get('/oeffnungszeiten')
+  @Render('de/hours.hbs')
+  hours () { return { languageSwitchLink: '/en/opening-hours' } }
+
+  @Get('/en/opening-hours')
+  @Render('de/hours.hbs')
+  hoursEnglish () { return { languageSwitchLink: '/oeffnungszeiten' } }
+
   @Get('/c/:id')
   @Bind(Response(), Param())
   async getStudentproject (res, { id }) {
