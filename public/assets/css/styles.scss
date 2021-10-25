@@ -611,6 +611,9 @@ body.start{
 		li{
 			font-size: 16px;
 			line-height: 20px;
+			&.closed{
+				color: $grey;
+			}
 		}
 	}
 }
@@ -656,7 +659,8 @@ body.start{
 	margin-left: -2px;
 }
 .leaflet-popup-content ul.tags li{
-	line-height: auto;
+	line-height: 26px;
+	font-size: 14px;
 }
 .leaflet-popup-content ul.tags li a{
 	color: white;

@@ -617,6 +617,9 @@ main.start div.rundang.greypill {
   font-size: 16px;
   line-height: 20px;
 }
+.leaflet-popup-content ul li.closed {
+  color: #C4C4C4;
+}
 
 .leaflet-container a.leaflet-popup-close-button {
   top: 10px !important;
@@ -661,7 +664,8 @@ main.start div.rundang.greypill {
 }
 
 .leaflet-popup-content ul.tags li {
-  line-height: auto;
+  line-height: 26px;
+  font-size: 14px;
 }
 
 .leaflet-popup-content ul.tags li a {
