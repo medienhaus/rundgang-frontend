@@ -514,6 +514,21 @@ export class StudentprojectService {
     return ret
   }
 
+  getLocationsAsObject (events) {
+    const data = { locations: [] }
+
+    events.forEach(event => {
+      event.forEach(contents => {
+        if (contents.name === 'location') {
+          contents.content.forEach(content => {
+            data.locations.push({ ...this.coordiantesToLocation(content.split('-')[0]), room: content.split('-')[1] })
+          })
+        }
+      })
+    })
+    return data
+  }
+
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
