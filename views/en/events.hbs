@@ -12,7 +12,7 @@
                     {{#each date as |time|}}
                         <div class="event">
                             <div class="time">{{time.time}}</div>
-                            <h3>{{event.name}} </h3>
+                            <h3><a href="/en/c/{{event.id}}">{{event.name}} </a></h3>
                             <div class="tags">
                                 <ul>
                                     {{#each ../locations as |location|}}
