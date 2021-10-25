@@ -182,7 +182,7 @@ export class StudentprojectService {
 
     await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
-    this.studentprojects = _.shuffle(result)
+    this.studentprojects = result
 
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
