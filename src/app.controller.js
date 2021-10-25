@@ -141,7 +141,7 @@ export class AppController {
       pageTitle: project.name,
       languageSwitchLink: `/en/c/${id}`,
       studentproject: project,
-      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      bubbles: { locations: this.studentprojectService.getLocationsAsObject(project.events).locations, context: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true) }
     })
   }
 
