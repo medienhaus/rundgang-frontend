@@ -78,7 +78,7 @@ export class AppController {
   }
 
   @Get('/en/advisory-services')
-  @Render('en/programm.hbs')
+  @Render('en/programme.hbs')
   getBeratungsangeboteEnglish () {
     return {
       pageTitle: 'Advisory Services',
