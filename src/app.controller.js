@@ -29,7 +29,7 @@ export class AppController {
     return {
       pageTitle: 'Programm',
       activePageProgram: true,
-      languageSwitchLink: '/en/program',
+      languageSwitchLink: '/en/programme',
       studentprojects: contextSpaceId
         ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
         : this.studentprojectService.getAll(),
@@ -38,15 +38,15 @@ export class AppController {
     }
   }
 
-  @Get('/en/program/:contextSpaceId?')
-  @Render('en/program.hbs')
+  @Get('/en/programme/:contextSpaceId?')
+  @Render('en/programme.hbs')
   @Bind(Param('contextSpaceId'))
   getAllEnglish (contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
     return {
-      pageTitle: 'Program',
+      pageTitle: 'Programme',
       activePageProgram: true,
       languageSwitchLink: '/programm',
       studentprojects: contextSpaceId
@@ -78,7 +78,7 @@ export class AppController {
   }
 
   @Get('/en/advisory-services')
-  @Render('en/program.hbs')
+  @Render('en/programm.hbs')
   getBeratungsangeboteEnglish () {
     return {
       pageTitle: 'Advisory Services',
@@ -100,7 +100,7 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { pageTitle: 'Zeitplan', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return { pageTitle: 'Zeitplan Einzelveranstaltungen', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
   }
 
   @Get('/en/events')
