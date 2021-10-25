@@ -30,11 +30,23 @@
         {{/each}}
     </div>
     <div class="info">
-        {{#if studentproject.parent}}
-            <div class="label">Kontext</div>
+         {{#if bubbles.locations.length}}
+            <div class="label">Location</div>
             <div class="tagbubble">
-                {{#each bubbles as |hierarchyElement|}}
-                    <span><a href="/programm/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                {{#each bubbles.locations as |location|}}
+                    <span><a href="/en/locations?coords={{location.coordinates}}">{{ location.name }}
+                    {{#if location.room}}
+                    — {{location.room}}
+                    {{/if}}
+                    </a></span>
+                {{/each}}
+            </div>
+        {{/if}}
+        {{#if studentproject.parent}}
+            <div class="label">Context</div>
+            <div class="tagbubble">
+                {{#each bubbles.context as |hierarchyElement|}}
+                    <span><a href="/en/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
                 {{/each}}
             </div>
         {{/if}}
