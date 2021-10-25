@@ -150,6 +150,10 @@ main.events .day .event .tags {
   }
 }
 @media only screen and (max-width: 550px) {
+  main.programm .projectswrap .projecttile {
+    width: 100%;
+  }
+
   main.programm #filterline ul li.back {
     width: 100%;
   }
@@ -287,6 +291,11 @@ main.events .day .event {
   }
   header .topline h1 a span {
     display: none !important;
+  }
+}
+@media only screen and (max-width: 340px) {
+  main.programm .projectswrap {
+    grid-template-columns: none;
   }
 }
 @media only screen and (max-height: 750px) {
