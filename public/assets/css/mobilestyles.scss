@@ -36,9 +36,6 @@
 	.singleproject .info{
 		width: 75%;
 	}
-	body.programm .projectswrap .projecttile{
-		width: calc(33% - 15px);
-	}
 }
 
 
@@ -120,9 +117,6 @@
 		width: 100%;
 		position: relative;
 		margin-top: 35px;
-	}
-	body.programm .projectswrap .projecttile{
-		width: calc(50% - 15px);
 	}
 	body.events .day .event{
 		-ms-flex-wrap: wrap;
@@ -284,9 +278,11 @@
 	}
 }
 
-
-
-
+@media only screen and (max-width: 340px) {
+	body.programm .projectswrap{
+		grid-template-columns: none;
+	}
+}
 
 @media only screen and (max-height: 750px) {
 	.menu{
