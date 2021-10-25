@@ -18,7 +18,7 @@ export class StudentprojectService {
     this.studentprojects = {}
   }
 
-  @Interval(60 * 60 * 1000) // Call this every 20 minutes
+  @Interval(30 * 60 * 1000) // Call this every 30 minutes
   async fetch () {
     Logger.log('Fetching student projects...')
 
@@ -182,7 +182,7 @@ export class StudentprojectService {
 
     await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
-    this.studentprojects = result
+    this.studentprojects = _.shuffle(result)
 
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
@@ -475,7 +475,7 @@ export class StudentprojectService {
     })
     return ret
   }
-    
+
   getStructureElementById (id, tree) {
     return this.getStructureElementByIdFunction(id.id, tree)
   }
