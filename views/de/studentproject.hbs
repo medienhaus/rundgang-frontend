@@ -27,25 +27,27 @@
             </div>
         {{/if}}
 
-        {{#if bubbles.locations.length}}
-            <div class="label">Ort</div>
-            {{#each bubbles.locations as |location|}}
-                <div class="tagbubble">
-                    <span>
-                        <a href="/orte?coords={{location.coordinates}}">
-                            {{ location.name }}
-                        </a>
-                    </span>
-                    {{#if location.room}}
+        <div>
+            {{#if bubbles.locations.length}}
+                <div class="label">Ort</div>
+                {{#each bubbles.locations as |location|}}
+                    <div class="tagbubble">
                         <span>
                             <a href="/orte?coords={{location.coordinates}}">
-                                {{location.room}}
+                                {{ location.name }}
                             </a>
                         </span>
-                    {{/if}}
-                </div>
-            {{/each}}
-        {{/if}}
+                        {{#if location.room}}
+                            <span>
+                                <a href="/orte?coords={{location.coordinates}}">
+                                    {{location.room}}
+                                </a>
+                            </span>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
 
         {{#if studentproject.thumbnail_full_size}}
             <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
