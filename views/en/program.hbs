@@ -1,4 +1,4 @@
-{{> de/partials/header }}
+{{> en/partials/header }}
 
 <main class="programm">
     {{#if filterData}}
@@ -8,17 +8,19 @@
                     {{#if parent.id}}
                         <ul style="margin-left: calc({{@index}} * 20px)">
                             {{#if parent.id}}
-                                <li><a href="/programm/{{parent.id}}">{{parent.name}}</a></li>
+                                <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
                             {{/if}}
-                            {{#greaterThan ../filterParents.length @index}}
-                            {{else}}
+                        </ul>
+                        {{#greaterThan ../filterParents.length @index}}
+                        {{else}}
+                            {{#if ../filterData.children}}
                                 <ul style="margin-left: 20px">
                                     {{#each ../filterData.children as |child|}}
-                                        <li><a href="/programm/{{child.id}}">{{child.name}}</a></li>
+                                        <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
                                     {{/each}}
                                 </ul>
-                            {{/greaterThan}}
-                        </ul>
+                            {{/if}}
+                        {{/greaterThan}}
                     {{/if}}
                 {{/each}}
             </div>
@@ -28,7 +30,7 @@
     <div class="projectswrap">
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
-                <a href="/c/{{ id }}">
+                <a href="/en/c/{{ id }}">
                     <div class="image">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
@@ -38,7 +40,7 @@
                         <div class="flags">
                         </div>
                         <div class="hoverinfo">
-                            <p>{{ topicDe }}</p>
+                            <p>{{ topicEn }}</p>
                         </div>
                     </div>
                     <div class="info">
@@ -55,4 +57,4 @@
     </div>
 </main>
 
-{{> de/partials/footer }}
+{{> en/partials/footer }}

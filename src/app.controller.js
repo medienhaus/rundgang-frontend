@@ -20,7 +20,7 @@ export class AppController {
   rootEnglish () { return { languageSwitchLink: '/' } }
 
   @Get('/programm/:contextSpaceId?')
-  @Render('de/programm.hbs')
+  @Render('de/program.hbs')
   @Bind(Param('contextSpaceId'))
   getAll (contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
@@ -39,7 +39,7 @@ export class AppController {
   }
 
   @Get('/en/programme/:contextSpaceId?')
-  @Render('en/programme.hbs')
+  @Render('en/program.hbs')
   @Bind(Param('contextSpaceId'))
   getAllEnglish (contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
@@ -58,7 +58,7 @@ export class AppController {
   }
 
   @Get('/beratungsangebote')
-  @Render('de/programm.hbs')
+  @Render('de/program.hbs')
   getBeratungsangebote () {
     return {
       pageTitle: 'Beratungsangebote',
@@ -78,7 +78,7 @@ export class AppController {
   }
 
   @Get('/en/advisory-services')
-  @Render('en/programme.hbs')
+  @Render('en/program.hbs')
   getBeratungsangeboteEnglish () {
     return {
       pageTitle: 'Advisory Services',
@@ -100,34 +100,62 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { pageTitle: 'Zeitplan Einzelveranstaltungen', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return {
+      pageTitle: 'Zeitplan Einzelveranstaltungen',
+      languageSwitchLink: '/en/events',
+      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    }
   }
 
   @Get('/en/events')
   @Render('en/events.hbs')
   getAllEventsEnglish () {
-    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return {
+      pageTitle: 'Event Calendar',
+      languageSwitchLink: '/zeitplan',
+      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    }
   }
 
   @Get('/orte')
   @Render('de/locations.hbs')
   getAllLocations () {
-    return { languageSwitchLink: '/en/locations' }
+    return {
+      pageTitle: 'Orte',
+      activePageLocations: true,
+      languageSwitchLink: '/en/locations'
+    }
   }
 
   @Get('/en/locations')
   @Render('en/locations.hbs')
   getAllLocationsEngl () {
-    return { languageSwitchLink: '/orte' }
+    return {
+      pageTitle: 'Locations',
+      activePageLocations: true,
+      languageSwitchLink: '/orte'
+    }
   }
 
   @Get('/einlasszeiten')
   @Render('de/hours.hbs')
-  hours () { return { languageSwitchLink: '/en/admission-times' } }
+  hours () {
+    return {
+      pageTitle: 'Einlasszeiten',
+      activePageAdmissionTimes: true,
+      languageSwitchLink: '/en/admission-times'
+    }
+  }
 
   @Get('/en/admission-times')
   @Render('en/hours.hbs')
-  hoursEnglish () { return { languageSwitchLink: '/einlasszeiten' } }
+  hoursEnglish () {
+    return {
+      pageTitle: 'Admission Times',
+      activePageAdmissionTimes: true,
+      languageSwitchLink: '/einlasszeiten'
+    }
+  }
 
   @Get('/c/:id')
   @Bind(Response(), Param())
