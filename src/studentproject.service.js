@@ -389,7 +389,6 @@ export class StudentprojectService {
 
   bringingOrderToEventsAndSanitize (data) { // function can be trashed after rundgang. Not generalizable at all, just to fetch deprecated user input.
     const ret = {
-      '2021-10-28': data['2021-10-28'],
       '2021-10-29': data['2021-10-29'],
       '2021-10-30': data['2021-10-30'],
       '2021-10-31': data['2021-10-31']
@@ -485,6 +484,19 @@ export class StudentprojectService {
 
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
+  }
+
+  // Return all student projects that happen at a given location
+  getByLocation (lat, lng) {
+    return _.filter(this.studentprojects, (project) =>
+      _.some(project.events, (event) =>
+        _.some(event, (eventProperty) =>
+          eventProperty.name === 'location' && _.some(eventProperty.content, (content) =>
+            _.startsWith(content, `${lat}, ${lng}-`)
+          )
+        )
+      )
+    )
   }
 
   async get (id, language = 'en') {
