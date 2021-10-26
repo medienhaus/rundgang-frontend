@@ -18,35 +18,34 @@
             {{/if}}
         </div>
 
-        <div class="info">
-             {{#if bubbles.locations.length}}
-                <div class="label">Ort</div>
-                {{#each bubbles.locations as |location|}}
-                    <div class="tagbubble">
+        {{#if studentproject.parent}}
+            <div class="label">Kontext</div>
+            <div class="tagbubble">
+                {{#each bubbles.context as |hierarchyElement|}}
+                    <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if bubbles.locations.length}}
+            <div class="label">Ort</div>
+            {{#each bubbles.locations as |location|}}
+                <div class="tagbubble">
+                    <span>
+                        <a href="/orte?coords={{location.coordinates}}">
+                            {{ location.name }}
+                        </a>
+                    </span>
+                    {{#if location.room}}
                         <span>
                             <a href="/orte?coords={{location.coordinates}}">
-                                {{ location.name }}
+                                {{location.room}}
                             </a>
                         </span>
-                        {{#if location.room}}
-                            <span>
-                                <a href="/orte?coords={{location.coordinates}}">
-                                    {{location.room}}
-                                </a>
-                            </span>
-                        {{/if}}
-                    </div>
-                {{/each}}
-            {{/if}}
-            {{#if studentproject.parent}}
-                <div class="label">Kontext</div>
-                <div class="tagbubble">
-                    {{#each bubbles.context as |hierarchyElement|}}
-                        <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
-                    {{/each}}
+                    {{/if}}
                 </div>
-            {{/if}}
-        </div>
+            {{/each}}
+        {{/if}}
 
         {{#if studentproject.thumbnail_full_size}}
             <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
