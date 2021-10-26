@@ -489,7 +489,7 @@ main.start div.footer.onlymobile {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 10px;
   display: none;
 }
 main.start div.footer.onlymobile ul {
@@ -699,14 +699,6 @@ main.programm #filterline {
   margin-top: 70px;
   padding-left: 20px;
   padding-right: 20px;
-  /*
-  ul + ul::before {
-  	content: '\21B3\00A0';
-  }
-  div > ul:last-of-type > ul {
-  	padding-left: 1ex;
-  }
-  */
 }
 main.programm #filterline ul {
   list-style: none;
@@ -767,6 +759,12 @@ main.programm #filterline ul li.back span {
 }
 main.programm #filterline ul li.back span:hover {
   opacity: 1;
+}
+main.programm #filterline ul + ul::before {
+  content: "↳ ";
+}
+main.programm #filterline div > ul:last-of-type > ul {
+  padding-left: 1ex;
 }
 main.programm #filterline .level {
   display: none;
