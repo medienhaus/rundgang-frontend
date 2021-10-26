@@ -1193,6 +1193,12 @@ main.programm .projectswrap .projecttile a.blocklink {
   margin-bottom: 8px;
   margin-top: 20px;
 }
+.singleproject .info .tagbubble span {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .singleproject ul {
   list-style-position: outside;
   list-style-type: "–  ";
