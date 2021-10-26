@@ -18,6 +18,15 @@
             {{/if}}
         </div>
 
+        {{#if studentproject.parent}}
+            <div class="label">Kontext</div>
+            <div class="tagbubble">
+                {{#each bubbles.context as |hierarchyElement|}}
+                    <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                {{/each}}
+            </div>
+        {{/if}}
+
         <div class="info">
              {{#if bubbles.locations.length}}
                 <div class="label">Ort</div>
@@ -37,14 +46,6 @@
                         {{/if}}
                     </div>
                 {{/each}}
-            {{/if}}
-            {{#if studentproject.parent}}
-                <div class="label">Kontext</div>
-                <div class="tagbubble">
-                    {{#each bubbles.context as |hierarchyElement|}}
-                        <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
-                    {{/each}}
-                </div>
             {{/if}}
         </div>
 
