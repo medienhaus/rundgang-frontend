@@ -18,17 +18,6 @@
             {{/if}}
         </div>
 
-        {{#if studentproject.parent}}
-            <div>
-                <div class="label">Context</div>
-                <div class="tagbubble">
-                    {{#each bubbles.context as |hierarchyElement|}}
-                        <span><a href="/en/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
-                    {{/each}}
-                </div>
-            </div>
-        {{/if}}
-
         {{#if bubbles.locations.length}}
             <div>
                 <div class="label">Events</div>
@@ -75,7 +64,19 @@
         {{#each studentproject.content}}
             {{{ formatted_content }}}
         {{/each}}
+
+        {{#if studentproject.parent}}
+            <div>
+                <div class="label">Context</div>
+                <div class="tagbubble">
+                    {{#each bubbles.context as |hierarchyElement|}}
+                        <span><a href="/en/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
     </div>
+
 </main>
 
 <script src="/assets/js/green-audio-player.min.js"></script>
