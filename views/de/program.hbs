@@ -13,7 +13,7 @@
                         </ul>
                         {{#greaterThan ../filterParents.length @index}}
                         {{else}}
-                            <ul style="margin-left: calc({{@index}} * 20px)">a
+                            <ul style="margin-left: calc({{@index}} * 20px)">
                                 {{#each ../filterData.children as |child|}}
                                     <li><a href="/programm/{{child.id}}">{{child.name}}</a></li>
                                 {{/each}}
