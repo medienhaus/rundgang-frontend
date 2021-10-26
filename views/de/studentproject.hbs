@@ -34,7 +34,7 @@
             <div class="label">Ort</div>
             <div class="tagbubble">
                 {{#each bubbles.locations as |location|}}
-                    <span><a href="/locations?coords={{location.coordinates}}">{{ location.name }}
+                    <span><a href="/orte?coords={{location.coordinates}}">{{ location.name }}
                     {{#if location.room}}
                     — {{location.room}}
                     {{/if}}
