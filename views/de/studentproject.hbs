@@ -32,8 +32,8 @@
     <div class="info">
          {{#if bubbles.locations.length}}
             <div class="label">Ort</div>
-            <div class="tagbubble">
-                {{#each bubbles.locations as |location|}}
+            {{#each bubbles.locations as |location|}}
+                <div class="tagbubble">
                     <span>
                         <a href="/orte?coords={{location.coordinates}}">
                             {{ location.name }}
@@ -46,8 +46,8 @@
                             </a>
                         </span>
                     {{/if}}
-                {{/each}}
-            </div>
+                </div>
+            {{/each}}
         {{/if}}
         {{#if studentproject.parent}}
             <div class="label">Kontext</div>
