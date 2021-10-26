@@ -123,11 +123,23 @@ export class AppController {
 
   @Get('/einlasszeiten')
   @Render('de/hours.hbs')
-  hours () { return { languageSwitchLink: '/en/admission-times' } }
+  hours () {
+    return {
+      pageTitle: 'Einlasszeiten',
+      activePageAdmissionTimes: true,
+      languageSwitchLink: '/en/admission-times'
+    }
+  }
 
   @Get('/en/admission-times')
   @Render('en/hours.hbs')
-  hoursEnglish () { return { languageSwitchLink: '/einlasszeiten' } }
+  hoursEnglish () {
+    return {
+      pageTitle: 'Admission Times',
+      activePageAdmissionTimes: true,
+      languageSwitchLink: '/einlasszeiten'
+    }
+  }
 
   @Get('/c/:id')
   @Bind(Response(), Param())
