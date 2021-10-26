@@ -100,13 +100,21 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { pageTitle: 'Zeitplan Einzelveranstaltungen', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return {
+      pageTitle: 'Zeitplan Einzelveranstaltungen',
+      languageSwitchLink: '/en/events',
+      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    }
   }
 
   @Get('/en/events')
   @Render('en/events.hbs')
   getAllEventsEnglish () {
-    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return {
+      pageTitle: 'Event Calendar',
+      languageSwitchLink: '/zeitplan',
+      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    }
   }
 
   @Get('/orte')
