@@ -424,7 +424,6 @@ export class StudentprojectService {
 
   bringingOrderToEventsAndSanitize (data) { // function can be trashed after rundgang. Not generalizable at all, just to fetch deprecated user input.
     const ret = {
-      '2021-10-28': data['2021-10-28'],
       '2021-10-29': data['2021-10-29'],
       '2021-10-30': data['2021-10-30'],
       '2021-10-31': data['2021-10-31']
