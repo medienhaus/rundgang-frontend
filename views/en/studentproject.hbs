@@ -27,16 +27,15 @@
             </div>
         {{/if}}
 
-        <div class="eventinfo">
-            <div class="day">Freitag, 29.10.2021</div>
-            <div class="flexbox">
-                <div class="time">14:00–18:00 Uhr</div>
-                <div class="infos">
-                    <div class="tags">
-                        <ul>
-                            {{#if bubbles.locations.length}}
-                                <div class="label">Location</div>
-                                {{#each bubbles.locations as |location|}}
+        {{#if bubbles.locations.length}}
+            {{#each bubbles.locations as |location|}}
+                <div class="eventinfo">
+                    <div class="day">Freitag, 29.10.2021</div>
+                    <div class="flexbox">
+                        <div class="time">14:00–18:00 Uhr</div>
+                        <div class="infos">
+                            <div class="tags">
+                                <ul>
                                     <div class="tagbubble">
                                         <span>
                                             <a href="/en/locations?coords={{location.coordinates}}">
@@ -51,14 +50,14 @@
                                             </span>
                                         {{/if}}
                                     </div>
-                                {{/each}}
-                            {{/if}}
-                            <li class="stream conference"><a href="">Konferenz beitreten</a></li>
-                        </ul>
+                                    <li class="stream conference"><a href="">Konferenz beitreten</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            {{/each}}
+        {{/if}}
 
 {{> en/partials/footer }}
         {{#if studentproject.thumbnail_full_size}}
