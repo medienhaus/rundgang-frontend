@@ -10,15 +10,15 @@
                             {{#if parent.id}}
                                 <li><a href="/programm/{{parent.id}}">{{parent.name}}</a></li>
                             {{/if}}
-                            {{#greaterThan ../filterParents.length @index}}
-                            {{else}}
-                                <ul style="margin-left: 20px">
-                                    {{#each ../filterData.children as |child|}}
-                                        <li><a href="/programm/{{child.id}}">{{child.name}}</a></li>
-                                    {{/each}}
-                                </ul>
-                            {{/greaterThan}}
                         </ul>
+                        {{#greaterThan ../filterParents.length @index}}
+                        {{else}}
+                        <ul style="margin-left: calc({{@index}} * 20px)">
+                            {{#each ../filterData.children as |child|}}
+                                <li><a href="/programm/{{child.id}}">{{child.name}}</a></li>
+                            {{/each}}
+                        </ul>
+                        {{/greaterThan}}
                     {{/if}}
                 {{/each}}
             </div>
