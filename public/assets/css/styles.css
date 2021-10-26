@@ -423,19 +423,19 @@ div.overlay.menuopen {
 
 /* STARTPAGE STYLES
    ============================= */
-main.start .choose {
+body.start .choose {
   width: 50%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 20px;
   padding-top: 20px;
 }
-main.start .choose .rundganginfo {
+body.start .choose .rundganginfo {
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 20px;
 }
-main.start .choose ul {
+body.start .choose ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -446,7 +446,7 @@ main.start .choose ul {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-main.start .choose ul li {
+body.start .choose ul li {
   font-weight: 500;
   font-size: 41px;
   background-color: black;
@@ -457,33 +457,33 @@ main.start .choose ul li {
   margin-right: 4px;
   margin-bottom: 10px;
 }
-main.start .choose ul li a {
+body.start .choose ul li a {
   color: white;
   text-decoration: inherit;
 }
-main.start div.footer {
+body.start div.footer {
   position: absolute;
   bottom: 10px;
   width: 50%;
 }
-main.start div.footer ul li {
+body.start div.footer ul li {
   background-color: transparent;
   font-size: 14px;
   padding: 0px;
   padding-right: 12px;
   margin-bottom: 2px;
 }
-main.start div.footer ul li a {
+body.start div.footer ul li a {
   color: #C4C4C4;
   -webkit-transition: color 0.3s;
   -o-transition: color 0.3s;
   transition: color 0.3s;
   text-decoration: none;
 }
-main.start div.footer ul li a:hover {
+body.start div.footer ul li a:hover {
   color: black;
 }
-main.start div.footer.onlymobile {
+body.start div.footer.onlymobile {
   position: relative;
   bottom: unset;
   width: 100%;
@@ -492,7 +492,7 @@ main.start div.footer.onlymobile {
   padding: 20px;
   display: none;
 }
-main.start div.footer.onlymobile ul {
+body.start div.footer.onlymobile ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -503,11 +503,11 @@ main.start div.footer.onlymobile ul {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-main.start .plakat {
+body.start .plakat {
   width: 50%;
   height: calc(100vh - 55px);
 }
-main.start div.greypill {
+body.start div.greypill {
   background-color: #C4C4C4;
   font-size: 14px;
   padding: 0px;
@@ -522,11 +522,11 @@ main.start div.greypill {
   height: 26px;
   line-height: 26px;
 }
-main.start div.greypill a {
+body.start div.greypill a {
   color: black;
   text-decoration: inherit;
 }
-main.start div.rundang.greypill {
+body.start div.rundang.greypill {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -694,13 +694,21 @@ main.start div.rundang.greypill {
 
 /* STYLES FÜR PROJEKTÜBERSICHT / PROGRAMM
    ============================= */
-main.programm #filterline {
+body.programm #filterline {
   position: relative;
   margin-top: 70px;
   padding-left: 20px;
   padding-right: 20px;
+  /*
+  ul + ul::before {
+  	content: '\21B3\00A0';
+  }
+  div > ul:last-of-type > ul {
+  	padding-left: 1ex;
+  }
+  */
 }
-main.programm #filterline ul {
+body.programm #filterline ul {
   list-style: none;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -710,7 +718,7 @@ main.programm #filterline ul {
   margin: 0;
   padding: 0;
 }
-main.programm #filterline ul li:not(.back) {
+body.programm #filterline ul li:not(.back) {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -727,18 +735,22 @@ main.programm #filterline ul li:not(.back) {
   box-sizing: border-box;
   background: black;
   color: white;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-main.programm #filterline ul li a {
+body.programm #filterline ul li a {
   color: white;
   text-decoration: none;
 }
-main.programm #filterline ul li.back {
+body.programm #filterline ul li.back {
   font-weight: 500;
   font-size: 14px;
   color: #858585;
   margin-right: 6px;
 }
-main.programm #filterline ul li.back span {
+body.programm #filterline ul li.back span {
   width: 26px;
   height: 26px;
   display: inline-block;
@@ -753,22 +765,16 @@ main.programm #filterline ul li.back span {
   transition: opacity 0.3s;
   cursor: pointer;
 }
-main.programm #filterline ul li.back span:hover {
+body.programm #filterline ul li.back span:hover {
   opacity: 1;
 }
-main.programm #filterline ul + ul::before {
-  content: "↳ ";
-}
-main.programm #filterline div > ul:last-of-type > ul {
-  padding-left: 1ex;
-}
-main.programm #filterline .level {
+body.programm #filterline .level {
   display: none;
 }
-main.programm #filterline .level.active {
+body.programm #filterline .level.active {
   display: block;
 }
-main.programm #filterline .selected > div {
+body.programm #filterline .selected > div {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -789,28 +795,28 @@ main.programm #filterline .selected > div {
   color: black;
   line-height: 24px;
 }
-main.programm #filterline .selected > div > span {
+body.programm #filterline .selected > div > span {
   font-size: 24px;
   vertical-align: -3px;
   margin-left: 5px;
 }
-main.programm #filterline .second ul {
+body.programm #filterline .second ul {
   display: none;
 }
-main.programm #filterline .second ul li.hide {
+body.programm #filterline .second ul li.hide {
   display: none;
 }
-main.programm #filterline .second ul.active {
+body.programm #filterline .second ul.active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-main.programm hr {
+body.programm hr {
   border: none;
   border-bottom: 1px solid #C4C4C4;
   outline: 0;
 }
-main.programm .projectswrap {
+body.programm .projectswrap {
   margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
@@ -818,21 +824,21 @@ main.programm .projectswrap {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
 }
-main.programm .projectswrap .projecttile {
+body.programm .projectswrap .projecttile {
   position: relative;
 }
-main.programm .projectswrap .projecttile h2 {
+body.programm .projectswrap .projecttile h2 {
   font-size: 16px;
   font-weight: 500;
   margin-top: 5px;
 }
-main.programm .projectswrap .projecttile .info {
+body.programm .projectswrap .projecttile .info {
   font-size: 16px;
   margin-bottom: 30px;
   line-height: 1.2;
   margin-top: 7px;
 }
-main.programm .projectswrap .projecttile .hoverinfo {
+body.programm .projectswrap .projecttile .hoverinfo {
   opacity: 0;
   position: absolute;
   top: 0;
@@ -852,7 +858,7 @@ main.programm .projectswrap .projecttile .hoverinfo {
   width: 100%;
   overflow: hidden;
 }
-main.programm .projectswrap .projecttile .hoverinfo p {
+body.programm .projectswrap .projecttile .hoverinfo p {
   font-size: 16px;
   line-height: 19px;
   margin: 0;
@@ -862,29 +868,29 @@ main.programm .projectswrap .projecttile .hoverinfo p {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-main.programm .projectswrap .projecttile a:hover + .hoverinfo {
+body.programm .projectswrap .projecttile a:hover + .hoverinfo {
   opacity: 1;
 }
-main.programm .projectswrap .projecttile .image {
+body.programm .projectswrap .projecttile .image {
   background-color: #c7c7c7;
   position: relative;
   line-height: 0;
   display: flex;
-  max-height: 80vh;
+  max-height: 70vh;
 }
-main.programm .projectswrap .projecttile .image img {
+body.programm .projectswrap .projecttile .image img {
   width: 100%;
   height: auto;
   opacity: 0.9;
   object-position: center;
   object-fit: cover;
 }
-main.programm .projectswrap .projecttile .image .flags {
+body.programm .projectswrap .projecttile .image .flags {
   position: absolute;
   right: 3px;
   top: 8px;
 }
-main.programm .projectswrap .projecttile .image .online {
+body.programm .projectswrap .projecttile .image .online {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -902,7 +908,7 @@ main.programm .projectswrap .projecttile .image .online {
   display: inline-block;
   background-color: #00C770;
 }
-main.programm .projectswrap .projecttile .image .live, main.programm .projectswrap .projecttile .image .livein {
+body.programm .projectswrap .projecttile .image .live, body.programm .projectswrap .projecttile .image .livein {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -920,11 +926,11 @@ main.programm .projectswrap .projecttile .image .live, main.programm .projectswr
   display: inline-block;
   background-color: #E4003A;
 }
-main.programm .projectswrap .projecttile .image .live {
+body.programm .projectswrap .projecttile .image .live {
   padding-left: 22px;
   position: relative;
 }
-main.programm .projectswrap .projecttile .image .live span {
+body.programm .projectswrap .projecttile .image .live span {
   background-color: white;
   width: 8px;
   height: 8px;
@@ -943,7 +949,7 @@ main.programm .projectswrap .projecttile .image .live span {
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
 }
-main.programm .projectswrap .projecttile .image .livein span {
+body.programm .projectswrap .projecttile .image .livein span {
   -webkit-animation: 1s seconds infinite step-end;
   animation: 1s seconds infinite step-end;
 }
@@ -979,24 +985,24 @@ main.programm .projectswrap .projecttile .image .livein span {
     opacity: 0;
   }
 }
-main.programm .projectswrap .projecttile .image:hover .hoverinfo {
+body.programm .projectswrap .projecttile .image:hover .hoverinfo {
   opacity: 1;
 }
-main.programm .projectswrap .projecttile .image.noimage {
+body.programm .projectswrap .projecttile .image.noimage {
   width: 100%;
   aspect-ratio: 3/2;
   background-image: url(../img/noimage.svg);
   background-size: cover;
   background-color: white;
 }
-main.programm .projectswrap .projecttile.flexfix {
+body.programm .projectswrap .projecttile.flexfix {
   height: 1px;
 }
-main.programm .projectswrap .projecttile a {
+body.programm .projectswrap .projecttile a {
   color: inherit;
   text-decoration: inherit;
 }
-main.programm .projectswrap .projecttile a.blocklink {
+body.programm .projectswrap .projecttile a.blocklink {
   width: 100%;
   height: 100%;
   top: 0;
@@ -1247,19 +1253,19 @@ main.programm .projectswrap .projecttile a.blocklink {
 
 /* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
    ============================= */
-main.events .eventswrap {
+body.events .eventswrap {
   margin-top: 100px;
 }
-main.events .day {
+body.events .day {
   margin-top: 50px;
 }
-main.events .day h2 {
+body.events .day h2 {
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 25px;
   padding-left: 20px;
 }
-main.events .day .event {
+body.events .day .event {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1276,50 +1282,50 @@ main.events .day .event {
   padding-top: 7px;
   padding-bottom: 7px;
 }
-main.events .day .event .time {
+body.events .day .event .time {
   width: 150px;
   -webkit-font-feature-settings: "tnum" 1;
   font-feature-settings: "tnum" 1;
   font-size: 15px;
   font-weight: 500;
 }
-main.events .day .event h3 {
+body.events .day .event h3 {
   width: 550px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding-left: 25px;
   font-size: 16px;
 }
-main.events .day .event h3 a {
+body.events .day .event h3 a {
   color: inherit;
   text-decoration: none;
 }
-main.events .day .event .tags {
+body.events .day .event .tags {
   padding-left: 80px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: calc(100% - 700px);
 }
-main.events .day .event .tags ul {
+body.events .day .event .tags ul {
   padding: 0;
   margin: 0;
 }
-main.events .day .event .tags ul li {
+body.events .day .event .tags ul li {
   margin-right: 2px;
   margin-bottom: 6px;
   font-weight: 500;
 }
-main.events .day .event .tags ul li a {
+body.events .day .event .tags ul li a {
   text-decoration: none;
   color: white;
 }
-main.events .day .event .tags ul li.online {
+body.events .day .event .tags ul li.online {
   background-color: #00C770;
 }
-main.events .day .event .tags ul li.bbb {
+body.events .day .event .tags ul li.bbb {
   background-color: #E4003A;
 }
-main.events .day .event:hover {
+body.events .day .event:hover {
   background-color: #F1F1F1;
 }
 
@@ -1367,9 +1373,67 @@ main.hours > div h3 {
   margin-top: 30px;
 }
 
+main.error {
+  height: calc(100vh - 55px);
+}
+main.error > div {
+  max-width: 500px;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+main.error > div > h2 {
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+main.error > div > p {
+  font-weight: 500;
+}
+main.error > div .pill {
+  background: black;
+  height: 26px;
+  border-radius: 60px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 26px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+}
+main.error > div > div {
+  width: 250px;
+  height: 0px;
+  margin: 0 auto;
+  margin-top: 330px;
+  background: red;
+}
+main.error > div > div img {
+  transform: rotate(150deg);
+  transform-origin: top;
+  animation: 3s ease-in-out infinite alternate wackel;
+}
+@keyframes wackel {
+  from {
+    transform: rotate(150deg);
+  }
+  to {
+    transform: rotate(160deg);
+  }
+}
+
 /* STYLES FOR STARTPAGE PLAKAT
    ============================= */
-main.start .plakat {
+body.start .plakat {
   background-image: url("../img/plakat/strasse.svg"), url("../img/plakat/udkpilz.svg"), url("../img/plakat/hausline.svg"), url("../img/plakat/kleinepilze.svg"), url("../img/plakat/dotsbg.png");
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-position: bottom left, bottom center, bottom left, bottom center, center center;
@@ -1377,11 +1441,11 @@ main.start .plakat {
 }
 
 @-moz-document url-prefix() {
-  main.programm #filterline ul li:not(.back),
-main.programm .projectswrap .projecttile .image .online,
+  body.programm #filterline ul li:not(.back),
+body.programm .projectswrap .projecttile .image .online,
 .tagbubble span,
-main.start div.greypill,
-main.start .choose div.footer ul li,
+body.start div.greypill,
+body.start .choose div.footer ul li,
 .singleproject .projectmain .bbb span.bbblink {
     line-height: 28px;
   }
@@ -1390,7 +1454,7 @@ main.start .choose div.footer ul li,
     line-height: 26px;
   }
 
-  main.start .choose ul li {
+  body.start .choose ul li {
     padding-top: 17px;
   }
 }
