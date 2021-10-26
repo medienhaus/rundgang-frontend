@@ -523,7 +523,7 @@ export class StudentprojectService {
           contents.content.forEach(content => {
             const exists = data.locations.find(loc => {
               if (content.split('-')[1] === null || content.split('-')[1].length === 0) {
-                if (loc.name === content.split('-')[0]) {
+                if (loc.coordinates === content.split('-')[0]) {
                   return true
                 }
               }
