@@ -3,35 +3,7 @@
 <main class="singleproject">
     <a href="/programm"><div class="projectclose"></div></a>
     <a href="/programm"><div class="back"></div></a>
-    <div class="info">
-         {{#if bubbles.locations.length}}
-            <div class="label">Ort</div>
-            {{#each bubbles.locations as |location|}}
-                <div class="tagbubble">
-                    <span>
-                        <a href="/orte?coords={{location.coordinates}}">
-                            {{ location.name }}
-                        </a>
-                    </span>
-                    {{#if location.room}}
-                        <span>
-                            <a href="/orte?coords={{location.coordinates}}">
-                                {{location.room}}
-                            </a>
-                        </span>
-                    {{/if}}
-                </div>
-            {{/each}}
-        {{/if}}
-        {{#if studentproject.parent}}
-            <div class="label">Kontext</div>
-            <div class="tagbubble">
-                {{#each bubbles.context as |hierarchyElement|}}
-                    <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
-                {{/each}}
-            </div>
-        {{/if}}
-    </div>
+
     <div class="projectmain">
         <h2 class="projecttitle">{{ studentproject.name }}</h2>
 
@@ -43,6 +15,36 @@
                 {{#each studentproject.credits}}
                     <span>{{.}}</span>
                 {{/each}}
+            {{/if}}
+        </div>
+
+        <div class="info">
+             {{#if bubbles.locations.length}}
+                <div class="label">Ort</div>
+                {{#each bubbles.locations as |location|}}
+                    <div class="tagbubble">
+                        <span>
+                            <a href="/orte?coords={{location.coordinates}}">
+                                {{ location.name }}
+                            </a>
+                        </span>
+                        {{#if location.room}}
+                            <span>
+                                <a href="/orte?coords={{location.coordinates}}">
+                                    {{location.room}}
+                                </a>
+                            </span>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            {{/if}}
+            {{#if studentproject.parent}}
+                <div class="label">Kontext</div>
+                <div class="tagbubble">
+                    {{#each bubbles.context as |hierarchyElement|}}
+                        <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                    {{/each}}
+                </div>
             {{/if}}
         </div>
 
