@@ -423,19 +423,19 @@ div.overlay.menuopen {
 
 /* STARTPAGE STYLES
    ============================= */
-body.start .choose {
+main.start .choose {
   width: 50%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 20px;
   padding-top: 20px;
 }
-body.start .choose .rundganginfo {
+main.start .choose .rundganginfo {
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 20px;
 }
-body.start .choose ul {
+main.start .choose ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -446,7 +446,7 @@ body.start .choose ul {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-body.start .choose ul li {
+main.start .choose ul li {
   font-weight: 500;
   font-size: 41px;
   background-color: black;
@@ -457,33 +457,33 @@ body.start .choose ul li {
   margin-right: 4px;
   margin-bottom: 10px;
 }
-body.start .choose ul li a {
+main.start .choose ul li a {
   color: white;
   text-decoration: inherit;
 }
-body.start div.footer {
+main.start div.footer {
   position: absolute;
   bottom: 10px;
   width: 50%;
 }
-body.start div.footer ul li {
+main.start div.footer ul li {
   background-color: transparent;
   font-size: 14px;
   padding: 0px;
   padding-right: 12px;
   margin-bottom: 2px;
 }
-body.start div.footer ul li a {
+main.start div.footer ul li a {
   color: #C4C4C4;
   -webkit-transition: color 0.3s;
   -o-transition: color 0.3s;
   transition: color 0.3s;
   text-decoration: none;
 }
-body.start div.footer ul li a:hover {
+main.start div.footer ul li a:hover {
   color: black;
 }
-body.start div.footer.onlymobile {
+main.start div.footer.onlymobile {
   position: relative;
   bottom: unset;
   width: 100%;
@@ -492,7 +492,7 @@ body.start div.footer.onlymobile {
   padding: 20px;
   display: none;
 }
-body.start div.footer.onlymobile ul {
+main.start div.footer.onlymobile ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -503,11 +503,11 @@ body.start div.footer.onlymobile ul {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-body.start .plakat {
+main.start .plakat {
   width: 50%;
   height: calc(100vh - 55px);
 }
-body.start div.greypill {
+main.start div.greypill {
   background-color: #C4C4C4;
   font-size: 14px;
   padding: 0px;
@@ -522,11 +522,11 @@ body.start div.greypill {
   height: 26px;
   line-height: 26px;
 }
-body.start div.greypill a {
+main.start div.greypill a {
   color: black;
   text-decoration: inherit;
 }
-body.start div.rundang.greypill {
+main.start div.rundang.greypill {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -694,7 +694,7 @@ body.start div.rundang.greypill {
 
 /* STYLES FÜR PROJEKTÜBERSICHT / PROGRAMM
    ============================= */
-body.programm #filterline {
+main.programm #filterline {
   position: relative;
   margin-top: 70px;
   padding-left: 20px;
@@ -708,7 +708,7 @@ body.programm #filterline {
   }
   */
 }
-body.programm #filterline ul {
+main.programm #filterline ul {
   list-style: none;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -718,7 +718,7 @@ body.programm #filterline ul {
   margin: 0;
   padding: 0;
 }
-body.programm #filterline ul li:not(.back) {
+main.programm #filterline ul li:not(.back) {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -740,17 +740,17 @@ body.programm #filterline ul li:not(.back) {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-body.programm #filterline ul li a {
+main.programm #filterline ul li a {
   color: white;
   text-decoration: none;
 }
-body.programm #filterline ul li.back {
+main.programm #filterline ul li.back {
   font-weight: 500;
   font-size: 14px;
   color: #858585;
   margin-right: 6px;
 }
-body.programm #filterline ul li.back span {
+main.programm #filterline ul li.back span {
   width: 26px;
   height: 26px;
   display: inline-block;
@@ -765,16 +765,16 @@ body.programm #filterline ul li.back span {
   transition: opacity 0.3s;
   cursor: pointer;
 }
-body.programm #filterline ul li.back span:hover {
+main.programm #filterline ul li.back span:hover {
   opacity: 1;
 }
-body.programm #filterline .level {
+main.programm #filterline .level {
   display: none;
 }
-body.programm #filterline .level.active {
+main.programm #filterline .level.active {
   display: block;
 }
-body.programm #filterline .selected > div {
+main.programm #filterline .selected > div {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -795,28 +795,28 @@ body.programm #filterline .selected > div {
   color: black;
   line-height: 24px;
 }
-body.programm #filterline .selected > div > span {
+main.programm #filterline .selected > div > span {
   font-size: 24px;
   vertical-align: -3px;
   margin-left: 5px;
 }
-body.programm #filterline .second ul {
+main.programm #filterline .second ul {
   display: none;
 }
-body.programm #filterline .second ul li.hide {
+main.programm #filterline .second ul li.hide {
   display: none;
 }
-body.programm #filterline .second ul.active {
+main.programm #filterline .second ul.active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-body.programm hr {
+main.programm hr {
   border: none;
   border-bottom: 1px solid #C4C4C4;
   outline: 0;
 }
-body.programm .projectswrap {
+main.programm .projectswrap {
   margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
@@ -824,21 +824,21 @@ body.programm .projectswrap {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
 }
-body.programm .projectswrap .projecttile {
+main.programm .projectswrap .projecttile {
   position: relative;
 }
-body.programm .projectswrap .projecttile h2 {
+main.programm .projectswrap .projecttile h2 {
   font-size: 16px;
   font-weight: 500;
   margin-top: 5px;
 }
-body.programm .projectswrap .projecttile .info {
+main.programm .projectswrap .projecttile .info {
   font-size: 16px;
   margin-bottom: 30px;
   line-height: 1.2;
   margin-top: 7px;
 }
-body.programm .projectswrap .projecttile .hoverinfo {
+main.programm .projectswrap .projecttile .hoverinfo {
   opacity: 0;
   position: absolute;
   top: 0;
@@ -858,7 +858,7 @@ body.programm .projectswrap .projecttile .hoverinfo {
   width: 100%;
   overflow: hidden;
 }
-body.programm .projectswrap .projecttile .hoverinfo p {
+main.programm .projectswrap .projecttile .hoverinfo p {
   font-size: 16px;
   line-height: 19px;
   margin: 0;
@@ -868,29 +868,29 @@ body.programm .projectswrap .projecttile .hoverinfo p {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-body.programm .projectswrap .projecttile a:hover + .hoverinfo {
+main.programm .projectswrap .projecttile a:hover + .hoverinfo {
   opacity: 1;
 }
-body.programm .projectswrap .projecttile .image {
+main.programm .projectswrap .projecttile .image {
   background-color: #c7c7c7;
   position: relative;
   line-height: 0;
   display: flex;
   max-height: 70vh;
 }
-body.programm .projectswrap .projecttile .image img {
+main.programm .projectswrap .projecttile .image img {
   width: 100%;
   height: auto;
   opacity: 0.9;
   object-position: center;
   object-fit: cover;
 }
-body.programm .projectswrap .projecttile .image .flags {
+main.programm .projectswrap .projecttile .image .flags {
   position: absolute;
   right: 3px;
   top: 8px;
 }
-body.programm .projectswrap .projecttile .image .online {
+main.programm .projectswrap .projecttile .image .online {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -908,7 +908,7 @@ body.programm .projectswrap .projecttile .image .online {
   display: inline-block;
   background-color: #00C770;
 }
-body.programm .projectswrap .projecttile .image .live, body.programm .projectswrap .projecttile .image .livein {
+main.programm .projectswrap .projecttile .image .live, main.programm .projectswrap .projecttile .image .livein {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -926,11 +926,11 @@ body.programm .projectswrap .projecttile .image .live, body.programm .projectswr
   display: inline-block;
   background-color: #E4003A;
 }
-body.programm .projectswrap .projecttile .image .live {
+main.programm .projectswrap .projecttile .image .live {
   padding-left: 22px;
   position: relative;
 }
-body.programm .projectswrap .projecttile .image .live span {
+main.programm .projectswrap .projecttile .image .live span {
   background-color: white;
   width: 8px;
   height: 8px;
@@ -949,7 +949,7 @@ body.programm .projectswrap .projecttile .image .live span {
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
 }
-body.programm .projectswrap .projecttile .image .livein span {
+main.programm .projectswrap .projecttile .image .livein span {
   -webkit-animation: 1s seconds infinite step-end;
   animation: 1s seconds infinite step-end;
 }
@@ -985,24 +985,24 @@ body.programm .projectswrap .projecttile .image .livein span {
     opacity: 0;
   }
 }
-body.programm .projectswrap .projecttile .image:hover .hoverinfo {
+main.programm .projectswrap .projecttile .image:hover .hoverinfo {
   opacity: 1;
 }
-body.programm .projectswrap .projecttile .image.noimage {
+main.programm .projectswrap .projecttile .image.noimage {
   width: 100%;
   aspect-ratio: 3/2;
   background-image: url(../img/noimage.svg);
   background-size: cover;
   background-color: white;
 }
-body.programm .projectswrap .projecttile.flexfix {
+main.programm .projectswrap .projecttile.flexfix {
   height: 1px;
 }
-body.programm .projectswrap .projecttile a {
+main.programm .projectswrap .projecttile a {
   color: inherit;
   text-decoration: inherit;
 }
-body.programm .projectswrap .projecttile a.blocklink {
+main.programm .projectswrap .projecttile a.blocklink {
   width: 100%;
   height: 100%;
   top: 0;
@@ -1253,19 +1253,19 @@ body.programm .projectswrap .projecttile a.blocklink {
 
 /* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
    ============================= */
-body.events .eventswrap {
+main.events .eventswrap {
   margin-top: 100px;
 }
-body.events .day {
+main.events .day {
   margin-top: 50px;
 }
-body.events .day h2 {
+main.events .day h2 {
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 25px;
   padding-left: 20px;
 }
-body.events .day .event {
+main.events .day .event {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1282,50 +1282,50 @@ body.events .day .event {
   padding-top: 7px;
   padding-bottom: 7px;
 }
-body.events .day .event .time {
+main.events .day .event .time {
   width: 150px;
   -webkit-font-feature-settings: "tnum" 1;
   font-feature-settings: "tnum" 1;
   font-size: 15px;
   font-weight: 500;
 }
-body.events .day .event h3 {
+main.events .day .event h3 {
   width: 550px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding-left: 25px;
   font-size: 16px;
 }
-body.events .day .event h3 a {
+main.events .day .event h3 a {
   color: inherit;
   text-decoration: none;
 }
-body.events .day .event .tags {
+main.events .day .event .tags {
   padding-left: 80px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: calc(100% - 700px);
 }
-body.events .day .event .tags ul {
+main.events .day .event .tags ul {
   padding: 0;
   margin: 0;
 }
-body.events .day .event .tags ul li {
+main.events .day .event .tags ul li {
   margin-right: 2px;
   margin-bottom: 6px;
   font-weight: 500;
 }
-body.events .day .event .tags ul li a {
+main.events .day .event .tags ul li a {
   text-decoration: none;
   color: white;
 }
-body.events .day .event .tags ul li.online {
+main.events .day .event .tags ul li.online {
   background-color: #00C770;
 }
-body.events .day .event .tags ul li.bbb {
+main.events .day .event .tags ul li.bbb {
   background-color: #E4003A;
 }
-body.events .day .event:hover {
+main.events .day .event:hover {
   background-color: #F1F1F1;
 }
 
@@ -1433,7 +1433,7 @@ main.error > div > div img {
 
 /* STYLES FOR STARTPAGE PLAKAT
    ============================= */
-body.start .plakat {
+main.start .plakat {
   background-image: url("../img/plakat/strasse.svg"), url("../img/plakat/udkpilz.svg"), url("../img/plakat/hausline.svg"), url("../img/plakat/kleinepilze.svg"), url("../img/plakat/dotsbg.png");
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-position: bottom left, bottom center, bottom left, bottom center, center center;
@@ -1441,11 +1441,11 @@ body.start .plakat {
 }
 
 @-moz-document url-prefix() {
-  body.programm #filterline ul li:not(.back),
-body.programm .projectswrap .projecttile .image .online,
+  main.programm #filterline ul li:not(.back),
+main.programm .projectswrap .projecttile .image .online,
 .tagbubble span,
-body.start div.greypill,
-body.start .choose div.footer ul li,
+main.start div.greypill,
+main.start .choose div.footer ul li,
 .singleproject .projectmain .bbb span.bbblink {
     line-height: 28px;
   }
@@ -1454,7 +1454,7 @@ body.start .choose div.footer ul li,
     line-height: 26px;
   }
 
-  body.start .choose ul li {
+  main.start .choose ul li {
     padding-top: 17px;
   }
 }

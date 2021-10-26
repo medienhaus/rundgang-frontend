@@ -6,7 +6,7 @@
   }
 }
 @media only screen and (max-width: 1500px) {
-  body.start .choose ul li {
+  main.start .choose ul li {
     font-size: 30px;
   }
 }
@@ -33,19 +33,19 @@
   }
 }
 @media only screen and (max-width: 1100px) {
-  body.start .choose ul li {
+  main.start .choose ul li {
     font-size: 25px;
   }
 
-  body.events .day .event h3 {
+  main.events .day .event h3 {
     width: 350px;
   }
 
-  body.events .day .event .tags {
+  main.events .day .event .tags {
     padding-left: 30px;
   }
 
-  body.events .day .event .tags {
+  main.events .day .event .tags {
     width: calc(100% - 500px);
   }
 }
@@ -71,12 +71,12 @@
   }
 }
 @media only screen and (max-width: 940px) {
-  body.start .choose div.footer ul li {
+  main.start .choose div.footer ul li {
     font-size: 12px;
     letter-spacing: -0.5px;
   }
 
-  body.start .choose ul li {
+  main.start .choose ul li {
     letter-spacing: -0.3px;
     font-weight: 400;
   }
@@ -95,43 +95,43 @@
     padding: 20px;
   }
 
-  body.start .choose ul li {
+  main.start .choose ul li {
     font-weight: 400;
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  body.start div.greypill {
+  main.start div.greypill {
     font-weight: 400;
     margin-top: 15px;
   }
 
-  body.start .choose,
-body.start .plakat {
+  main.start .choose,
+main.start .plakat {
     width: 100%;
     position: relative;
   }
 
-  body.start .choose div.footer {
+  main.start .choose div.footer {
     width: 100%;
     position: relative;
     margin-top: 35px;
   }
 
-  body.events .day .event {
+  main.events .day .event {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
 
-  body.events .day .event .time,
-body.events .day .event h3,
-body.events .day .event .tags {
+  main.events .day .event .time,
+main.events .day .event h3,
+main.events .day .event .tags {
     width: 100%;
     padding: 0;
   }
 
-  body.events .day .event .tags {
+  main.events .day .event .tags {
     margin-top: 5px;
     margin-bottom: 20px;
   }
@@ -140,16 +140,16 @@ body.events .day .event .tags {
     display: none;
   }
 
-  body.start div.footer.onlymobile {
+  main.start div.footer.onlymobile {
     display: block;
   }
 
-  body.start .plakat {
+  main.start .plakat {
     height: calc(100vh - 310px);
   }
 }
 @media only screen and (max-width: 650px) {
-  body.start .plakat {
+  main.start .plakat {
     height: calc(100vh - 365px);
   }
 }
@@ -159,17 +159,17 @@ body.events .day .event .tags {
   }
 }
 @media only screen and (max-width: 550px) {
-  body.programm .projectswrap .projecttile {
+  main.programm .projectswrap .projecttile {
     width: 100%;
   }
 
-  body.programm #filterline ul li.back {
+  main.programm #filterline ul li.back {
     width: 100%;
   }
 
-  body.programm #filterline ul li:not(.back),
-body.programm #filterline ul li.back,
-body.programm #filterline .selected > div {
+  main.programm #filterline ul li:not(.back),
+main.programm #filterline ul li.back,
+main.programm #filterline .selected > div {
     margin-top: 5px;
     margin-bottom: 6px;
   }
@@ -213,7 +213,7 @@ body.programm #filterline .selected > div {
     height: calc(100vh - 133px);
   }
 
-  body.programm #filterline {
+  main.programm #filterline {
     margin-top: 65px;
   }
 
@@ -236,15 +236,15 @@ body.programm #filterline .selected > div {
   }
 
   header .topline,
-body.programm #filterline,
-body.programm .projectswrap,
-body.start .choose,
-body.start div.footer.onlymobile,
+main.programm #filterline,
+main.programm .projectswrap,
+main.start .choose,
+main.start div.footer.onlymobile,
 .menu,
 .singleproject .projectmain,
 .singleproject .info,
-body.events .day h2,
-body.events .day .event {
+main.events .day h2,
+main.events .day .event {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -258,7 +258,7 @@ body.events .day .event {
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  body.start .choose ul li {
+  main.start .choose ul li {
     font-size: 20px;
     padding: 7px;
     padding-left: 15px;
@@ -293,7 +293,7 @@ body.events .day .event {
     bottom: -8px;
   }
 
-  body.start .plakat {
+  main.start .plakat {
     height: calc(100vh - 345px);
   }
 
@@ -311,7 +311,7 @@ body.events .day .event {
   }
 }
 @media only screen and (max-width: 390px) {
-  body.start .plakat {
+  main.start .plakat {
     height: calc(100vh - 390px);
   }
 }
@@ -329,7 +329,7 @@ body.events .day .event {
   }
 }
 @media only screen and (max-width: 340px) {
-  body.programm .projectswrap {
+  main.programm .projectswrap {
     grid-template-columns: none;
   }
 }
