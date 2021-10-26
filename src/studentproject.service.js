@@ -521,7 +521,19 @@ export class StudentprojectService {
       event.forEach(contents => {
         if (contents.name === 'location') {
           contents.content.forEach(content => {
-            data.locations.push({ ...this.coordiantesToLocation(content.split('-')[0]), room: content.split('-')[1] })
+            const exists = data.locations.find(loc => {
+              if (content.split('-')[1] === null || content.split('-')[1].length === 0) {
+                if (loc.name === content.split('-')[0]) {
+                  return true
+                }
+              }
+              return false
+            })
+            // console.log(this.coordiantesToLocation(content.split('-')[0]))
+            if (!exists) {
+              data.locations.push({ ...this.coordiantesToLocation(content.split('-')[0]), room: content.split('-')[1] })
+            }
+            // console.log(data.locations)
           })
         }
       })
