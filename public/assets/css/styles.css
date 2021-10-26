@@ -1042,6 +1042,9 @@ main.programm .projectswrap .projecttile a.blocklink {
 .singleproject .tagbubble {
   margin-left: -2px;
 }
+.singleproject .tagbubble + .tagbubble {
+  margin-top: 20px;
+}
 .singleproject .students.tagbubble {
   margin-bottom: 40px;
 }
@@ -1052,7 +1055,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   width: 50%;
   position: relative;
   padding-top: 45px;
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0 auto;
@@ -1215,6 +1218,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   background-color: rgba(0, 0, 0, 0.05);
   padding: 15px;
   font-weight: 500;
+  margin-top: 5px;
 }
 .singleproject .eventinfo .day {
   font-size: 20px;
@@ -1251,8 +1255,20 @@ main.programm .projectswrap .projecttile a.blocklink {
 .singleproject .eventinfo .tags ul li {
   margin-bottom: 8px;
 }
+.singleproject .eventinfo .tags ul .tagbubble span {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .singleproject .eventinfo .tags .stream, .singleproject .eventinfo .tags .conference {
   background-color: #E4003A;
+}
+.singleproject .eventinfo + .eventinfo {
+  margin-top: 30px;
+}
+.singleproject .eventinfo:last-child {
+  margin-bottom: 30px;
 }
 
 /* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
