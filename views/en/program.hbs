@@ -13,11 +13,13 @@
                         </ul>
                         {{#greaterThan ../filterParents.length @index}}
                         {{else}}
+                        {{#if ../filterData.children.length}}
                             <ul style="margin-left: 20px">
                                 {{#each ../filterData.children as |child|}}
                                     <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
                                 {{/each}}
                             </ul>
+                        {{/if}}
                         {{/greaterThan}}
                     {{/if}}
                 {{/each}}
