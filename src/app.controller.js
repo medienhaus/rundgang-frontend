@@ -112,13 +112,21 @@ export class AppController {
   @Get('/orte')
   @Render('de/locations.hbs')
   getAllLocations () {
-    return { languageSwitchLink: '/en/locations' }
+    return {
+      pageTitle: 'Orte',
+      activePageLocations: true,
+      languageSwitchLink: '/en/locations'
+    }
   }
 
   @Get('/en/locations')
   @Render('en/locations.hbs')
   getAllLocationsEngl () {
-    return { languageSwitchLink: '/orte' }
+    return {
+      pageTitle: 'Locations',
+      activePageLocations: true,
+      languageSwitchLink: '/orte'
+    }
   }
 
   @Get('/einlasszeiten')
