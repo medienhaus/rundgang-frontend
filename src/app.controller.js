@@ -2,6 +2,8 @@ import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render, 
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
+import _ from 'lodash'
+import locationData from '../data/locationData.json'
 
 @Controller()
 @Dependencies(AppService, 'STUDENTPROJECT_PROVIDER')
@@ -55,6 +57,38 @@ export class AppController {
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
     }
+  }
+
+  @Get('/programm/ort/:lat/:lng')
+  @Bind(Response(), Param())
+  getProgrammeByLocation (res, { lat, lng }) {
+    // Make sure this is a valid lat/lng combination, otherwise forward to /programm
+    const location = _.find(locationData, { coordinates: `${lat}, ${lng}` })
+    if (!location) return res.redirect('/programm')
+
+    return res.render('de/program.hbs', {
+      pageTitle: 'Programm',
+      activePageProgram: true,
+      languageSwitchLink: `/en/programme/location/${lat}/${lng}`,
+      studentprojects: this.studentprojectService.getByLocation(lat, lng),
+      locationData: location
+    })
+  }
+
+  @Get('/en/programme/location/:lat/:lng')
+  @Bind(Response(), Param())
+  getProgrammeByLocationEnglish (res, { lat, lng }) {
+    // Make sure this is a valid lat/lng combination, otherwise forward to /en/programme
+    const location = _.find(locationData, { coordinates: `${lat}, ${lng}` })
+    if (!location) return res.redirect('/en/programme')
+
+    return res.render('en/program.hbs', {
+      pageTitle: 'Programme',
+      activePageProgram: true,
+      languageSwitchLink: `/programm/ort/${lat}/${lng}`,
+      studentprojects: this.studentprojectService.getByLocation(lat, lng),
+      locationData: location
+    })
   }
 
   @Get('/beratungsangebote')
