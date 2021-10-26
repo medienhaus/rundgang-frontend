@@ -51,18 +51,18 @@
         {{#each studentproject.content}}
             {{{ formatted_content }}}
         {{/each}}
-
-        {{#if studentproject.parent}}
-            <div>
-                <div class="label">Kontext</div>
-                <div class="tagbubble">
-                    {{#each bubbles.context as |hierarchyElement|}}
-                        <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
-                    {{/each}}
-                </div>
-            </div>
-        {{/if}}
     </div>
+
+    {{#if studentproject.parent}}
+        <div class="info">
+            <div class="label">Kontext</div>
+            <div class="tagbubble">
+                {{#each bubbles.context as |hierarchyElement|}}
+                    <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
 
 </main>
 
