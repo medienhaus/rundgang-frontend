@@ -20,7 +20,7 @@ export class AppController {
   rootEnglish () { return { languageSwitchLink: '/' } }
 
   @Get('/programm/:contextSpaceId?')
-  @Render('de/programm.hbs')
+  @Render('de/program.hbs')
   @Bind(Param('contextSpaceId'))
   getAll (contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
@@ -39,7 +39,7 @@ export class AppController {
   }
 
   @Get('/en/programme/:contextSpaceId?')
-  @Render('en/programme.hbs')
+  @Render('en/program.hbs')
   @Bind(Param('contextSpaceId'))
   getAllEnglish (contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
@@ -58,7 +58,7 @@ export class AppController {
   }
 
   @Get('/beratungsangebote')
-  @Render('de/programm.hbs')
+  @Render('de/program.hbs')
   getBeratungsangebote () {
     return {
       pageTitle: 'Beratungsangebote',
@@ -78,7 +78,7 @@ export class AppController {
   }
 
   @Get('/en/advisory-services')
-  @Render('en/programme.hbs')
+  @Render('en/program.hbs')
   getBeratungsangeboteEnglish () {
     return {
       pageTitle: 'Advisory Services',
