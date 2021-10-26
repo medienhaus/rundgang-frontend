@@ -27,28 +27,40 @@
             </div>
         {{/if}}
 
-        <div>
-            {{#if bubbles.locations.length}}
-                <div class="label">Location</div>
-                {{#each bubbles.locations as |location|}}
-                    <div class="tagbubble">
-                        <span>
-                            <a href="/en/locations?coords={{location.coordinates}}">
-                                {{ location.name }}
-                            </a>
-                        </span>
-                        {{#if location.room}}
-                            <span>
-                                <a href="/orte?coords={{location.coordinates}}">
-                                    {{location.room}}
-                                </a>
-                            </span>
-                        {{/if}}
+        <div class="eventinfo">
+            <div class="day">Freitag, 29.10.2021</div>
+            <div class="flexbox">
+                <div class="time">14:00–18:00 Uhr</div>
+                <div class="infos">
+                    <div class="tags">
+                        <ul>
+                            {{#if bubbles.locations.length}}
+                                <div class="label">Location</div>
+                                {{#each bubbles.locations as |location|}}
+                                    <div class="tagbubble">
+                                        <span>
+                                            <a href="/en/locations?coords={{location.coordinates}}">
+                                                {{ location.name }}
+                                            </a>
+                                        </span>
+                                        {{#if location.room}}
+                                            <span>
+                                                <a href="/orte?coords={{location.coordinates}}">
+                                                    {{location.room}}
+                                                </a>
+                                            </span>
+                                        {{/if}}
+                                    </div>
+                                {{/each}}
+                            {{/if}}
+                            <li class="stream conference"><a href="">Konferenz beitreten</a></li>
+                        </ul>
                     </div>
-                {{/each}}
-            {{/if}}
+                </div>
+            </div>
         </div>
 
+{{> en/partials/footer }}
         {{#if studentproject.thumbnail_full_size}}
             <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
         {{/if}}
