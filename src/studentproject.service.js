@@ -522,6 +522,19 @@ export class StudentprojectService {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
 
+  // Return all student projects that happen at a given location
+  getByLocation (lat, lng) {
+    return _.filter(this.studentprojects, (project) =>
+      _.some(project.events, (event) =>
+        _.some(event, (eventProperty) =>
+          eventProperty.name === 'location' && _.some(eventProperty.content, (content) =>
+            _.startsWith(content, `${lat}, ${lng}-`)
+          )
+        )
+      )
+    )
+  }
+
   async get (id, language = 'en') {
     const { content, formattedContent } = await this.getContent(id, language)
     return { ...this.studentprojects[id], content, formatted_content: formattedContent }
