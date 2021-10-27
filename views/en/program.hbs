@@ -6,7 +6,7 @@
             <div>
                 {{#each filterParents as |parent|}}
                     {{#if parent.id}}
-                        <ul style="margin-left: calc({{@index}} * 20px)">
+                        <ul>
                             {{#if parent.id}}
                                 <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
                             {{/if}}
@@ -14,7 +14,7 @@
                         {{#greaterThan ../filterParents.length @index}}
                         {{else}}
                             {{#if ../filterData.children}}
-                                <ul style="margin-left: 20px">
+                                <ul>
                                     {{#each ../filterData.children as |child|}}
                                         <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
                                     {{/each}}
