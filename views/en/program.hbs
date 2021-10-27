@@ -12,12 +12,10 @@
         <div id="filterline">
             <p>Context Filter</p>
             <div>
+                {{#if filterParents.length}}
                 {{#each filterParents as |parent|}}
-                    {{#if parent.id}}
                         <ul>
-                            {{#if parent.id}}
                                 <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
-                            {{/if}}
                         </ul>
                         {{#greaterThan ../filterParents.length @index}}
                         {{else}}
@@ -29,8 +27,16 @@
                                 </ul>
                             {{/if}}
                         {{/greaterThan}}
-                    {{/if}}
                 {{/each}}
+                {{else}}
+                    {{#if filterData.children}}
+                                <ul>
+                                    {{#each filterData.children as |child|}}
+                                        <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
+                                    {{/each}}
+                                </ul>
+                            {{/if}}
+                {{/if}}
             </div>
         </div>
     {{/if}}

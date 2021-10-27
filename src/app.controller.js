@@ -39,7 +39,7 @@ export class AppController {
         ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
         : this.studentprojectService.getAll(),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
-      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id !== Object.keys(this.apiGetStructure())[0]),
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
       substructureActive: substructureActive
     })
   }
@@ -48,6 +48,7 @@ export class AppController {
   @Bind(Response(), Param('contextSpaceId'))
   getAllEnglish (res, contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
+
     const substructureActive = !contextSpaceId
     if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
       return res.redirect('/en/programme')
@@ -63,7 +64,7 @@ export class AppController {
         ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
         : this.studentprojectService.getAll(),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
-      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id !== Object.keys(this.apiGetStructure())[0]),
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
       substructureActive: substructureActive
     })
   }
