@@ -1,4 +1,4 @@
-import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render, Response } from '@nestjs/common'
+import { Bind, Controller, Dependencies, Get, NotFoundException, HttpException, HttpStatus, Param, Render, Response } from '@nestjs/common'
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
@@ -195,7 +195,8 @@ export class AppController {
   @Bind(Response(), Param())
   async getStudentproject (res, { id }) {
     const project = await this.studentprojectService.get(id, 'de')
-    if (!project) throw new NotFoundException()
+    if (!project) return this.customError(res)
+
     // If there's no German content for this project redirect to the English version
     if (project.formatted_content === '' && !project.topicDe) return res.redirect(`/en/c/${id}`)
 
@@ -211,8 +212,10 @@ export class AppController {
   @Bind(Response(), Param())
   async getStudentprojectEnglish (res, { id }) {
     const project = await this.studentprojectService.get(id, 'en')
-    if (!project) throw new NotFoundException()
+    if (!project) return this.customErrorEN(res)
+
     // If there's no English content for this project redirect to the German version
+
     if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
 
     return res.render('en/studentproject.hbs', {
@@ -281,5 +284,15 @@ export class AppController {
     const project = await this.studentprojectService.get(id)
     if (!project) throw new NotFoundException()
     return project
+  }
+
+  customError (res) {
+    res.status(HttpStatus.NOT_FOUND)
+    return res.render('de/error.hbs', {})
+  }
+
+  customErrorEN (res) {
+    res.status(HttpStatus.NOT_FOUND)
+    return res.render('en/error.hbs', {})
   }
 }

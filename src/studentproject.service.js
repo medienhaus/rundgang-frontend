@@ -500,6 +500,9 @@ export class StudentprojectService {
   }
 
   async get (id, language = 'en') {
+    if (!this.studentprojects[id]) {
+      return null
+    }
     const { content, formattedContent } = await this.getContent(id, language)
     return { ...this.studentprojects[id], content, formatted_content: formattedContent }
   }
