@@ -31,13 +31,13 @@ export class AppController {
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
-    return res.render('en/program.hbs', {
+    
+    const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
+    return res.render('de/program.hbs', {
       pageTitle: 'Programm',
       activePageProgram: true,
       languageSwitchLink: '/en/programme',
-      studentprojects: contextSpaceId
-        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
-        : this.studentprojectService.getAll(),
+      studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
       substructureActive: substructureActive
@@ -56,13 +56,12 @@ export class AppController {
 
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
+    const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
     return res.render('en/program.hbs', {
       pageTitle: 'Programme',
       activePageProgram: true,
       languageSwitchLink: '/programm',
-      studentprojects: contextSpaceId
-        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
-        : this.studentprojectService.getAll(),
+      studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
       substructureActive: substructureActive

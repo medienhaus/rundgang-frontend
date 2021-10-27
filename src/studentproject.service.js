@@ -182,17 +182,30 @@ export class StudentprojectService {
 
     await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
-    this.studentprojects = {}
-    const shuffledProjects = _.shuffle(result)
-    shuffledProjects.forEach(project => {
-      this.studentprojects[project.id] = project
-    })
+    this.studentprojects = result
 
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
 
   getAll () {
     return this.studentprojects
+  }
+
+  everydayImShuffling (data) {
+    const randomProjects = []
+    const ret = {}
+
+    Object.entries(data).forEach(([key, content]) => {
+      randomProjects.push(content)
+    })
+    for (let i = randomProjects.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [randomProjects[i], randomProjects[j]] = [randomProjects[j], randomProjects[i]]
+    }
+    randomProjects.forEach(project => {
+      ret[Math.random() * (10000 - 0) + 0] = project
+    })
+    return randomProjects
   }
 
   getAllEvents () {
