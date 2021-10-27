@@ -28,13 +28,12 @@ export class AppController {
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
+    const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
     return {
       pageTitle: 'Programm',
       activePageProgram: true,
       languageSwitchLink: '/en/programme',
-      studentprojects: contextSpaceId
-        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
-        : this.studentprojectService.getAll(),
+      studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
     }
@@ -47,13 +46,13 @@ export class AppController {
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
+    const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
+
     return {
       pageTitle: 'Programme',
       activePageProgram: true,
       languageSwitchLink: '/programm',
-      studentprojects: contextSpaceId
-        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
-        : this.studentprojectService.getAll(),
+      studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
     }
