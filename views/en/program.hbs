@@ -13,9 +13,9 @@
             <p>Context Filter</p>
             <div>
                 {{#if filterParents.length}}
-                {{#each filterParents as |parent|}}
+                    {{#each filterParents as |parent|}}
                         <ul>
-                                <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
+                            <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
                         </ul>
                         {{#greaterThan ../filterParents.length @index}}
                         {{else}}
@@ -27,15 +27,15 @@
                                 </ul>
                             {{/if}}
                         {{/greaterThan}}
-                {{/each}}
+                    {{/each}}
                 {{else}}
                     {{#if filterData.children}}
-                                <ul>
-                                    {{#each filterData.children as |child|}}
-                                        <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
-                                    {{/each}}
-                                </ul>
-                            {{/if}}
+                        <ul>
+                            {{#each filterData.children as |child|}}
+                                <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>

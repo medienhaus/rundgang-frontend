@@ -783,10 +783,14 @@ main.programm #filterline ul:last-of-type > li:hover > a {
 main.programm #filterline ul + ul:not(:last-of-type)::before {
   content: "\21B3\00A0";
 }
+main.programm #filterline ul + ul:not(:last-of-type) > li:only-child,
+main.programm #filterline ul:first-of-type > li:only-child,
 main.programm #filterline ul:last-of-type > li:only-child {
   background-color: white;
   border: 1px solid black;
 }
+main.programm #filterline ul + ul:not(:last-of-type) > li:only-child > a,
+main.programm #filterline ul:first-of-type > li:only-child > a,
 main.programm #filterline ul:last-of-type > li:only-child > a {
   color: black;
 }
