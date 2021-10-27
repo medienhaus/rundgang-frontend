@@ -696,9 +696,14 @@ main.start div.rundang.greypill {
    ============================= */
 main.programm #filterline {
   position: relative;
-  margin-top: 70px;
   padding-left: 20px;
   padding-right: 20px;
+}
+main.programm #filterline + #filterline {
+  margin-top: 20px;
+}
+main.programm #filterline:first-of-type {
+  margin-top: 70px;
 }
 main.programm #filterline ul {
   list-style: none;
@@ -778,10 +783,14 @@ main.programm #filterline ul:last-of-type > li:hover > a {
 main.programm #filterline ul + ul:not(:last-of-type)::before {
   content: "\21B3\00A0";
 }
+main.programm #filterline ul + ul:not(:last-of-type) > li:only-child,
+main.programm #filterline ul:first-of-type > li:only-child,
 main.programm #filterline ul:last-of-type > li:only-child {
   background-color: white;
   border: 1px solid black;
 }
+main.programm #filterline ul + ul:not(:last-of-type) > li:only-child > a,
+main.programm #filterline ul:first-of-type > li:only-child > a,
 main.programm #filterline ul:last-of-type > li:only-child > a {
   color: black;
 }
