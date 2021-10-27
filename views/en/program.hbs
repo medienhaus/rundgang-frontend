@@ -1,12 +1,10 @@
 {{> en/partials/header }}
 
 <main class="programm">
-    {{#if substructureActive}}
-    <h3>Context</h3>
-    {{/if}}
+
     {{#if filterData}}
-    
         <div id="filterline">
+            <p>Context Filter</p>
             <div>
                 {{#each filterParents as |parent|}}
                     {{#if parent.id}}
@@ -29,36 +27,36 @@
                 {{/each}}
             </div>
         </div>
-        <hr>
     {{/if}}
 
-{{#if substructureActive}}
-    <h3>Locations</h3>
-    <div class="address-lists">
-        <!-- <div class="address" data-lat="52.50893832945276" data-lng="13.328045756372312" id="hardenbergstrabe-33"> -->
-        <div class="address" data-lat="52.509063" data-lng="13.326793" id="hardenbergstrabe-33">
-            <div class="location-name"><a href="/en/programme/location/52.50893832945276/13.328045756372312">Hardenbergstraße 33</a></div>
-        </div>
-        <div class="address" data-lat="52.51035490505003" data-lng="13.33019394102799" id="fasanenstraße-88">
-        <div class="location-name"><a href="/en/programme/location/52.51035490505003/13.33019394102799">Universitätsbibliothek im Volkswagen-Haus</a></div>
-
-        </div>
-        <div class="address" data-lat="52.513904723230915" data-lng="13.329303512192054" id="strasse-17-juni">
-        <div class="location-name"><a href="/en/programme/location/52.513904723230915/13.329303512192054">Straße des 17. Juni 118</a></div>
-        </div>
-    </div>
-{{/if}}
-    
-    
-    {{#if locationData}}
-    
+    {{#if substructureActive}}
         <div id="filterline">
+            <p>Location Filter</p>
             <div>
-                <ul class="tags"><li class="active">{{locationData.name}}</li></ul>
+                <ul>
+                    <li class="location-name"><a href="/en/programme/location/52.50893832945276/13.328045756372312">Hardenbergstraße 33</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.51035490505003/13.33019394102799">Universitätsbibliothek im Volkswagen-Haus</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.513904723230915/13.329303512192054">Straße des 17. Juni 118</a></li>
+                </ul>
             </div>
         </div>
-        <hr>
     {{/if}}
+
+    {{#if locationData}}
+        <div id="filterline">
+            <div>
+                <ul>
+                    <li><a href="/en/programme/!ijJyXjLNqgeJkRerIG:dev.medienhaus.udk-berlin.de">Rundgang 2021</a></li>
+                </ul>
+                <ul>
+                    <li style="color: black">{{locationData.name}}</li>
+                </ul>
+            </div>
+        </div>
+    {{/if}}
+
+    <hr>
+
     <div class="projectswrap">
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">

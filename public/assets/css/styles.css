@@ -696,9 +696,14 @@ main.start div.rundang.greypill {
    ============================= */
 main.programm #filterline {
   position: relative;
-  margin-top: 70px;
   padding-left: 20px;
   padding-right: 20px;
+}
+main.programm #filterline + #filterline {
+  margin-top: 20px;
+}
+main.programm #filterline:first-of-type {
+  margin-top: 70px;
 }
 main.programm #filterline ul {
   list-style: none;
