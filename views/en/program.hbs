@@ -1,40 +1,86 @@
 {{> en/partials/header }}
 
 <main class="programm">
+
+    <div id="filterline">
+        <ul>
+            <li><a href="/en/programme">Rundgang 2021</a></li>
+        </ul>
+    </div>
+
     {{#if filterData}}
         <div id="filterline">
+            <p>Context Filter</p>
             <div>
-                {{#each filterParents as |parent|}}
-                    {{#if parent.id}}
-                        <ul style="margin-left: calc({{@index}} * 20px)">
-                            {{#if parent.id}}
-                                <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
-                            {{/if}}
+                {{#if filterParents.length}}
+                    {{#each filterParents as |parent|}}
+                        <ul>
+                            <li><a href="/en/programme/{{parent.id}}">{{parent.name}}</a></li>
                         </ul>
                         {{#greaterThan ../filterParents.length @index}}
                         {{else}}
                             {{#if ../filterData.children}}
-                                <ul style="margin-left: calc(({{@index}} + 1) * 20px)">
+                                <ul>
                                     {{#each ../filterData.children as |child|}}
                                         <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
                                     {{/each}}
                                 </ul>
                             {{/if}}
                         {{/greaterThan}}
+                    {{/each}}
+                {{else}}
+                    {{#if filterData.children}}
+                        <ul>
+                            {{#each filterData.children as |child|}}
+                                <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
+                            {{/each}}
+                        </ul>
                     {{/if}}
-                {{/each}}
+                {{/if}}
             </div>
         </div>
-        <hr>
     {{/if}}
+
+    {{#if substructureActive}}
+        <div id="filterline">
+            <p>Location Filter</p>
+            <div>
+                <ul>
+                    <li class="location-name"><a href="/en/programme/location/52.50893832945276/13.328045756372312">Hardenbergstraße 33</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.51035490505003/13.33019394102799">Universitätsbibliothek im Volkswagen-Haus</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.513904723230915/13.329303512192054">Straße des 17. Juni 118</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.49082496403345/13.3595672852078">Grunewaldstraße 2–5</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.50001283127866/13.332853627535915">Lietzenburger Straße 45</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.52472611550576/13.303810927536668">Mierendorffstraße 30</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.508846909728646/13.328002841028002">Konzertsaal der UdK Berlin</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.49978324397309/13.29472164102763">Karlsruher Straße 7a</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.51136993151621/13.32335888335587">Hardenbergstraße 41</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.49884512443705/13.32995634288022">Bundesallee 1-12</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.50919098886368/13.32846072753614">Fasanenstraße 1b</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.51709564151452/13.323078790766152">Jazz-Institut Berlin</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.51732414757127/13.322746196847742">designtransfer</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.517271917720215/13.322113195519155">Einsteinufer 43-53</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.51009829740333/13.329050794009817">UNI.T</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.551912998961505/13.374770994996302">HZT Berlin</a></li>
+                    <li class="location-name"><a href="/en/programme/location/52.496642889026305/13.334328574756974">Grainauer Straße 12</a></li>
+                </ul>
+            </div>
+        </div>
+    {{/if}}
+
     {{#if locationData}}
         <div id="filterline">
+            <p>Location Filter</p>
             <div>
-                <ul class="tags"><li class="active">{{locationData.name}}</li></ul>
+                <ul>
+                    <li style="color: black">{{locationData.name}}</li>
+                </ul>
             </div>
         </div>
-        <hr>
     {{/if}}
+
+    <hr>
+
     <div class="projectswrap">
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">

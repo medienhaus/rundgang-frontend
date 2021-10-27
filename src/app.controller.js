@@ -22,40 +22,50 @@ export class AppController {
   rootEnglish () { return { languageSwitchLink: '/' } }
 
   @Get('/programm/:contextSpaceId?')
-  @Render('de/program.hbs')
-  @Bind(Param('contextSpaceId'))
-  getAll (contextSpaceId) {
+  @Bind(Response(), Param('contextSpaceId'))
+  getAll (res, contextSpaceId) {
+    const substructureActive = !contextSpaceId
+    if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
+      return res.redirect('/de/programme')
+    }
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
+    
     const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
-    return {
+    return res.render('de/program.hbs', {
       pageTitle: 'Programm',
       activePageProgram: true,
       languageSwitchLink: '/en/programme',
       studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
-      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
-    }
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
+      substructureActive: substructureActive
+    })
   }
 
   @Get('/en/programme/:contextSpaceId?')
-  @Render('en/program.hbs')
-  @Bind(Param('contextSpaceId'))
-  getAllEnglish (contextSpaceId) {
+  @Bind(Response(), Param('contextSpaceId'))
+  getAllEnglish (res, contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
+
+    const substructureActive = !contextSpaceId
+    if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
+      return res.redirect('/en/programme')
+    }
+
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
     const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
-
-    return {
+    return res.render('en/program.hbs', {
       pageTitle: 'Programme',
       activePageProgram: true,
       languageSwitchLink: '/programm',
       studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
-      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
-    }
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
+      substructureActive: substructureActive
+    })
   }
 
   @Get('/programm/ort/:lat/:lng')
