@@ -184,6 +184,16 @@ export class StudentprojectService {
               const content = await fetchContent(event.room_id)
               const type = event.name.substring(event.name.indexOf('_') + 1)
               if (type === 'location') onlineExclusive = false // if a room with a location exists we know the project has a physical location
+              const eventDate = content[0].substring(0, content[0].indexOf(' '))
+              if (eventDate === date) {
+                // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
+                const eventHour = content[0].substring(content[0].indexOf(' '), content[0].indexOf(':'))
+                if (eventHour - today.getHours().toString().padStart(2, '0') <= 0 && eventHour - today.getHours().toString().padStart(2, '0') >= -1) isLive = true
+
+                if (eventHour - today.getHours() >= 0) {
+                  liveAt = content[0].substring(content[0].indexOf(' ') + 1)
+                }
+              }
               eventResult.push([{ name: type, content: content }])
             }
           }))
