@@ -169,7 +169,7 @@ export class StudentprojectService {
                     if (eventDate === date) {
                       // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
                       const eventHour = content[0].substring(content[0].indexOf(' '), content[0].indexOf(':'))
-                      if (eventHour - today.getHours() <= 0 && eventHour - today.getHours() >= -1) isLive = true
+                      if (eventHour - today.getHours().toString().padStart(2, '0') <= 0 && eventHour - today.getHours().toString().padStart(2, '0') >= -1) isLive = true
 
                       if (eventHour - today.getHours() >= 0) {
                         liveAt = content[0].substring(content[0].indexOf(' ') + 1)
