@@ -145,7 +145,7 @@ export class AppController {
     return {
       pageTitle: 'Zeitplan Einzelveranstaltungen',
       languageSwitchLink: '/en/events',
-      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+      eventsByDay: this.studentprojectService.sortEventsByTime(this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()))
     }
   }
 
@@ -155,7 +155,7 @@ export class AppController {
     return {
       pageTitle: 'Event Calendar',
       languageSwitchLink: '/zeitplan',
-      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+      eventsByDay: this.studentprojectService.sortEventsByTime(this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()))
     }
   }
 
@@ -250,7 +250,7 @@ export class AppController {
 
   @Get('/api/events/day')
   apiGetEventsByDay () {
-    return this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    return this.studentprojectService.sortEventsByTime(this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()))
   }
 
   @Get('/api/struct/:id/branch')
