@@ -87,6 +87,11 @@
                 <a href="/en/c/{{ id }}">
                 
                     <div class="image">
+                        <div class="flags">
+                        {{#if onlineExclusive }} <div class="online">Online Exclusive</div>{{/if}}
+                        {{#if isLive }}<div class="live"><span></span>Live</div>{{/if}}
+                        
+                    </div>
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
                         {{else}}
@@ -97,8 +102,7 @@
                         <div class="hoverinfo">
                             <p>{{ topicEn }}</p>
                         </div>
-                        {{#if onlineExclusive }} <span>online exclusive</span>{{/if}}
-                        {{#if isLive }} <span>LIVE</span>{{/if}}
+
                     </div>
                     <div class="info">
                         <h2>{{ name }}</h2>
