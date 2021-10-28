@@ -8,7 +8,6 @@ import Handlebars from 'handlebars'
 import fs from 'fs'
 import { join } from 'path'
 import locationData from '../data/locationData.json'
-import { isUndefined } from 'lodash'
 
 @Injectable()
 @Dependencies(ConfigService, HttpService)
