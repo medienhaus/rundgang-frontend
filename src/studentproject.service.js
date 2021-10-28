@@ -34,7 +34,7 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent, parentSpaceId) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, onlineExclusive, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
@@ -47,6 +47,7 @@ export class StudentprojectService {
         authors: authors,
         credit: credit,
         published: published,
+        onlineExclusive: onlineExclusive,
         parent: parent,
         parentSpaceId: parentSpaceId,
         children: {}
@@ -126,6 +127,7 @@ export class StudentprojectService {
         const events = hierarchy.rooms.filter(room => room.name === 'events' && !room.name.startsWith('x_'))
         // const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
         const eventResult = [] // array for events
+        let onlineExclusive = true // we assume a project to be exclusively online and change this below if a location was specified
         if (events.length > 0) {
           const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
 
@@ -147,9 +149,11 @@ export class StudentprojectService {
               const childrenResult = await Promise.all(event.children_state.map(async child => {
                 const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
                 return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
-                  // we want to return an array of object with all information for the specific event
+                  // we want to return an array of objects with all information for the specific event
                   const content = await fetchContent(data.room_id)
-                  return { name: data.name.substring(data.name.indexOf('_') + 1), content: content }
+                  const type = data.name.substring(data.name.indexOf('_') + 1)
+                  if (type === 'location') onlineExclusive = false
+                  return { name: type, content: content }
                 })))[0]
               }))
               eventResult.push(childrenResult)
@@ -162,7 +166,7 @@ export class StudentprojectService {
 
         // fetch events
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, onlineExclusive, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
