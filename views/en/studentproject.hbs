@@ -18,39 +18,34 @@
             {{/if}}
         </div>
 
-        {{#if bubbles.locations.length}}
-            <div>
-                {{#each bubbles.locations as |location|}}
-                    <div class="eventinfo">
-                        <div class="day">Freitag, 29.10.2021</div>
-                        <div class="flexbox">
-                            <div class="time">14:00–18:00 Uhr</div>
-                            <div class="infos">
-                                <div class="tags">
-                                    <ul>
-                                        <div class="tagbubble">
-                                            <span>
-                                                <a href="/en/locations?coords={{location.coordinates}}">
-                                                    {{ location.name }}
-                                                </a>
-                                            </span>
-                                            {{#if location.room}}
-                                                <span>
-                                                    <a href="/orte?coords={{location.coordinates}}">
-                                                        {{location.room}}
-                                                    </a>
-                                                </span>
-                                            {{/if}}
-                                        </div>
-                                        <li class="stream conference"><a href="">Konferenz beitreten</a></li>
-                                    </ul>
+        {{#each eventInformation as |event|}}
+            <div class="eventinfo">
+                <div class="day">{{event.date.0.day}}</div>
+                <div class="flexbox">
+                    <div class="time">{{ event.date.0.time }}</div>
+                    <div class="infos">
+                        <div class="tags">
+                            <ul>
+                                <div class="tagbubble">
+                                    <span>
+                                        <a href="/en/locations?coords={{event.locations.0.coordinates}}">
+                                            {{ event.locations.0.name }}
+                                        </a>
+                                    </span>
+                                    {{#if event.locations.0.room}}
+                                        <span>
+                                            <a href="/orte?coords={{event.locations.0.coordinates}}">
+                                                {{event.locations.0.room}}
+                                            </a>
+                                        </span>
+                                    {{/if}}
                                 </div>
-                            </div>
+                            </ul>
                         </div>
                     </div>
-                {{/each}}
+                </div>
             </div>
-        {{/if}}
+        {{/each}}
 
         {{#if studentproject.thumbnail_full_size}}
             <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
