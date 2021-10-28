@@ -512,7 +512,7 @@ export class StudentprojectService {
             })
             // console.log(this.coordiantesToLocation(content.split('-')[0]))
             if (!exists) {
-              data.locations.push({ ...this.coordiantesToLocation(content.split('-')[0]), room: content.split('-')[1] })
+              data.locations.push({ ...this.coordinatesToLocation(content.split('-')[0]), room: content.split('-')[1] })
             }
             // console.log(data.locations)
           })
