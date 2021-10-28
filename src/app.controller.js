@@ -26,12 +26,11 @@ export class AppController {
   getAll (res, contextSpaceId) {
     const substructureActive = !contextSpaceId
     if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
-      return res.redirect('/de/programme')
+      return res.redirect('/programm')
     }
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
-    
     const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
     return res.render('de/program.hbs', {
       pageTitle: 'Programm',
@@ -224,7 +223,6 @@ export class AppController {
     if (!project) return this.customErrorEN(res)
 
     // If there's no English content for this project redirect to the German version
-
     if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
 
     return res.render('en/studentproject.hbs', {
