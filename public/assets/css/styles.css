@@ -559,7 +559,7 @@ main.start div.rundang.greypill {
   transition: 100ms linear;
   display: inline-block;
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
@@ -717,7 +717,7 @@ main.programm #filterline ul {
 }
 main.programm #filterline ul li:not(.back) {
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
