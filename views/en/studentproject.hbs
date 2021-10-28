@@ -19,7 +19,6 @@
         </div>
 
         {{#each eventInformation as |event|}}
-            {{log event}}
             <div class="eventinfo">
                 <div class="day">{{formatDateEnglish event.date.0.day}}</div>
                 {{#if event.date.0.time}}<span class="time">{{ event.date.0.time }}</span>{{/if}}
