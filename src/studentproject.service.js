@@ -34,7 +34,7 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, onlineExclusive, isLive, parent, parentSpaceId) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, onlineExclusive, isLive, liveAt, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
@@ -49,6 +49,7 @@ export class StudentprojectService {
         published: published,
         onlineExclusive: onlineExclusive,
         isLive,
+        liveAt,
         parent: parent,
         parentSpaceId: parentSpaceId,
         children: {}
@@ -131,6 +132,7 @@ export class StudentprojectService {
         let onlineExclusive = true // we assume a project to be exclusively online and change this below if a location was specified
 
         let isLive = false // we do the same thing for the LIVE disclaimer but in reverse
+        let liveAt = ''
 
         const today = new Date()
         const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
@@ -168,6 +170,10 @@ export class StudentprojectService {
                       // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
                       const eventHour = content[0].substring(content[0].indexOf(' '), content[0].indexOf(':'))
                       if (eventHour - today.getHours() <= 0 && eventHour - today.getHours() >= -1) isLive = true
+
+                      if (eventHour - today.getHours() >= 0) {
+                        liveAt = content[0].substring(content[0].indexOf(' ') + 1)
+                      }
                     }
                   } // if a room with a location exists we know the project has a physical location
                   return { name: type, content: content }
@@ -185,7 +191,7 @@ export class StudentprojectService {
 
         // fetch events
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, onlineExclusive, isLive, parent, parentSpaceId))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, onlineExclusive, isLive, liveAt, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
