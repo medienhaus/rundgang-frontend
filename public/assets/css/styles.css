@@ -135,14 +135,14 @@ strong, b {
 .tagbubble span {
   display: inline-block;
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -519,8 +519,8 @@ main.start div.greypill {
   margin-top: 30px;
   margin-right: 5px;
   margin-left: -5px;
-  height: 28px;
-  line-height: 28px;
+  height: 26px;
+  line-height: 26px;
 }
 main.start div.greypill a {
   color: black;
@@ -750,8 +750,8 @@ main.programm #filterline ul li.back {
   margin-right: 6px;
 }
 main.programm #filterline ul li.back span {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: inline-block;
   background-image: url("../img/back.svg");
   background-repeat: no-repeat;
@@ -802,14 +802,14 @@ main.programm #filterline .level.active {
 }
 main.programm #filterline .selected > div {
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -918,14 +918,14 @@ main.programm .projectswrap .projecttile .image .flags {
 }
 main.programm .projectswrap .projecttile .image .online {
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -936,14 +936,14 @@ main.programm .projectswrap .projecttile .image .online {
 }
 main.programm .projectswrap .projecttile .image .live, main.programm .projectswrap .projecttile .image .livein {
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -1047,8 +1047,8 @@ main.programm .projectswrap .projecttile a.blocklink {
   letter-spacing: -0.025em;
 }
 .singleproject .back {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   position: fixed;
   left: 20px;
   top: 70px;
@@ -1057,8 +1057,8 @@ main.programm .projectswrap .projecttile a.blocklink {
   background-size: contain;
 }
 .singleproject .projectclose {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   position: fixed;
   right: 28px;
   top: 70px;
@@ -1157,14 +1157,14 @@ main.programm .projectswrap .projecttile a.blocklink {
   display: inline-block;
   margin-top: 10px;
   background: #E4003A;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 10px;
   margin-bottom: 6px;
   margin-left: 7px;
@@ -1444,14 +1444,14 @@ main.error > div > p {
 }
 main.error > div .pill {
   background: black;
-  height: 28px;
+  height: 26px;
   border-radius: 60px;
   color: white;
   font-size: 14px;
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
