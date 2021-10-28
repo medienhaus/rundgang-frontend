@@ -163,7 +163,7 @@ export class StudentprojectService {
                   // we want to return an array of objects with all information for the specific event
                   const content = await fetchContent(data.room_id)
                   const type = data.name.substring(data.name.indexOf('_') + 1)
-                  const deleted = data.name.substring(0, data.name.indexOf('_')) === '0'
+                  const deleted = data.name.substring(0, data.name.indexOf('_')) === 'x'
                   if (type === 'location' && !deleted) {
                     onlineExclusive = false // if a room with a location exists we know the project has a physical location
                     if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
@@ -188,7 +188,12 @@ export class StudentprojectService {
             } else { // otherwise we direcetly get the content of the room
               const content = await fetchContent(event.room_id)
               const type = event.name.substring(event.name.indexOf('_') + 1)
-              if (type === 'location') onlineExclusive = false // if a room with a location exists we know the project has a physical location
+              const deleted = event.name.substring(0, event.name.indexOf('_')) === 'x'
+              if (type === 'location' && !deleted) {
+                onlineExclusive = false // if a room with a location exists we know the project has a physical location
+                if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
+              }
+
               const eventDate = content[0].substring(0, content[0].indexOf(' '))
               if (eventDate === date) {
                 // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
