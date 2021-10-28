@@ -566,7 +566,7 @@ main.start div.rundang.greypill {
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 26px;
+  line-height: 28px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -669,7 +669,7 @@ main.start div.rundang.greypill {
 }
 
 .leaflet-popup-content ul.tags li {
-  line-height: 26px;
+  line-height: 28px;
   font-size: 14px;
 }
 
@@ -724,7 +724,7 @@ main.programm #filterline ul li:not(.back) {
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 26px;
+  line-height: 28px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -1500,7 +1500,7 @@ main.start .choose div.footer ul li,
   }
 
   .tags li, .address-lists .address {
-    line-height: 26px;
+    line-height: 28px;
   }
 
   main.start .choose ul li {
