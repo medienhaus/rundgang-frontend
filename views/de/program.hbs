@@ -85,11 +85,9 @@
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
                 <a href="/c/{{ id }}">
-                    <div class="image">
+                    <div class="image {{#unless thumbnail}}noimage{{/unless}}">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
-                        {{else}}
-                            <div style="background: #ffd246; display: block; height: 190px; width: 100%"></div>
                         {{/if}}
                         <div class="flags">
                         </div>
