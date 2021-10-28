@@ -163,7 +163,8 @@ export class StudentprojectService {
                   // we want to return an array of objects with all information for the specific event
                   const content = await fetchContent(data.room_id)
                   const type = data.name.substring(data.name.indexOf('_') + 1)
-                  if (type === 'location') {
+                  const deleted = data.name.substring(0, data.name.indexOf('_')) === '0'
+                  if (type === 'location' && !deleted) {
                     onlineExclusive = false // if a room with a location exists we know the project has a physical location
                     if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
                   }
