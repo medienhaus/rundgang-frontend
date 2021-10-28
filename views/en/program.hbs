@@ -83,11 +83,9 @@
 
     <div class="projectswrap">
         {{#each studentprojects}}
-        {{ log events }}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
                 <a href="/en/c/{{ id }}">
-                {{#if onlineExclusive }} <span>online exclusive</span>
-                {{/if}}
+                
                     <div class="image">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
@@ -99,6 +97,8 @@
                         <div class="hoverinfo">
                             <p>{{ topicEn }}</p>
                         </div>
+                        {{#if onlineExclusive }} <span>online exclusive</span>{{/if}}
+                        {{#if isLive }} <span>LIVE</span>{{/if}}
                     </div>
                     <div class="info">
                         <h2>{{ name }}</h2>
@@ -107,7 +107,6 @@
                                 {{.}}{{#greaterThan ../authors.length @index}}, {{/greaterThan}}
                             {{/each}}
                         </div>
-                        
                     </div>
                 </a>
             </div>
