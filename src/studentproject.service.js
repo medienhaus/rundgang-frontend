@@ -495,33 +495,6 @@ export class StudentprojectService {
     return ret
   }
 
-  getLocationsAsObject (events) {
-    const data = { locations: [] }
-
-    events.forEach(event => {
-      event.forEach(contents => {
-        if (contents.name === 'location') {
-          contents.content.forEach(content => {
-            const exists = data.locations.find(loc => {
-              if (content.split('-')[1] === null || content.split('-')[1].length === 0) {
-                if (loc.coordinates === content.split('-')[0]) {
-                  return true
-                }
-              }
-              return false
-            })
-            // console.log(this.coordiantesToLocation(content.split('-')[0]))
-            if (!exists) {
-              data.locations.push({ ...this.coordinatesToLocation(content.split('-')[0]), room: content.split('-')[1] })
-            }
-            // console.log(data.locations)
-          })
-        }
-      })
-    })
-    return data
-  }
-
   getByContextSpaceIds (contextSpaceIds) {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
