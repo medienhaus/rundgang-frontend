@@ -1261,6 +1261,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   flex-wrap: wrap;
 }
 .singleproject .eventinfo .time {
+  display: block;
   font-size: 15px;
   width: 180px;
 }
