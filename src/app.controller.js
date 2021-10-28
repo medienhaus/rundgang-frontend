@@ -39,6 +39,7 @@ export class AppController {
       studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
+      activeLocations: this.studentprojectService.getActivelocations(),
       substructureActive: substructureActive
     })
   }
@@ -63,6 +64,7 @@ export class AppController {
       studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
       filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
+      activeLocations: this.studentprojectService.getActivelocations(),
       substructureActive: substructureActive
     })
   }
