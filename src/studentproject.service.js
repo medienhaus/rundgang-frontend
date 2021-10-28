@@ -243,8 +243,10 @@ export class StudentprojectService {
   getActivelocations () {
     const getLocationNames = this.activeLocations.map(locations => {
       const location = this.coordinatesToLocation(locations)
-      return { name: location.name.split(',')[0], coordinates: location.coordinates.replace(', ', '/') }
-    }) // get names for our coordinates
+      if (location.name) return { name: location.name.split(',')[0], coordinates: location.coordinates.replace(', ', '/') }
+      return null
+    }).filter(location => location !== null) // get names for our coordinates
+    console.log(getLocationNames)
     const uniqLocations = _.uniqBy(getLocationNames, 'name') // remove doublicates
     const sortedLocations = uniqLocations.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0)) // sort them by name
     return sortedLocations
