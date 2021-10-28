@@ -88,10 +88,16 @@
                     <div class="image {{#unless thumbnail}}noimage{{/unless}}">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
-                        {{else}}
-                            <div style="background: #ffd246; display: block; height: 190px; width: 100%"></div>
                         {{/if}}
                         <div class="flags">
+                            {{#if onlineExclusive }}<div class="online">Online Exclusive</div>{{/if}}
+                            {{#if isLive }}
+                                <div class="live"><span></span>Live</div>
+                            {{else}}
+                                {{#if liveAt}}
+                                    <div class="livein">Live at {{ liveAt }}</div>
+                                {{/if}}
+                            {{/if}}
                         </div>
                         <div class="hoverinfo">
                             <p>{{ topicEn }}</p>
@@ -109,6 +115,9 @@
             </div>
         {{/each}}
     </div>
+    <!-- <button id="scrollToTopButton" onClick="topFunction()" title="Go to top">TOP</button>  -->
 </main>
+
+<script src="/assets/js/scrollToTop.js"></script>
 
 {{> en/partials/footer }}

@@ -34,7 +34,7 @@ export class StudentprojectService {
       useAuthorizationHeader: true
     })
 
-    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, parent, parentSpaceId) { // changed
+    function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, onlineExclusive, isLive, liveAt, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
@@ -47,6 +47,9 @@ export class StudentprojectService {
         authors: authors,
         credit: credit,
         published: published,
+        onlineExclusive: onlineExclusive,
+        isLive,
+        liveAt,
         parent: parent,
         parentSpaceId: parentSpaceId,
         children: {}
@@ -126,6 +129,14 @@ export class StudentprojectService {
         const events = hierarchy.rooms.filter(room => room.name === 'events' && !room.name.startsWith('x_'))
         // const location = hierarchy.rooms.filter(room => room.name.includes('location') && !room.name.startsWith('x_'))
         const eventResult = [] // array for events
+        let onlineExclusive = true // we assume a project to be exclusively online and change this below if a location was specified
+
+        let isLive = false // we do the same thing for the LIVE disclaimer but in reverse
+        let liveAt = ''
+
+        const today = new Date()
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+
         if (events.length > 0) {
           const eventHierarchy = await matrixClient.getRoomHierarchy(events[0].room_id, 50, 1)
 
@@ -147,22 +158,50 @@ export class StudentprojectService {
               const childrenResult = await Promise.all(event.children_state.map(async child => {
                 const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
                 return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
-                  // we want to return an array of object with all information for the specific event
+                  // we want to return an array of objects with all information for the specific event
                   const content = await fetchContent(data.room_id)
-                  return { name: data.name.substring(data.name.indexOf('_') + 1), content: content }
+                  const type = data.name.substring(data.name.indexOf('_') + 1)
+                  if (type === 'location') onlineExclusive = false // if a room with a location exists we know the project has a physical location
+                  // check if an event is LIVE
+                  if (type === 'date') {
+                    const eventDate = content[0].substring(0, content[0].indexOf(' '))
+                    // fitst we check if the event is happening today
+                    if (eventDate === date) {
+                      // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
+                      const eventHour = content[0].substring(content[0].indexOf(' '), content[0].indexOf(':'))
+                      if (eventHour - today.getHours().toString().padStart(2, '0') <= 0 && eventHour - today.getHours().toString().padStart(2, '0') >= -1) isLive = true
+
+                      if (eventHour - today.getHours() >= 0) {
+                        liveAt = content[0].substring(content[0].indexOf(' ') + 1)
+                      }
+                    }
+                  } // if a room with a location exists we know the project has a physical location
+                  return { name: type, content: content }
                 })))[0]
               }))
               eventResult.push(childrenResult)
             } else { // otherwise we direcetly get the content of the room
               const content = await fetchContent(event.room_id)
-              eventResult.push([{ name: event.name.substring(event.name.indexOf('_') + 1), content: content }])
+              const type = event.name.substring(event.name.indexOf('_') + 1)
+              if (type === 'location') onlineExclusive = false // if a room with a location exists we know the project has a physical location
+              const eventDate = content[0].substring(0, content[0].indexOf(' '))
+              if (eventDate === date) {
+                // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
+                const eventHour = content[0].substring(content[0].indexOf(' '), content[0].indexOf(':'))
+                if (eventHour - today.getHours().toString().padStart(2, '0') <= 0 && eventHour - today.getHours().toString().padStart(2, '0') >= -1) isLive = true
+
+                if (eventHour - today.getHours() >= 0) {
+                  liveAt = content[0].substring(content[0].indexOf(' ') + 1)
+                }
+              }
+              eventResult.push([{ name: type, content: content }])
             }
           }))
         }
 
         // fetch events
 
-        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, parent, parentSpaceId))
+        _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, onlineExclusive, isLive, liveAt, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
