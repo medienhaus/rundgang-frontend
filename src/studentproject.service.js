@@ -496,6 +496,19 @@ export class StudentprojectService {
     return ret
   }
 
+  sortEventsByTime (data) {
+    const ret = {}
+    Object.entries(data).forEach(([dayKey, dayContent]) => {
+      ret[dayKey] = []
+      Object.entries(dayContent).forEach(([eventId, eventData]) => {
+        ret[dayKey].push(eventData)
+      })
+      ret[dayKey].sort((a, b) => (a.date[0].time > b.date[0].time) ? 1 : -1)
+    })
+
+    return ret
+  }
+
   getStructureElementById (id, tree) {
     return this.getStructureElementByIdFunction(id.id, tree)
   }

@@ -32,7 +32,7 @@
                     {{#if filterData.children}}
                         <ul>
                             {{#each filterData.children as |child|}}
-                                <li><a href="/en/programme/{{child.id}}">{{child.name}}</a></li>
+                                <li><a href="/programm/{{child.id}}">{{child.name}}</a></li>
                             {{/each}}
                         </ul>
                     {{/if}}
@@ -43,7 +43,7 @@
 
     {{#if substructureActive}}
         <div id="filterline">
-            <p>Location Filter</p>
+            <p>Standort-Filter</p>
             <div>
                 <ul>
                     <li class="location-name"><a href="/en/programme/location/52.50893832945276/13.328045756372312">Hardenbergstraße 33</a></li>
@@ -85,23 +85,19 @@
         {{#each studentprojects}}
             <div class="projecttile" data-ref="item" data-fakultaet="musik" data-studiengang="studiengang2" data-kontext="kontext4" data-analogdigital="+online" data-locations="hardenbergstrasse33">
                 <a href="/c/{{ id }}">
-                    <div class="image">
-                         <div class="flags">
-                        {{#if onlineExclusive }} <div class="online">Online Exclusive</div>{{/if}}
-                         {{#if isLive }}
-                             <div class="live"><span></span>Live</div>
-                         {{else}}
-                             {{#if liveAt}}
-                                 <div class="livein">Live at {{ liveAt }}</div>
-                             {{/if}}
-                         {{/if}}
-                    </div>
+                    <div class="image {{#unless thumbnail}}noimage{{/unless}}">
                         {{#if thumbnail}}
                             <img src="{{ thumbnail }}" alt="{{ title }}" width="100%" />
-                        {{else}}
-                            <div style="background: #ffd246; display: block; height: 190px; width: 100%"></div>
                         {{/if}}
                         <div class="flags">
+                            {{#if onlineExclusive }} <div class="online">Online Exclusive</div>{{/if}}
+                            {{#if isLive }}
+                                <div class="live"><span></span>Live</div>
+                            {{else}}
+                                {{#if liveAt}}
+                                    <div class="livein">Live at {{ liveAt }}</div>
+                                {{/if}}
+                            {{/if}}
                         </div>
                         <div class="hoverinfo">
                             <p>{{ topicDe }}</p>

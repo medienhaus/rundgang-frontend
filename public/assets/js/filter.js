@@ -221,7 +221,7 @@
 
 	filterByURL();
 	// show filters slides
-	projectsContainer.style.display = 'flex';
+	projectsContainer.style.display = 'grid';
 
 	window.addEventListener('popstate', function (event) {
 		filterByURL();

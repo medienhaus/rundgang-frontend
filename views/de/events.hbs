@@ -1,7 +1,7 @@
 {{> de/partials/header activePageEvents=true }}
 
 <main class="events">
-    <hr>
+    <br>
     <div class="eventsswrap">
 
         {{#each eventsByDay  as |day|}}
@@ -40,7 +40,9 @@
                                     {{/each}}
                                     {{#each ../livestream as |livestream|}}
                                         <li class="online">
-                                            {{livestream}}
+                                             <a href="{{livestream}}">
+                                                    livestream
+                                            </a>
                                         </li>
                                     {{/each}}
                                 </ul>

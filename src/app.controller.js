@@ -26,12 +26,11 @@ export class AppController {
   getAll (res, contextSpaceId) {
     const substructureActive = !contextSpaceId
     if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
-      return res.redirect('/de/programme')
+      return res.redirect('/programm')
     }
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
-    
     const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
     return res.render('de/program.hbs', {
       pageTitle: 'Programm',
@@ -146,7 +145,7 @@ export class AppController {
     return {
       pageTitle: 'Zeitplan Einzelveranstaltungen',
       languageSwitchLink: '/en/events',
-      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+      eventsByDay: this.studentprojectService.sortEventsByTime(this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()))
     }
   }
 
@@ -156,7 +155,7 @@ export class AppController {
     return {
       pageTitle: 'Event Calendar',
       languageSwitchLink: '/zeitplan',
-      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+      eventsByDay: this.studentprojectService.sortEventsByTime(this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()))
     }
   }
 
@@ -180,26 +179,6 @@ export class AppController {
     }
   }
 
-  @Get('/einlasszeiten')
-  @Render('de/hours.hbs')
-  hours () {
-    return {
-      pageTitle: 'Einlasszeiten',
-      activePageAdmissionTimes: true,
-      languageSwitchLink: '/en/admission-times'
-    }
-  }
-
-  @Get('/en/admission-times')
-  @Render('en/hours.hbs')
-  hoursEnglish () {
-    return {
-      pageTitle: 'Admission Times',
-      activePageAdmissionTimes: true,
-      languageSwitchLink: '/einlasszeiten'
-    }
-  }
-
   @Get('/c/:id')
   @Bind(Response(), Param())
   async getStudentproject (res, { id }) {
@@ -213,7 +192,10 @@ export class AppController {
       pageTitle: project.name,
       languageSwitchLink: `/en/c/${id}`,
       studentproject: project,
-      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      eventInformation: _.map(project.events, (event) => this.studentprojectService.getEventInformation({ id: id, event: event })),
+      bubbles: {
+        context: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      }
     })
   }
 
@@ -224,14 +206,16 @@ export class AppController {
     if (!project) return this.customErrorEN(res)
 
     // If there's no English content for this project redirect to the German version
-
     if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
 
     return res.render('en/studentproject.hbs', {
       pageTitle: project.name,
       languageSwitchLink: `/c/${id}`,
       studentproject: project,
-      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      eventInformation: _.map(project.events, (event) => this.studentprojectService.getEventInformation({ id: id, event: event })),
+      bubbles: {
+        context: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      }
     })
   }
 
@@ -252,7 +236,7 @@ export class AppController {
 
   @Get('/api/events/day')
   apiGetEventsByDay () {
-    return this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    return this.studentprojectService.sortEventsByTime(this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()))
   }
 
   @Get('/api/struct/:id/branch')

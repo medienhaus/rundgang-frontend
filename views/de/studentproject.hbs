@@ -3,6 +3,7 @@
 <main class="singleproject">
     <a href="/programm"><div class="projectclose"></div></a>
     <a href="/programm"><div class="back"></div></a>
+
     <div class="projectmain">
         <h2 class="projecttitle">{{ studentproject.name }}</h2>
 
@@ -10,12 +11,41 @@
             {{#each studentproject.authors}}
                 <span>{{.}}</span>
             {{/each}}
-            {{#if studentproject.credits}}
-                {{#each studentproject.credits}}
+            {{#if studentproject.credit}}
+                {{#each studentproject.credit}}
                     <span>{{.}}</span>
                 {{/each}}
             {{/if}}
         </div>
+
+        {{#each eventInformation as |event|}}
+            <div class="eventinfo">
+                <div class="day">{{formatDateGerman event.date.0.day}}</div>
+                <div class="flexbox">
+                    <div class="time">{{ event.date.0.time }}</div>
+                    <div class="infos">
+                        <div class="tags">
+                            <ul>
+                                <div class="tagbubble">
+                                    <span>
+                                        <a href="/en/locations?coords={{event.locations.0.coordinates}}">
+                                        {{ event.locations.0.name }}
+                                        </a>
+                                    </span>
+                                    {{#if event.locations.0.room}}
+                                        <span>
+                                            <a href="/orte?coords={{event.locations.0.coordinates}}">
+                                            {{event.locations.0.room}}
+                                            </a>
+                                        </span>
+                                    {{/if}}
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
 
         {{#if studentproject.thumbnail_full_size}}
             <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
@@ -29,16 +59,18 @@
             {{{ formatted_content }}}
         {{/each}}
     </div>
-    <div class="info">
-        {{#if studentproject.parent}}
+
+    {{#if studentproject.parent}}
+        <div class="info">
             <div class="label">Kontext</div>
             <div class="tagbubble">
-                {{#each bubbles as |hierarchyElement|}}
+                {{#each bubbles.context as |hierarchyElement|}}
                     <span><a href="/programm/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
                 {{/each}}
             </div>
-        {{/if}}
-    </div>
+        </div>
+    {{/if}}
+
 </main>
 
 <script src="/assets/js/green-audio-player.min.js"></script>
