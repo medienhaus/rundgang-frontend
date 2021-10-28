@@ -48,7 +48,9 @@
         {{/each}}
 
         {{#if studentproject.thumbnail_full_size}}
-            <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
+            <div class="featureimage image">
+                <img src="{{ studentproject.thumbnail_full_size }}" alt="" />
+            </div>
         {{/if}}
 
         {{#if studentproject.topicEn}}
