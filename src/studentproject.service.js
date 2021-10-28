@@ -8,6 +8,7 @@ import Handlebars from 'handlebars'
 import fs from 'fs'
 import { join } from 'path'
 import locationData from '../data/locationData.json'
+import moment from 'moment'
 
 @Injectable()
 @Dependencies(ConfigService, HttpService)
@@ -167,12 +168,16 @@ export class StudentprojectService {
                     const eventDate = content[0].substring(0, content[0].indexOf(' '))
                     // fitst we check if the event is happening today
                     if (eventDate === date) {
-                      // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
-                      const eventHour = content[0].substring(content[0].indexOf(' '), content[0].indexOf(':'))
-                      if (eventHour - today.getHours().toString().padStart(2, '0') <= 0 && eventHour - today.getHours().toString().padStart(2, '0') >= -1) isLive = true
+                      const eventTimeHourMinutes = content[0].substring(content[0].indexOf(' ')).trim()
+                      if (eventTimeHourMinutes) {
+                        // If we're currently within 15 minutes before and 2 hours after the event we mark it as "live"
+                        if (moment().isBetween(moment(content[0].trim()).subtract(15, 'minutes'), moment(content[0].trim()).add(2, 'hours'))) {
+                          isLive = true
+                        }
 
-                      if (eventHour - today.getHours() >= 0) {
-                        liveAt = content[0].substring(content[0].indexOf(' ') + 1)
+                        if (moment().isBefore(content[0].trim())) {
+                          liveAt = moment(content[0].trim()).format('H:mm') // e.g. 9:02
+                        }
                       }
                     }
                   } // if a room with a location exists we know the project has a physical location
