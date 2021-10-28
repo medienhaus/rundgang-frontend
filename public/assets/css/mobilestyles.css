@@ -147,6 +147,15 @@ main.events .day .event .tags {
   main.start .plakat {
     height: calc(100vh - 310px);
   }
+
+  main.programm #filterline ul.path {
+    width: 100%;
+    overflow: scroll;
+    flex-wrap: nowrap;
+  }
+  main.programm #filterline ul.path li {
+    white-space: nowrap;
+  }
 }
 @media only screen and (max-width: 650px) {
   main.start .plakat {
