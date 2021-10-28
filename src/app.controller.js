@@ -1,7 +1,9 @@
-import { Bind, Controller, Dependencies, Get, NotFoundException, Param, Render, Response } from '@nestjs/common'
+import { Bind, Controller, Dependencies, Get, NotFoundException, HttpException, HttpStatus, Param, Render, Response } from '@nestjs/common'
 import { AppService } from './app.service'
 import struktur from '../data/struktur'
 import strukturDev from '../data/struktur-dev'
+import _ from 'lodash'
+import locationData from '../data/locationData.json'
 
 @Controller()
 @Dependencies(AppService, 'STUDENTPROJECT_PROVIDER')
@@ -20,45 +22,85 @@ export class AppController {
   rootEnglish () { return { languageSwitchLink: '/' } }
 
   @Get('/programm/:contextSpaceId?')
-  @Render('de/programm.hbs')
-  @Bind(Param('contextSpaceId'))
-  getAll (contextSpaceId) {
+  @Bind(Response(), Param('contextSpaceId'))
+  getAll (res, contextSpaceId) {
+    const substructureActive = !contextSpaceId
+    if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
+      return res.redirect('/programm')
+    }
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
-    return {
+    const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
+    return res.render('de/program.hbs', {
       pageTitle: 'Programm',
       activePageProgram: true,
       languageSwitchLink: '/en/programme',
-      studentprojects: contextSpaceId
-        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
-        : this.studentprojectService.getAll(),
+      studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
-      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
-    }
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
+      substructureActive: substructureActive
+    })
   }
 
   @Get('/en/programme/:contextSpaceId?')
-  @Render('en/programme.hbs')
-  @Bind(Param('contextSpaceId'))
-  getAllEnglish (contextSpaceId) {
+  @Bind(Response(), Param('contextSpaceId'))
+  getAllEnglish (res, contextSpaceId) {
     // If we are not filtering by a given context show the filter data for the root context
+
+    const substructureActive = !contextSpaceId
+    if (contextSpaceId && contextSpaceId === Object.keys(this.apiGetStructure())[0]) {
+      return res.redirect('/en/programme')
+    }
+
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
-    return {
+    const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
+    return res.render('en/program.hbs', {
       pageTitle: 'Programme',
       activePageProgram: true,
       languageSwitchLink: '/programm',
-      studentprojects: contextSpaceId
-        ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false)
-        : this.studentprojectService.getAll(),
+      studentprojects: this.studentprojectService.everydayImShuffling(projects),
       filterData: this.studentprojectService.getStrucureElementByIdFilteredOutEmptyOnes(this.studentprojectService.getStructureElementById({ id: contextSpaceId }, this.apiGetStructure()), this.apiGetStructure()),
-      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true)
-    }
+      filterParents: this.studentprojectService.findId({ id: contextSpaceId }, this.apiGetStructure(), true).filter(parent => parent.id && parent.id !== Object.keys(this.apiGetStructure())[0]),
+      substructureActive: substructureActive
+    })
+  }
+
+  @Get('/programm/ort/:lat/:lng')
+  @Bind(Response(), Param())
+  getProgrammeByLocation (res, { lat, lng }) {
+    // Make sure this is a valid lat/lng combination, otherwise forward to /programm
+    const location = _.find(locationData, { coordinates: `${lat}, ${lng}` })
+    if (!location) return res.redirect('/programm')
+
+    return res.render('de/program.hbs', {
+      pageTitle: 'Programm',
+      activePageProgram: true,
+      languageSwitchLink: `/en/programme/location/${lat}/${lng}`,
+      studentprojects: this.studentprojectService.getByLocation(lat, lng),
+      locationData: location
+    })
+  }
+
+  @Get('/en/programme/location/:lat/:lng')
+  @Bind(Response(), Param())
+  getProgrammeByLocationEnglish (res, { lat, lng }) {
+    // Make sure this is a valid lat/lng combination, otherwise forward to /en/programme
+    const location = _.find(locationData, { coordinates: `${lat}, ${lng}` })
+    if (!location) return res.redirect('/en/programme')
+
+    return res.render('en/program.hbs', {
+      pageTitle: 'Programme',
+      activePageProgram: true,
+      languageSwitchLink: `/programm/ort/${lat}/${lng}`,
+      studentprojects: this.studentprojectService.getByLocation(lat, lng),
+      locationData: location
+    })
   }
 
   @Get('/beratungsangebote')
-  @Render('de/programm.hbs')
+  @Render('de/program.hbs')
   getBeratungsangebote () {
     return {
       pageTitle: 'Beratungsangebote',
@@ -78,7 +120,7 @@ export class AppController {
   }
 
   @Get('/en/advisory-services')
-  @Render('en/programme.hbs')
+  @Render('en/program.hbs')
   getBeratungsangeboteEnglish () {
     return {
       pageTitle: 'Advisory Services',
@@ -100,40 +142,69 @@ export class AppController {
   @Get('/zeitplan')
   @Render('de/events.hbs')
   getAllEvents () {
-    return { pageTitle: 'Zeitplan Einzelveranstaltungen', languageSwitchLink: '/en/events', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return {
+      pageTitle: 'Zeitplan Einzelveranstaltungen',
+      languageSwitchLink: '/en/events',
+      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    }
   }
 
   @Get('/en/events')
   @Render('en/events.hbs')
   getAllEventsEnglish () {
-    return { pageTitle: 'Event Calendar', languageSwitchLink: '/zeitplan', eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay()) }
+    return {
+      pageTitle: 'Event Calendar',
+      languageSwitchLink: '/zeitplan',
+      eventsByDay: this.studentprojectService.bringingOrderToEventsAndSanitize(this.studentprojectService.getAllEventsByDay())
+    }
   }
 
   @Get('/orte')
   @Render('de/locations.hbs')
   getAllLocations () {
-    return { languageSwitchLink: '/en/locations' }
+    return {
+      pageTitle: 'Orte',
+      activePageLocations: true,
+      languageSwitchLink: '/en/locations'
+    }
   }
 
   @Get('/en/locations')
   @Render('en/locations.hbs')
   getAllLocationsEngl () {
-    return { languageSwitchLink: '/orte' }
+    return {
+      pageTitle: 'Locations',
+      activePageLocations: true,
+      languageSwitchLink: '/orte'
+    }
   }
 
   @Get('/einlasszeiten')
   @Render('de/hours.hbs')
-  hours () { return { languageSwitchLink: '/en/admission-times' } }
+  hours () {
+    return {
+      pageTitle: 'Einlasszeiten',
+      activePageAdmissionTimes: true,
+      languageSwitchLink: '/en/admission-times'
+    }
+  }
 
   @Get('/en/admission-times')
   @Render('en/hours.hbs')
-  hoursEnglish () { return { languageSwitchLink: '/einlasszeiten' } }
+  hoursEnglish () {
+    return {
+      pageTitle: 'Admission Times',
+      activePageAdmissionTimes: true,
+      languageSwitchLink: '/einlasszeiten'
+    }
+  }
 
   @Get('/c/:id')
   @Bind(Response(), Param())
   async getStudentproject (res, { id }) {
     const project = await this.studentprojectService.get(id, 'de')
-    if (!project) throw new NotFoundException()
+    if (!project) return this.customError(res)
+
     // If there's no German content for this project redirect to the English version
     if (project.formatted_content === '' && !project.topicDe) return res.redirect(`/en/c/${id}`)
 
@@ -152,7 +223,8 @@ export class AppController {
   @Bind(Response(), Param())
   async getStudentprojectEnglish (res, { id }) {
     const project = await this.studentprojectService.get(id, 'en')
-    if (!project) throw new NotFoundException()
+    if (!project) return this.customErrorEN(res)
+
     // If there's no English content for this project redirect to the German version
     if (project.formatted_content === '' && !project.topicEn) return res.redirect(`/c/${id}`)
 
@@ -225,5 +297,15 @@ export class AppController {
     const project = await this.studentprojectService.get(id)
     if (!project) throw new NotFoundException()
     return project
+  }
+
+  customError (res) {
+    res.status(HttpStatus.NOT_FOUND)
+    return res.render('de/error.hbs', {})
+  }
+
+  customErrorEN (res) {
+    res.status(HttpStatus.NOT_FOUND)
+    return res.render('en/error.hbs', {})
   }
 }

@@ -182,17 +182,30 @@ export class StudentprojectService {
 
     await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
-    this.studentprojects = {}
-    const shuffledProjects = _.shuffle(result)
-    shuffledProjects.forEach(project => {
-      this.studentprojects[project.id] = project
-    })
+    this.studentprojects = result
 
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
 
   getAll () {
     return this.studentprojects
+  }
+
+  everydayImShuffling (data) {
+    const randomProjects = []
+    const ret = {}
+
+    Object.entries(data).forEach(([key, content]) => {
+      randomProjects.push(content)
+    })
+    for (let i = randomProjects.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [randomProjects[i], randomProjects[j]] = [randomProjects[j], randomProjects[i]]
+    }
+    randomProjects.forEach(project => {
+      ret[Math.random() * (10000 - 0) + 0] = project
+    })
+    return randomProjects
   }
 
   getAllEvents () {
@@ -206,52 +219,17 @@ export class StudentprojectService {
   }
 
   getAllEventsByDay () {
-    const days = {}
-    const events = this.getAllEvents()
-
-    Object.entries(events).forEach(([key, content]) => {
-      if (content.events && content.events.length > 0) {
-        // events[key] = content
-        content.events.forEach(event => {
-          event.forEach(entry => {
-            if (entry.name === 'date') {
-              entry.content.forEach(date => {
-                if (date.split(' ')[0] in days) {
-                } else {
-                  days[date.split(' ')[0]] = {}
-                }
-                days[date.split(' ')[0]][key] = {
-                  id: content.id,
-                  name: content.name,
-                  parent: content.parent,
-                  type: content.type
-                }
-              })
-            }
-          })
-        })
-        content.events.forEach(event => {
-          const tempData = {}
-          tempData.id = content.id
-          tempData.event = event
-          const infos = this.getEventInformation(tempData)
-          if (infos.date) {
-            infos.date.forEach(date => {
-              Object.entries(days).forEach(([infoK, infoC]) => {
-                if (infoK === date.day) {
-                  Object.entries(infoC).forEach(([eventK, eventC]) => {
-                    if (eventC.id === infos.id) {
-                      days[infoK][eventK] = { ...eventC, ...infos }
-                    }
-                  })
-                }
-              })
-            })
+    return _.transform(this.getAllEvents(), (result, studentproject, id) => {
+      _.each(studentproject.events, (event) => {
+        const eventInformation = this.getEventInformation({ id: id, event: event })
+        _.each(eventInformation.date, (date) => {
+          if (date.day) {
+            result[date.day] = result[date.day] || {}
+            result[date.day][id] = { ...studentproject, ...eventInformation }
           }
         })
-      }
+      })
     })
-    return days
   }
 
   getEventInformation (event) {
@@ -266,12 +244,12 @@ export class StudentprojectService {
             data.coordinates = []
             data.coordinates.push(content)
           }
-          this.coordiantesToLocation(content.split('-')[0])
+          this.coordinatesToLocation(content.split('-')[0])
           if (data.locations) {
-            data.locations.push(this.coordiantesToLocation(content))
+            data.locations.push(this.coordinatesToLocation(content))
           } else {
             data.locations = []
-            data.locations.push(this.coordiantesToLocation(content))
+            data.locations.push(this.coordinatesToLocation(content))
           }
         }
         if (entry.name === 'date') {
@@ -304,8 +282,8 @@ export class StudentprojectService {
     return data
   }
 
-  coordiantesToLocation (coords) {
-    const found = locationData.find(location => location.coordinates.trim() === coords.split('-')[0].trim())
+  coordinatesToLocation (coords) {
+    const found = { ...locationData.find(location => location.coordinates.trim() === coords.split('-')[0].trim()) }
     if (found && coords.split('-')[1]) {
       found.room = coords.split('-')[1]
     }
@@ -424,7 +402,6 @@ export class StudentprojectService {
 
   bringingOrderToEventsAndSanitize (data) { // function can be trashed after rundgang. Not generalizable at all, just to fetch deprecated user input.
     const ret = {
-      '2021-10-28': data['2021-10-28'],
       '2021-10-29': data['2021-10-29'],
       '2021-10-30': data['2021-10-30'],
       '2021-10-31': data['2021-10-31']
@@ -505,6 +482,10 @@ export class StudentprojectService {
 
   getStrucureElementByIdFilteredOutEmptyOnes (level, tree) {
     const ret = { ...level }
+    if (Object.keys(ret.children).length === 0) {
+      delete ret.children
+      return ret
+    }
     Object.entries(level.children).forEach(([key, content]) => {
       const projects = this.getProjectsByLevel({ id: key }, tree, false)
       if (Object.keys(projects).length === 0) {
@@ -545,7 +526,23 @@ export class StudentprojectService {
     return _.filter(this.studentprojects, content => contextSpaceIds.includes(content.parentSpaceId))
   }
 
+  // Return all student projects that happen at a given location
+  getByLocation (lat, lng) {
+    return _.filter(this.studentprojects, (project) =>
+      _.some(project.events, (event) =>
+        _.some(event, (eventProperty) =>
+          eventProperty.name === 'location' && _.some(eventProperty.content, (content) =>
+            _.startsWith(content, `${lat}, ${lng}-`)
+          )
+        )
+      )
+    )
+  }
+
   async get (id, language = 'en') {
+    if (!this.studentprojects[id]) {
+      return null
+    }
     const { content, formattedContent } = await this.getContent(id, language)
     return { ...this.studentprojects[id], content, formatted_content: formattedContent }
   }
