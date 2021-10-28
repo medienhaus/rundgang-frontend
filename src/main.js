@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { join } from 'path'
 import hbs from 'hbs'
+import moment from 'moment'
 
 async function bootstrap () {
   const app = await NestFactory.create(AppModule)
@@ -20,6 +21,12 @@ async function bootstrap () {
       return options.fn(this)
     }
     return options.inverse(this)
+  })
+  hbs.registerHelper('formatDateEnglish', function (a) {
+    return moment(a).format('dddd, LL')
+  })
+  hbs.registerHelper('formatDateGerman', function (a) {
+    return moment(a).locale('de').format('dddd, LL')
   })
   app.setViewEngine('hbs')
 

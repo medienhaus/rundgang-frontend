@@ -212,7 +212,10 @@ export class AppController {
       pageTitle: project.name,
       languageSwitchLink: `/en/c/${id}`,
       studentproject: project,
-      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      eventInformation: _.map(project.events, (event) => this.studentprojectService.getEventInformation({ id: id, event: event })),
+      bubbles: {
+        context: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      }
     })
   }
 
@@ -229,7 +232,10 @@ export class AppController {
       pageTitle: project.name,
       languageSwitchLink: `/c/${id}`,
       studentproject: project,
-      bubbles: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      eventInformation: _.map(project.events, (event) => this.studentprojectService.getEventInformation({ id: id, event: event })),
+      bubbles: {
+        context: this.studentprojectService.findId({ id: project.parentSpaceId }, this.apiGetStructure(), true)
+      }
     })
   }
 
