@@ -1288,6 +1288,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   padding: 15px;
   font-weight: 500;
   margin-top: 5px;
+  position: relative;
 }
 .singleproject .eventinfo .day {
   font-size: 20px;
@@ -1317,6 +1318,7 @@ main.programm .projectswrap .projecttile a.blocklink {
 }
 .singleproject .eventinfo .tags ul {
   padding-left: 0;
+  max-width: 100%;
 }
 .singleproject .eventinfo .tags ul li a {
   color: inherit;
@@ -1324,6 +1326,10 @@ main.programm .projectswrap .projecttile a.blocklink {
 }
 .singleproject .eventinfo .tags ul li {
   margin-bottom: 8px;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .singleproject .eventinfo + .eventinfo {	
   margin-top: 30px;	
@@ -1399,11 +1405,16 @@ main.events .day .event .tags {
 main.events .day .event .tags ul {
   padding: 0;
   margin: 0;
+  max-width: 100%;
 }
 main.events .day .event .tags ul li {
   margin-right: 2px;
   margin-bottom: 6px;
   font-weight: 500;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 main.events .day .event .tags ul li a {
   text-decoration: none;
