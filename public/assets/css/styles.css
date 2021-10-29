@@ -91,11 +91,11 @@ header .topline h1 a {
 /** PREVIEW STYLES**/
 /*
 .singleproject > main {
-	border-color: var(--color-lo);
-	border-radius: unset;
-	border-style: solid;
-	border-width: calc(var(--margin) * 0.2);
-	padding: calc(var(--margin) * 1);
+  border-color: var(--color-lo);
+  border-radius: unset;
+  border-style: solid;
+  border-width: calc(var(--margin) * 0.2);
+  padding: calc(var(--margin) * 1);
 }
 */
 /* GENERAL STYLES
@@ -148,7 +148,23 @@ strong, b {
   cursor: pointer;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /*
+  overflow-x: scroll;
+  white-space: nowrap;
+  */
 }
+.tagbubble span::-webkit-scrollbar {
+  display: none;
+}
+.tagbubble span {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .tagbubble span a {
   color: inherit;
   text-decoration: inherit;
@@ -566,7 +582,7 @@ main.start div.rundang.greypill {
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -669,7 +685,7 @@ main.start div.rundang.greypill {
 }
 
 .leaflet-popup-content ul.tags li {
-  line-height: 28px;
+  line-height: 26px;
   font-size: 14px;
 }
 
@@ -684,7 +700,7 @@ main.start div.rundang.greypill {
 }
 
 /* .leaflet-popup.leaflet-zoom-animated {
-	left: 25px !important;
+  left: 25px !important;
 } */
 #map {
   border-top: 1px solid #C4C4C4;
@@ -699,13 +715,35 @@ main.programm #filterline {
   padding-left: 20px;
   padding-right: 20px;
 }
-main.programm #filterline + #filterline {
-  margin-top: 20px;
+main.programm #filterline ul.path {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
 }
-main.programm #filterline:first-of-type {
-  margin-top: 70px;
+main.programm #filterline ul.path li {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
 }
-main.programm #filterline ul {
+main.programm #filterline ul.path li::after {
+  content: "/";
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #858585;
+}
+main.programm #filterline ul.path a {
+  color: #858585;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+main.programm #filterline ul.path a:hover {
+  color: black;
+  cursor: pointer;
+}
+main.programm #filterline ul:not(.path) {
   list-style: none;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -715,7 +753,13 @@ main.programm #filterline ul {
   margin: 0;
   padding: 0;
 }
-main.programm #filterline ul li:not(.back) {
+main.programm #filterline + #filterline {
+  margin-top: 20px;
+}
+main.programm #filterline:first-of-type {
+  margin-top: 70px;
+}
+main.programm #filterline ul:not(.path) li:not(.back) {
   background: black;
   height: 26px;
   border-radius: 60px;
@@ -724,7 +768,7 @@ main.programm #filterline ul li:not(.back) {
   font-weight: 500;
   padding-left: 10px;
   padding-right: 10px;
-  line-height: 28px;
+  line-height: 26px;
   margin-right: 4px;
   margin-bottom: 6px;
   cursor: pointer;
@@ -732,24 +776,22 @@ main.programm #filterline ul li:not(.back) {
   box-sizing: border-box;
   background: black;
   color: white;
-  /*
-  max-width: 280px;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  */
 }
-main.programm #filterline ul li a {
+main.programm #filterline ul:not(.path) li a {
   color: white;
   text-decoration: none;
 }
-main.programm #filterline ul li.back {
+main.programm #filterline ul:not(.path) li.back {
   font-weight: 500;
   font-size: 14px;
   color: #858585;
   margin-right: 6px;
 }
-main.programm #filterline ul li.back span {
+main.programm #filterline ul:not(.path) li.back span {
   width: 26px;
   height: 26px;
   display: inline-block;
@@ -764,28 +806,28 @@ main.programm #filterline ul li.back span {
   transition: opacity 0.3s;
   cursor: pointer;
 }
-main.programm #filterline ul li.back span:hover {
+main.programm #filterline ul:not(.path) li.back span:hover {
   opacity: 1;
 }
-main.programm #filterline ul:last-of-type {
+main.programm #filterline ul:last-of-type:not(.path) {
   margin-top: 10px;
 }
-main.programm #filterline ul:last-of-type > li {
+main.programm #filterline ul:last-of-type:not(.path) > li {
   border: 1px solid black;
 }
-main.programm #filterline ul:last-of-type > li:hover {
+main.programm #filterline ul:last-of-type:not(.path) > li:hover {
   background-color: white;
   border: 1px solid black;
 }
-main.programm #filterline ul:last-of-type > li:hover > a {
+main.programm #filterline ul:last-of-type:not(.path) > li:hover > a {
   color: black;
 }
-main.programm #filterline ul + ul:not(:last-of-type)::before {
+main.programm #filterline ul + ul:not(:last-of-type):not(.path)::before {
   content: "\21B3\00A0";
 }
-main.programm #filterline ul + ul:not(:last-of-type) > li:only-child,
-main.programm #filterline ul:first-of-type > li:only-child,
-main.programm #filterline ul:last-of-type > li:only-child {
+main.programm #filterline ul + ul:not(:last-of-type):not(.path) > li:only-child,
+main.programm #filterline ul:first-of-type:not(.path) > li:only-child,
+main.programm #filterline ul:last-of-type:not(.path) > li:only-child {
   background-color: white;
   border: 1px solid black;
 }
@@ -1070,8 +1112,8 @@ main.programm .projectswrap .projecttile a.blocklink {
 .singleproject .tagbubble {
   margin-left: -2px;
 }
-.singleproject .tagbubble + .tagbubble {
-  margin-top: 20px;
+.singleproject .tagbubble + .tagbubble {	
+  margin-top: 20px;	
 }
 .singleproject .students.tagbubble {
   margin-bottom: 40px;
@@ -1125,10 +1167,10 @@ main.programm .projectswrap .projecttile a.blocklink {
   padding: 25px;
   /*
   &:before {
-  	content: open-quote;
+    content: open-quote;
   }
   &:after {
-  	content: close-quote;
+    content: close-quote;
   }
   */
 }
@@ -1224,15 +1266,15 @@ main.programm .projectswrap .projecttile a.blocklink {
   margin-bottom: 8px;
   margin-top: 20px;
 }
-.singleproject .info .tagbubble span {
-  max-width: 280px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.singleproject .info .tagbubble span {	
+  max-width: 100%;	
+  overflow: hidden;	
+  text-overflow: ellipsis;	
+  white-space: nowrap;	
 }
 .singleproject ul {
   list-style-position: outside;
-  list-style-type: "–  ";
+  list-style-type: "–  ";
   padding: 0;
   padding-left: 22px;
   margin-bottom: 0;
@@ -1247,6 +1289,7 @@ main.programm .projectswrap .projecttile a.blocklink {
   padding: 15px;
   font-weight: 500;
   margin-top: 5px;
+  position: relative;
 }
 .singleproject .eventinfo .day {
   font-size: 20px;
@@ -1261,9 +1304,9 @@ main.programm .projectswrap .projecttile a.blocklink {
   flex-wrap: wrap;
 }
 .singleproject .eventinfo .time {
-  display: block;
   font-size: 15px;
   width: 180px;
+  display: block;
 }
 .singleproject .eventinfo .infos {
   width: calc(100% - 180px);
@@ -1276,6 +1319,7 @@ main.programm .projectswrap .projecttile a.blocklink {
 }
 .singleproject .eventinfo .tags ul {
   padding-left: 0;
+  max-width: 100%;
 }
 .singleproject .eventinfo .tags ul li a {
   color: inherit;
@@ -1283,21 +1327,25 @@ main.programm .projectswrap .projecttile a.blocklink {
 }
 .singleproject .eventinfo .tags ul li {
   margin-bottom: 8px;
-}
-.singleproject .eventinfo .tags ul .tagbubble span {
-  max-width: 280px;
+  white-space: nowrap;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+}
+.singleproject .eventinfo + .eventinfo {	
+  margin-top: 30px;	
+}	
+.singleproject .eventinfo:last-child {	
+  margin-bottom: 30px;	
 }
 .singleproject .eventinfo .tags .stream, .singleproject .eventinfo .tags .conference {
   background-color: #E4003A;
 }
-.singleproject .eventinfo + .eventinfo {
-  margin-top: 30px;
-}
-.singleproject .eventinfo:last-child {
-  margin-bottom: 30px;
+.singleproject .eventinfo + .eventinfo {	
+  margin-top: 30px;	
+}	
+.singleproject .eventinfo:last-child {	
+  margin-bottom: 30px;	
 }
 
 /* STYLES FÜR EVENTS / EINZELVERANSTALTUNGEN
@@ -1358,11 +1406,16 @@ main.events .day .event .tags {
 main.events .day .event .tags ul {
   padding: 0;
   margin: 0;
+  max-width: 100%;
 }
 main.events .day .event .tags ul li {
   margin-right: 2px;
   margin-bottom: 6px;
   font-weight: 500;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 main.events .day .event .tags ul li a {
   text-decoration: none;
@@ -1495,12 +1548,13 @@ main.programm .projectswrap .projecttile .image .online,
 .tagbubble span,
 main.start div.greypill,
 main.start .choose div.footer ul li,
-.singleproject .projectmain .bbb span.bbblink {
+.singleproject .projectmain .bbb span.bbblink,
+.singleproject .eventinfo .tags ul li{
     line-height: 28px;
   }
 
   .tags li, .address-lists .address {
-    line-height: 28px;
+    line-height: 26px;
   }
 
   main.start .choose ul li {
