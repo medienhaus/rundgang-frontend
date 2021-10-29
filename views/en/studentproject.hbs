@@ -21,28 +21,56 @@
         {{#each eventInformation as |event|}}
             <div class="eventinfo">
                 <div class="day">{{formatDateEnglish event.date.0.day}}</div>
-                <div class="flexbox">
-                    <div class="time">{{ event.date.0.time }}</div>
-                    <div class="infos">
-                        <div class="tags">
-                            <ul>
-                                <div class="tagbubble">
-                                    <span>
-                                        <a href="/en/locations?coords={{event.locations.0.coordinates}}">
-                                            {{ event.locations.0.name }}
-                                        </a>
-                                    </span>
-                                    {{#if event.locations.0.room}}
-                                        <span>
-                                            <a href="/orte?coords={{event.locations.0.coordinates}}">
-                                                {{event.locations.0.room}}
-                                            </a>
-                                        </span>
-                                    {{/if}}
-                                </div>
-                            </ul>
+                {{#if event.date.0.time}}<span class="time">{{ event.date.0.time }}</span>{{/if}}
+                {{#if ../studentproject.isLive}}
+                    {{#if event.livestream}}
+                        <iframe
+                            src="https://stream.udk-berlin.de/videos/embed/{{ event.livestream.[0] }}"
+                            frameBorder="0"
+                            sandbox="allow-same-origin allow-scripts"
+                            allowFullScreen="allowfullscreen"
+                            style="width: 100%; max-width: 620px; height: auto; aspect-ratio: 16/9;"
+                        ></iframe>
+                    {{/if}}
+                    {{#if event.bigBlueButton}}
+                        <div class="bbb">
+                            <a href="{{ event.bigBlueButton.[0] }}" target="_blank">
+                                <center><span class="bbblink">Join Video Conference</span></center>
+                            </a>
                         </div>
-                    </div>
+                    {{/if}}
+                {{/if}}
+                <div class="tags">
+                    <ul>
+                        {{#if event.locations}}
+                            <li>
+                                <a href="/en/locations?coords={{event.locations.0.coordinates}}">
+                                    {{ event.locations.0.name }}
+                                </a>
+                            </li>
+                            {{#if event.locations.0.room}}
+                                <li>
+                                    <a href="/en/locations?coords={{event.locations.0.coordinates}}">
+                                        {{event.locations.0.room}}
+                                    </a>
+                                </li>
+                            {{/if}}
+                            {{#if event.livestream}}
+                                <li class="stream">
+                                    <a href="{{ event.livestream.[0] }}" target="_blank">
+                                        Livestream
+                                    </a>
+                                </li>
+                            {{/if}}
+                            {{#if event.bigBlueButton}}
+                                <li class="conference">
+                                    <a href="{{ event.bigBlueButton.[0] }}" target="_blank">
+                                        Video Conference
+                                    </a>
+                                </li>
+                            {{/if}}
+                        {{/if}}
+                    </ul>
                 </div>
             </div>
         {{/each}}

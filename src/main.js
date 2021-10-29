@@ -23,10 +23,10 @@ async function bootstrap () {
     return options.inverse(this)
   })
   hbs.registerHelper('formatDateEnglish', function (a) {
-    return moment(a).format('dddd, LL')
+    return moment(a).isValid() ? moment(a).format('dddd, LL') : a
   })
   hbs.registerHelper('formatDateGerman', function (a) {
-    return moment(a).locale('de').format('dddd, LL')
+    return moment(a).isValid() ? moment(a).locale('de').format('dddd, LL') : a
   })
   app.setViewEngine('hbs')
 

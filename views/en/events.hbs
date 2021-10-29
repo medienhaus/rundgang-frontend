@@ -7,7 +7,7 @@
         {{#each eventsByDay  as |day|}}
 
             <div class="day">
-                <h2>{{@key}}</h2>
+                <h2>{{formatDateEnglish @key}}</h2>
                 {{#each day as |event|}}
                     {{#each date as |time|}}
                         <div class="event">
@@ -33,15 +33,15 @@
                                     {{/each}}
                                     {{#each ../bigBlueButton as |bbb|}}
                                         <li class="bbb">
-                                            <a href="{{bbb}}">
-                                                video conference
+                                            <a href="{{bbb}}" target="_blank">
+                                                Video Conference
                                             </a>
                                         </li>
                                     {{/each}}
                                     {{#each ../livestream as |livestream|}}
                                         <li class="online">
-                                             <a href="{{livestream}}">
-                                                    livestream
+                                             <a href="{{livestream}}" target="_blank">
+                                                 Livestream
                                             </a>
                                         </li>
                                     {{/each}}
