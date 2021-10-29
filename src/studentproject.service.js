@@ -167,7 +167,9 @@ export class StudentprojectService {
                   const deleted = data.name.substring(0, data.name.indexOf('_')) === 'x'
                   if (type === 'location' && !deleted) {
                     onlineExclusive = false // if a room with a location exists we know the project has a physical location
-                    if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
+                    if (content[0]) {
+                      locationResult.push(content[0].split('-')[0])
+                    } // additionally we push it into our active locations array for filtering
                   }
                   // check if an event is LIVE
                   if (type === 'date') {
@@ -190,6 +192,7 @@ export class StudentprojectService {
                   return { name: type, content: content }
                 })))[0]
               }))
+              eventResult.push(childrenResult)
             } else { // otherwise we direcetly get the content of the room
               const content = await fetchContent(event.room_id)
               const type = event.name.substring(event.name.indexOf('_') + 1)
@@ -215,7 +218,6 @@ export class StudentprojectService {
         }
 
         // fetch events
-
         _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, onlineExclusive, isLive, liveAt, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
