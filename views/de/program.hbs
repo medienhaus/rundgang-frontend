@@ -45,11 +45,11 @@
         <div id="filterline">
             <p>Standort-Filter</p>
             <div>
-             <ul>
-            {{#each activeLocations as |location|}}
-                    <li class="location-name"><a href="/en/programme/location/{{location.coordinates}}">{{location.name}}</a></li>
-            {{/each}}
-            </ul>
+                <ul>
+                    {{#each activeLocations as |location|}}
+                        <li class="location-name"><a href="/programm/ort/{{location.coordinates}}">{{location.name}}</a></li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
     {{/if}}
