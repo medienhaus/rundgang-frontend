@@ -17,6 +17,7 @@ export class StudentprojectService {
     this.configService = configService
     this.httpService = httpService
     this.studentprojects = {}
+    this.activeLocations = [] // array to store all Locations that are actually mentioned in projects
   }
 
   @Interval(30 * 60 * 1000) // Call this every 30 minutes
@@ -24,6 +25,7 @@ export class StudentprojectService {
     Logger.log('Fetching student projects...')
 
     const result = {}
+    const locationResult = []
 
     const configService = this.configService
     const httpService = this.httpService
@@ -162,7 +164,13 @@ export class StudentprojectService {
                   // we want to return an array of objects with all information for the specific event
                   const content = await fetchContent(data.room_id)
                   const type = data.name.substring(data.name.indexOf('_') + 1)
-                  if (type === 'location') onlineExclusive = false // if a room with a location exists we know the project has a physical location
+                  const deleted = data.name.substring(0, data.name.indexOf('_')) === 'x'
+                  if (type === 'location' && !deleted) {
+                    onlineExclusive = false // if a room with a location exists we know the project has a physical location
+                    if (content[0]) {
+                      locationResult.push(content[0].split('-')[0])
+                    } // additionally we push it into our active locations array for filtering
+                  }
                   // check if an event is LIVE
                   if (type === 'date') {
                     const eventDate = content[0].substring(0, content[0].indexOf(' '))
@@ -188,7 +196,12 @@ export class StudentprojectService {
             } else { // otherwise we direcetly get the content of the room
               const content = await fetchContent(event.room_id)
               const type = event.name.substring(event.name.indexOf('_') + 1)
-              if (type === 'location') onlineExclusive = false // if a room with a location exists we know the project has a physical location
+              const deleted = event.name.substring(0, event.name.indexOf('_')) === 'x'
+              if (type === 'location' && !deleted) {
+                onlineExclusive = false // if a room with a location exists we know the project has a physical location
+                if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
+              }
+
               const eventDate = content[0].substring(0, content[0].indexOf(' '))
               if (eventDate === date) {
                 // if the specified hour of the event is the current hour of day or the one just gone, we flag the project as being live
@@ -205,12 +218,10 @@ export class StudentprojectService {
         }
 
         // fetch events
-
         _.set(result, [spaceId], createSpaceObject(matrixClient, spaceId, spaceName, metaEvent, avatar?.content.url, authorNames, credit, published, topicEn, topicDe, eventResult, onlineExclusive, isLive, liveAt, parent, parentSpaceId))
       } else {
         if (!typesOfSpaces.includes(metaEvent.content.type)) return
       }
-
       // _.set(result, [...path, spaceId], createSpaceObject(spaceId, spaceName, metaEvent))
 
       // console.log(`getting children for ${spaceId} / ${spaceName}`)
@@ -227,12 +238,24 @@ export class StudentprojectService {
     await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
     this.studentprojects = result
+    this.activeLocations = locationResult
 
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
 
   getAll () {
     return this.studentprojects
+  }
+
+  getActivelocations () {
+    const getLocationNames = this.activeLocations.map(locations => {
+      const location = this.coordinatesToLocation(locations)
+      if (location.name) return { name: location.name.split(',')[0], coordinates: location.coordinates.replace(', ', '/') }
+      return null
+    }).filter(location => location !== null) // get names for our coordinates
+    const uniqLocations = _.uniqBy(getLocationNames, 'name') // remove doublicates
+    const sortedLocations = uniqLocations.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0)) // sort them by name
+    return sortedLocations
   }
 
   everydayImShuffling (data) {

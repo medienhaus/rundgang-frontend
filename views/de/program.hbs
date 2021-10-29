@@ -46,23 +46,9 @@
             <p>Standort-Filter</p>
             <div>
                 <ul>
-                    <li class="location-name"><a href="/en/programme/location/52.50893832945276/13.328045756372312">Hardenbergstraße 33</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.51035490505003/13.33019394102799">Universitätsbibliothek im Volkswagen-Haus</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.513904723230915/13.329303512192054">Straße des 17. Juni 118</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.49082496403345/13.3595672852078">Grunewaldstraße 2–5</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.50001283127866/13.332853627535915">Lietzenburger Straße 45</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.52472611550576/13.303810927536668">Mierendorffstraße 30</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.508846909728646/13.328002841028002">Konzertsaal der UdK Berlin</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.49978324397309/13.29472164102763">Karlsruher Straße 7a</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.51136993151621/13.32335888335587">Hardenbergstraße 41</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.49884512443705/13.32995634288022">Bundesallee 1-12</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.50919098886368/13.32846072753614">Fasanenstraße 1b</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.51709564151452/13.323078790766152">Jazz-Institut Berlin</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.51732414757127/13.322746196847742">designtransfer</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.517271917720215/13.322113195519155">Einsteinufer 43-53</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.51009829740333/13.329050794009817">UNI.T</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.551912998961505/13.374770994996302">HZT Berlin</a></li>
-                    <li class="location-name"><a href="/en/programme/location/52.496642889026305/13.334328574756974">Grainauer Straße 12</a></li>
+                    {{#each activeLocations as |location|}}
+                        <li class="location-name"><a href="/programm/ort/{{location.coordinates}}">{{location.name}}</a></li>
+                    {{/each}}
                 </ul>
             </div>
         </div>
@@ -94,7 +80,7 @@
                                 <div class="live"><span></span>Live</div>
                             {{else}}
                                 {{#if liveAt}}
-                                    <div class="livein">Live at {{ liveAt }}</div>
+                                    <div class="livein">Live um {{ liveAt }} Uhr</div>
                                 {{/if}}
                             {{/if}}
                         </div>
