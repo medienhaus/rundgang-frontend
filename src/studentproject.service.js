@@ -159,13 +159,17 @@ export class StudentprojectService {
             if (index === 0) return // we ignore the first result since its the event space itself
             if (event.children_state.length > 0) { // if the space has children
               const childrenResult = await Promise.all(event.children_state.map(async child => {
-                const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10)
+                const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10).catch(() => {})
+                if (!childrenHierarchy) return
+
                 return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
-                  // we want to return an array of objects with all information for the specific event
-                  const content = await fetchContent(data.room_id)
                   const type = data.name.substring(data.name.indexOf('_') + 1)
                   const deleted = data.name.substring(0, data.name.indexOf('_')) === 'x'
-                  if (type === 'location' && !deleted) {
+                  if (deleted) return
+
+                  // we want to return an array of objects with all information for the specific event
+                  const content = await fetchContent(data.room_id)
+                  if (type === 'location') {
                     onlineExclusive = false // if a room with a location exists we know the project has a physical location
                     if (content[0]) {
                       locationResult.push(content[0].split('-')[0])
@@ -192,12 +196,14 @@ export class StudentprojectService {
                   return { name: type, content: content }
                 })))[0]
               }))
-              eventResult.push(childrenResult)
+              eventResult.push(_.compact(childrenResult))
             } else { // otherwise we direcetly get the content of the room
-              const content = await fetchContent(event.room_id)
               const type = event.name.substring(event.name.indexOf('_') + 1)
               const deleted = event.name.substring(0, event.name.indexOf('_')) === 'x'
-              if (type === 'location' && !deleted) {
+              if (deleted) return
+
+              const content = await fetchContent(event.room_id)
+              if (type === 'location') {
                 onlineExclusive = false // if a room with a location exists we know the project has a physical location
                 if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
               }
