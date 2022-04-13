@@ -1,45 +1,21 @@
-const zoom = 13
+const zoom = 12
 const markers = []
 const addresses = document.querySelectorAll('.address')
 const firstAddress = document.querySelector('.address')
 const firstLat = firstAddress.getAttribute('data-lat')
 const firstLng = firstAddress.getAttribute('data-lng')
 
-const map = L.map('map', {
-  center: [firstLat, firstLng],
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://osm.udk-berlin.de/nice/styles/toner/style.json', // stylesheet location
+  center: [firstLng, firstLat], // starting position [lng, lat]
   zoom: zoom,
-  attributionControl: false,
-  popupPane: false
-})
-
-// https://osm-tileserver.medienhaus.udk-berlin.de/osm_tiles/{z}/{x}/{y}.{ext} https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}
-const Stamen_TonerLite = L.tileLayer('https://osm.udk-berlin.de/tile/{z}/{x}/{y}.{ext}', {
-  minZoom: 11,
   maxZoom: 20,
-  ext: 'png'
-}).addTo(map)
+  minZoom: 11
+})
 
 function randomIntFromInterval (min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-function getIcon () {
-  randomMarkerNo = randomIntFromInterval(1, 10)
-  return L.icon({
-    iconUrl: '/assets/img/marker/mushroom' + randomMarkerNo + '.svg',
-    iconSize: [45, 64], // size of the icon
-    shadowSize: [50, 64], // size of the shadow
-    iconAnchor: [22, 55], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62], // the same for the shadow
-    popupAnchor: [-5, -60] // point from which the popup should open relative to the iconAnchor
-  })
-}
-
-function getMarker (latLon, icon = false) {
-  if (icon) {
-    return L.marker(latLon, { icon: icon }).addTo(map)
-  }
-  return L.marker(latLon).addTo(map)
 }
 
 function removeActiveClass () {
@@ -52,22 +28,17 @@ function addressClickHandler (el, index) {
   const lat = el.getAttribute('data-lat')
   const lng = el.getAttribute('data-lng')
 
-  const latLon = L.latLng(lat, lng)
-  markers[index].openPopup(latLon)
-
-  map.setView(latLon, 18, {
-    animate: true,
-    pan: {
-      duration: 0.5
-    }
-  })
+  map.flyTo({ center: [lng, lat], speed: 1, zoom: 17 })
+  if (!markers[index].getPopup().isOpen()) {
+    markers[index].togglePopup()
+  }
 
   removeActiveClass()
   el.classList.add('active')
 }
 
 function markerClickHandler (e) {
-  const lat = e.latlng.lat
+  const lat = e.getAttribute('data-lat')
   removeActiveClass()
   document.querySelector('.address[data-lat="' + lat + '"]').classList.add('active')
 }
@@ -79,23 +50,28 @@ addresses.forEach((el, index) => {
   const text = el.querySelector('.location-name').innerText
   const html = el.querySelector('.location-info').innerHTML
 
-  const icon = getIcon()
-  const latLon = L.latLng(lat, lng)
-  const marker = getMarker(latLon, icon)
+  // create a DOM element for the marker
+  const randomMarkerNo = randomIntFromInterval(1, 10)
+  const markerElement = document.createElement('div')
+  markerElement.className = 'marker'
+  markerElement.style.backgroundImage = 'url("/assets/img/marker/mushroom' + randomMarkerNo + '.svg")'
+  markerElement.style.backgroundRepeat = 'no-repeat'
+  markerElement.style.width = '45px'
+  markerElement.style.height = '64px'
 
-  marker.on('click', markerClickHandler)
+  markerElement.addEventListener('click', function () {
+    markerClickHandler(el)
+  })
 
+  const popup = new maplibregl.Popup({ offset: 35, maxWidth: '300px' }).setHTML(`<h3>${text}</h3> ${html}`)
+  popup.on('close', removeActiveClass)
+
+  // add marker to map
+  const marker = new maplibregl.Marker(markerElement)
+    .setLngLat([lng, lat])
+    .setPopup(popup)
+    .addTo(map)
   markers.push(marker)
-  const popup = L.popup()
-    .setLatLng(latLon)
-    .setContent(`
-            <h3>${text}</h3>
-            ${html}
-        `)
-
-  popup.on('remove', removeActiveClass)
-
-  marker.bindPopup(popup)
 
   el.addEventListener('click', function () {
     addressClickHandler(this, index)
