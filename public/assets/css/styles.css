@@ -620,42 +620,40 @@ main.start div.rundang.greypill {
   gap: 10px;
 }
 
-.leaflet-popup-content-wrapper {
-  -webkit-box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
-  border: 1px solid #C4C4C4;
+.maplibregl-popup-content {
+  -webkit-box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 12px !important;
+  padding: 10px !important;
 }
 
-.leaflet-popup-content {
-  margin: 10px !important;
-}
-.leaflet-popup-content ul {
+.maplibregl-popup-content ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
-.leaflet-popup-content ul li {
+.maplibregl-popup-content ul li {
   font-size: 16px;
   line-height: 20px;
 }
-.leaflet-popup-content ul li.closed {
+.maplibregl-popup-content ul li.closed {
   color: #C4C4C4;
 }
 
-.leaflet-container a.leaflet-popup-close-button {
+.maplibregl-map .maplibregl-popup-close-button {
   top: 10px !important;
   right: 10px !important;
   font-size: 20px !important;
   color: black !important;
 }
 
-.leaflet-popup-content h3 {
+.maplibregl-popup-content h3 {
   margin-bottom: 0 !important;
   font-size: 16px;
   margin-top: 5px;
 }
 
-.leaflet-popup-content p {
+.maplibregl-popup-content p {
   margin-top: 5px !important;
   margin-bottom: 5px !important;
   font-size: 16px;
@@ -663,45 +661,22 @@ main.start div.rundang.greypill {
   color: #C4C4C4;
 }
 
-.leaflet-popup-tip-container {
-  display: none;
-}
-
-.leaflet-control {
-  z-index: 300 !important;
-}
-
-.leaflet-top, .leaflet-bottom {
-  z-index: 400 !important;
-}
-
-.leaflet-popup {
-  margin-bottom: 10px !important;
-}
-
-.leaflet-popup-content ul.tags {
+.maplibregl-popup-content ul.tags {
   margin-top: 10px;
   margin-left: -2px;
 }
 
-.leaflet-popup-content ul.tags li {
+.maplibregl-popup-content ul.tags li {
   line-height: 26px;
   font-size: 14px;
 }
 
-.leaflet-popup-content ul.tags li a {
+.maplibregl-popup-content ul.tags li a {
   color: white;
   text-decoration: none;
   line-height: auto;
 }
 
-.leaflet-tile-pane {
-  filter: grayscale(1);
-}
-
-/* .leaflet-popup.leaflet-zoom-animated {
-  left: 25px !important;
-} */
 #map {
   border-top: 1px solid #C4C4C4;
   width: 100%;
