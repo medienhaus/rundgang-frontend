@@ -24,25 +24,6 @@ function removeActiveClass () {
   }
 }
 
-function addressClickHandler (el, index) {
-  const lat = el.getAttribute('data-lat')
-  const lng = el.getAttribute('data-lng')
-
-  map.flyTo({ center: [lng, lat], speed: 1, zoom: 17 })
-  if (!markers[index].getPopup().isOpen()) {
-    markers[index].togglePopup()
-  }
-
-  removeActiveClass()
-  el.classList.add('active')
-}
-
-function markerClickHandler (e) {
-  const lat = e.getAttribute('data-lat')
-  removeActiveClass()
-  document.querySelector('.address[data-lat="' + lat + '"]').classList.add('active')
-}
-
 addresses.forEach((el, index) => {
   const lat = el.getAttribute('data-lat')
   const lng = el.getAttribute('data-lng')
@@ -59,12 +40,18 @@ addresses.forEach((el, index) => {
   markerElement.style.width = '45px'
   markerElement.style.height = '64px'
 
-  markerElement.addEventListener('click', function () {
-    markerClickHandler(el)
-  })
-
   const popup = new maplibregl.Popup({ offset: 35, maxWidth: '300px' }).setHTML(`<h3>${text}</h3> ${html}`)
   popup.on('close', removeActiveClass)
+  popup.on('open', function () {
+    setTimeout(function () {
+      // Close all other popups
+      markers.forEach(function (marker) {
+        if (marker.getLngLat().lng == lng && marker.getLngLat().lat == lat) return
+        if (marker.getPopup().isOpen()) marker.togglePopup()
+      })
+      el.classList.add('active')
+    }, 0)
+  })
 
   // add marker to map
   const marker = new maplibregl.Marker(markerElement)
@@ -74,16 +61,12 @@ addresses.forEach((el, index) => {
   markers.push(marker)
 
   el.addEventListener('click', function () {
-    addressClickHandler(this, index)
+    map.flyTo({ center: [lng, lat], speed: 1, zoom: 17 })
+    if (!popup.isOpen()) {
+      marker.togglePopup()
+    }
   })
 })
-
-if (window.location.hash) {
-  const hash = document.querySelector(window.location.hash)
-  if (hash && hash.classList.contains('address')) {
-    hash.click()
-  }
-}
 
 /** DRAGGABLE LIST VIEW **/
 const slider = document.querySelector('.container')
@@ -112,14 +95,9 @@ slider.addEventListener('mousedown', startDragging, false)
 slider.addEventListener('mouseup', stopDragging, false)
 slider.addEventListener('mouseleave', stopDragging, false)
 
-/// /// adding zooming on location if get paramter exists
+/// /// adding zooming on location if get parameter exists
 const urlParams = new URLSearchParams(window.location.search)
 if (urlParams.get('coords')) {
   const urlCoords = urlParams.get('coords').split(',')
-  map.setView(L.latLng(urlCoords[0].trim(), urlCoords[1].trim()), 18, {
-    animate: true,
-    pan: {
-      duration: 0
-    }
-  })
+  map.flyTo({ center: [urlCoords[1].trim(), urlCoords[0].trim()], speed: 1, zoom: 17 })
 }
