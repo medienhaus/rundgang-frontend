@@ -7,7 +7,7 @@ const firstLng = firstAddress.getAttribute('data-lng')
 
 const map = new maplibregl.Map({
   container: 'map',
-  style: 'https://osm.udk-berlin.de/nice/styles/toner/style.json', // stylesheet location
+  style: 'https://osm.udk-berlin.de/styles/toner/style.json', // stylesheet location
   center: [firstLng, firstLat], // starting position [lng, lat]
   zoom: zoom,
   maxZoom: 20,
