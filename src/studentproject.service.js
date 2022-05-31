@@ -626,14 +626,15 @@ export class StudentprojectService {
 
     // Get the spaces for the available languages
     const languageSpaces = {}
-    const spaceSummary = await matrixClient.getSpaceSummary(projectSpaceId, 0)
+    const spaceSummary = await matrixClient.getRoomHierarchy(projectSpaceId, 50, 10)
     spaceSummary.rooms.map(languageSpace => {
       if (languageSpace.room_id == projectSpaceId) return
       languageSpaces[languageSpace.name] = languageSpace.room_id
     })
 
     // Get the actual content block rooms for the given language
-    const contentRooms = await matrixClient.getSpaceSummary(languageSpaces[language], 0)
+    const contentRooms = await matrixClient.getRoomHierarchy(languageSpaces[language], 50, 10)
+    
 
     await Promise.all(contentRooms.rooms.map(async (contentRoom) => {
       // Skip the language space itself
