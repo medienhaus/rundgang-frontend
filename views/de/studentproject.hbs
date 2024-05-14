@@ -8,8 +8,8 @@
         <h2 class="projecttitle">{{ studentproject.name }}</h2>
 
         <div class="students tagbubble">
-            {{#each studentproject.authors}}
-                <span>{{.}}</span>
+            {{#each studentproject.origin.authors  as |author|}}
+                <span>{{author.name}}</span>
             {{/each}}
             {{#if studentproject.credit}}
                 {{#each studentproject.credit}}
@@ -81,21 +81,21 @@
             </div>
         {{/if}}
 
-        {{#if studentproject.topicDe}}
-            <p>{{ studentproject.topicDe }}</p>
+        {{#if studentproject.description.DE}}
+            <p>{{ studentproject.abstract.description.DE }}</p>
         {{/if}}
 
-        {{#each studentproject.content}}
-            {{{ formatted_content }}}
+        {{#each studentproject.languages.DE.content as |content|}}
+            {{{ content.formatted_content }}}
         {{/each}}
     </div>
 
-    {{#if studentproject.parent}}
+    {{#if studentproject.parentSpaceId}}
         <div class="info">
             <div class="label">Kontext</div>
             <div class="tagbubble">
-                {{#each bubbles.context as |hierarchyElement|}}
-                    <span><a href="/programm/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
+                 {{#each bubbles.context as |hierarchyElement|}}
+                    <span><a href="/programme/{{hierarchyElement.id}}">{{ hierarchyElement.name }}</a></span>
                 {{/each}}
             </div>
         </div>

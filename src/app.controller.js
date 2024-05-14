@@ -31,6 +31,7 @@ export class AppController {
     // If we are not filtering by a given context show the filter data for the root context
     if (!contextSpaceId) contextSpaceId = Object.keys(this.apiGetStructure())[0]
 
+    // const projects =  this.studentprojectService.getAll()
     const projects = contextSpaceId ? this.studentprojectService.getProjectsByLevel({ id: contextSpaceId }, this.apiGetStructure(), false) : this.studentprojectService.getAll()
     return res.render('de/program.hbs', {
       pageTitle: 'Programm',
@@ -74,6 +75,7 @@ export class AppController {
   getProgrammeByLocation (res, { lat, lng }) {
     // Make sure this is a valid lat/lng combination, otherwise forward to /programm
     const location = _.find(locationData, { coordinates: `${lat}, ${lng}` })
+    console.log(this.studentprojectService.getByLocation(lat, lng))
     if (!location) return res.redirect('/programm')
 
     return res.render('de/program.hbs', {
@@ -228,7 +230,8 @@ export class AppController {
 
   @Get('/api/structure')
   apiGetStructure () {
-    return process.env.NODE_ENV === 'local' ? strukturDev : struktur
+    return struktur
+    //return process.env.NODE_ENV === 'local' ? strukturDev : struktur
   }
 
   @Get('/api/events')

@@ -20,7 +20,7 @@ export class StudentprojectService {
     this.activeLocations = [] // array to store all Locations that are actually mentioned in projects
   }
 
-  @Interval(30 * 60 * 1000) // Call this every 30 minutes
+
   async fetch () {
     Logger.log('Fetching student projects...')
 
@@ -30,23 +30,20 @@ export class StudentprojectService {
     const configService = this.configService
     const httpService = this.httpService
 
-    const matrixClient = createMatrixClient({
-      baseUrl: this.configService.get('matrix.homeserver_base_url'),
-      accessToken: this.configService.get('matrix.access_token'),
-      userId: this.configService.get('matrix.user_id'),
-      useAuthorizationHeader: true
-    })
+    const delayMS = 100
+
+   
 
     function createSpaceObject (matrixClient, id, name, metaEvent, thumbnail, authors, credit, published, topicEn, topicDe, events, onlineExclusive, isLive, liveAt, parent, parentSpaceId) { // changed
       return {
         id: id,
         name: name,
-        type: metaEvent.content.type,
+        template: metaEvent.content.type,
         topicEn: topicEn,
         topicDe: topicDe,
         events: events,
-        thumbnail: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail, 800, 800, 'scale') : '',
-        thumbnail_full_size: thumbnail ? matrixClient.mxcUrlToHttp(thumbnail) : '',
+        thumbnail: thumbnail ,
+        thumbnail_full_size: thumbnail,
         authors: authors,
         credit: credit,
         published: published,
@@ -71,6 +68,7 @@ export class StudentprojectService {
       'semester']
 
     async function scanForAndAddSpaceChildren (spaceId, path, parent, parentSpaceId) {
+      await new Promise((r) => setTimeout(r, delayMS))
       const stateEvents = await matrixClient.roomState(spaceId).catch(() => {})
 
       const metaEvent = _.find(stateEvents, { type: 'dev.medienhaus.meta' })
@@ -109,10 +107,11 @@ export class StudentprojectService {
       // robert end
 
       if (
-        metaEvent.content.type === 'studentproject' &&
+        metaEvent.content.template === 'studentproject' &&
         (metaEvent.content.published ? metaEvent.content.published === 'public' : (joinRulesEvent && joinRulesEvent.content.join_rule === 'public'))
       ) {
         const hierarchy = await matrixClient.getRoomHierarchy(spaceId, 50, 10)
+        await new Promise((r) => setTimeout(r, delayMS))
         // fetch descriptions
         const en = hierarchy.rooms.filter(room => room.name === 'en')
         const topicEn = en[0].topic || undefined
@@ -156,27 +155,31 @@ export class StudentprojectService {
           }
           // @TODO one map too many
           await Promise.all(eventHierarchy.rooms.map(async (event, index) => {
+            console.log(index)
+            //for await (const [index, event] of eventHierarchy.rooms.entries()) {
             if (index === 0) return // we ignore the first result since its the event space itself
             if (event.children_state.length > 0) { // if the space has children
               const childrenResult = await Promise.all(event.children_state.map(async child => {
                 const childrenHierarchy = await matrixClient.getRoomHierarchy(child.state_key, 50, 10).catch(() => {})
                 if (!childrenHierarchy) return
-
+                await new Promise((r) => setTimeout(r, delayMS))
+                console.log('id', new Date().getTime())
                 return (await Promise.all(childrenHierarchy.rooms.map(async (data, index) => {
-                  const type = data.name.substring(data.name.indexOf('_') + 1)
+                  const template = data.name.substring(data.name.indexOf('_') + 1)
                   const deleted = data.name.substring(0, data.name.indexOf('_')) === 'x'
                   if (deleted) return
 
                   // we want to return an array of objects with all information for the specific event
                   const content = await fetchContent(data.room_id)
-                  if (type === 'location') {
+                  await new Promise((r) => setTimeout(r, delayMS))
+                  if (template === 'location') {
                     onlineExclusive = false // if a room with a location exists we know the project has a physical location
                     if (content[0]) {
                       locationResult.push(content[0].split('-')[0])
                     } // additionally we push it into our active locations array for filtering
                   }
                   // check if an event is LIVE
-                  if (type === 'date') {
+                  if (template === 'date') {
                     const eventDate = content[0].substring(0, content[0].indexOf(' '))
                     // fitst we check if the event is happening today
                     if (eventDate === date) {
@@ -193,17 +196,17 @@ export class StudentprojectService {
                       }
                     }
                   } // if a room with a location exists we know the project has a physical location
-                  return { name: type, content: content }
+                  return { name: template, content: content }
                 })))[0]
               }))
               eventResult.push(_.compact(childrenResult))
             } else { // otherwise we direcetly get the content of the room
-              const type = event.name.substring(event.name.indexOf('_') + 1)
+              const template = event.name.substring(event.name.indexOf('_') + 1)
               const deleted = event.name.substring(0, event.name.indexOf('_')) === 'x'
               if (deleted) return
 
               const content = await fetchContent(event.room_id)
-              if (type === 'location') {
+              if (template === 'location') {
                 onlineExclusive = false // if a room with a location exists we know the project has a physical location
                 if (content[0]) locationResult.push(content[0].split('-')[0]) // additionally we push it into our active locations array for filtering
               }
@@ -218,7 +221,7 @@ export class StudentprojectService {
                   liveAt = content[0].substring(content[0].indexOf(' ') + 1)
                 }
               }
-              eventResult.push([{ name: type, content: content }])
+              eventResult.push([{ name: template, content: content }])
             }
           }))
         }
@@ -241,13 +244,42 @@ export class StudentprojectService {
       }
     }
 
-    await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
 
-    this.studentprojects = result
+    async function getDataFromApi() {
+      const result = {}
+  
+      const fetchedItemsFromApi =  (await httpService.axiosRef(configService.get('api.url')+'/api/v2/!TCqCDYYsBUxmjWOZWV:content.udk-berlin.de/list/filter/type/item'))?.data
+  
+        
+      for await (const [i,item] of fetchedItemsFromApi.entries()) {
+        const itemData = (await httpService.axiosRef(configService.get('api.url')+'/api/v2/'+item?.id))?.data
+        console.log(i + '/' + fetchedItemsFromApi.length)
+        if (itemData && itemData.template === 'studentproject') {
+          if(itemData?.parents?.length > 0) {
+            itemData.parentSpaceId = itemData?.parents[0]
+          }
+          delete itemData.children
+          result[itemData.id] = itemData
+        }
+
+    
+
+
+      }
+      return result
+    }
+
+   // await scanForAndAddSpaceChildren(this.configService.get('matrix.root_context_space_id'), [], '', null)
+
+   
+
+    this.studentprojects = await getDataFromApi() 
     this.activeLocations = locationResult
 
     Logger.log(`Found ${Object.keys(result).length} student projects`)
   }
+
+
 
   getAll () {
     return this.studentprojects
@@ -380,6 +412,8 @@ export class StudentprojectService {
   }
 
   flattenTree (data) {
+
+    if(!data.treeSection) return {flattened: [], treeSection: {}}
     Object.entries(data.treeSection).forEach(([key, content]) => {
       const tmp = { id: content.id, name: content.name }
       data.flattened.push(tmp)
@@ -419,7 +453,6 @@ export class StudentprojectService {
     if (onlyCurrentLevel) {
       Object.entries(this.studentprojects).forEach(([key, content]) => {
         if (content.parentSpaceId === levelId.id) {
-          console.log(content.parentSpaceId)
           matchingProjects[key] = content
         }
       })
@@ -431,15 +464,19 @@ export class StudentprojectService {
 
   collectingProjectsFromCollectedChildren (entryId, tree) {
     const matchingProjects = {}
+
     Object.entries(tree).forEach(([key, content]) => {
       const collectedChildren = this.searchLevelforAllChildren(entryId.id, { [key]: content })
-      Object.entries(collectedChildren).forEach(([childrenKey, childrenContent]) => {
-        Object.entries(this.studentprojects).forEach(([projectKey, projectContent]) => {
-          if (projectContent.parentSpaceId === childrenKey) {
-            matchingProjects[projectKey] = projectContent
-          }
-        })
-      })
+        if(collectedChildren ){
+          Object.entries(collectedChildren).forEach(([childrenKey, childrenContent]) => {
+            Object.entries(this.studentprojects).forEach(([projectKey, projectContent]) => {
+              if (projectContent.parentSpaceId === childrenKey) {
+                matchingProjects[projectKey] = projectContent
+              }
+            })
+          })
+        }
+      
     })
     return matchingProjects
   }
@@ -567,8 +604,10 @@ export class StudentprojectService {
   }
 
   getStrucureElementByIdFilteredOutEmptyOnes (level, tree) {
+
+    if(!level) return {}
     const ret = { ...level }
-    if (Object.keys(ret.children).length === 0) {
+    if (ret && Object.keys(ret.children).length === 0) {
       delete ret.children
       return ret
     }
@@ -602,8 +641,11 @@ export class StudentprojectService {
     if (!this.studentprojects[id]) {
       return null
     }
+
+    const fetchFromApi =  (await this.httpService.axiosRef(this.configService.get('api.url')+'/api/v2/'+id+'/render/json'))?.data
+    const d = { ...this.studentprojects[id], ...fetchFromApi}
+    return d
     const { content, formattedContent } = await this.getContent(id, language)
-    return { ...this.studentprojects[id], content, formatted_content: formattedContent }
   }
 
   async getContent (projectSpaceId, language) {
@@ -617,13 +659,14 @@ export class StudentprojectService {
 
   async getContentBlocks (projectSpaceId, language) {
     const result = {}
+    return
     const matrixClient = createMatrixClient({
       baseUrl: this.configService.get('matrix.homeserver_base_url'),
       accessToken: this.configService.get('matrix.access_token'),
       userId: this.configService.get('matrix.user_id'),
       useAuthorizationHeader: true
     })
-
+    
     // Get the spaces for the available languages
     const languageSpaces = {}
     const spaceSummary = await matrixClient.getRoomHierarchy(projectSpaceId, 50, 10)
@@ -634,7 +677,6 @@ export class StudentprojectService {
 
     // Get the actual content block rooms for the given language
     const contentRooms = await matrixClient.getRoomHierarchy(languageSpaces[language], 50, 10)
-    
 
     await Promise.all(contentRooms.rooms.map(async (contentRoom) => {
       // Skip the language space itself

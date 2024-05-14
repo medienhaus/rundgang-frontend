@@ -1,8 +1,5 @@
 export default () => ({
-  matrix: {
-    homeserver_base_url: 'https://dev.medienhaus.udk-berlin.de',
-    user_id: '@rundgang-bot:dev.medienhaus.udk-berlin.de',
-    access_token: 'syt_XXXuZGdhbmctYm90_BRnkDuPAihrEnRkZJsuD_0YfBnN',
-    root_context_space_id: '!CgKzJcINbtDdglFtub:dev.medienhaus.udk-berlin.de'
+  api: {
+    url: "https://localhost:3009"
   }
 })
